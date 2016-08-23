@@ -1,0 +1,54 @@
+\newcommand{\import}[1]{\input{\includeDir/#1.tex}}
+
+% \nobreakhline : \hline that doesn't break pages
+\makeatletter
+\def\nobreakhline{%
+  \noalign{\ifnum0=`}\fi
+    \penalty\@M
+    \futurelet\@let@token\LT@@nobreakhline}
+\def\LT@@nobreakhline{%
+  \ifx\@let@token\hline
+    \global\let\@gtempa\@gobble
+    \gdef\LT@sep{\penalty\@M\vskip\doublerulesep}
+  \else
+    \global\let\@gtempa\@empty
+    \gdef\LT@sep{\penalty\@M\vskip-\arrayrulewidth}
+  \fi
+  \ifnum0=`{\fi}%
+  \multispan\LT@cols
+     \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
+  \noalign{\LT@sep}%
+  \multispan\LT@cols
+     \unskip\leaders\hrule\@height\arrayrulewidth\hfill\cr
+  \noalign{\penalty\@M}%
+  \@gtempa}
+\makeatother
+
+% \tablesection{# columns}{text} : used to divide thematic groups in a table
+\newcommand{\tablesection}[2]{%
+  \multicolumn{#1}{c}%
+  {%
+    #2%
+  }%
+  \\* \nobreakhline%
+}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\variable}[1]{\texttt{\textit{#1}}}
+\newcommand{\cmdline}[1]{\texttt{#1}}
+
+\newcommand{\addcaption}[2]{%
+  \multicolumn{#1}{c}{%
+    \textbf{[Table \ref{#2}]}%
+  }%
+}
+
+% ScheMo deserve a command
+\newcommand{\ScheMo}{ScheMo}
+\newcommand{\ScheMoTeX}{%
+\raise .5ex\hbox {S}%
+\kern -.2em\lower .5ex\hbox {\textsc{che}}%
+\kern -.12em\raise .1ex\hbox {M}%
+\kern -.125em\lower .5ex\hbox {\small O}%
+\kern -.125em\TeX{}%
+}

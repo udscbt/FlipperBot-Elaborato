@@ -1,0 +1,50 @@
+FlipperBot is made of different devices that need to communicate
+among themselves and for this reason they have to be connected in a
+suitable network. In particular, the devices can be connected in
+different ways depending on the current mode: standard game or
+standalone.
+
+\subsubsection{Standard Game Network (SSID starting with
+  \code{FlipperBot-Board-})}
+  In game mode, the board acts as access point for all other devices
+  and all communications go through it.
+
+  In particular, in this mode controller and robot are not directly
+  connected, instead there is a client-server connection between
+  controller and board and another one between board and robot. This
+  way, the board is able to block or modify the commands given by
+  the controller before sending them to the robot, as suited to make
+  the game work as expected.
+
+  The first connection is also used to manage the Everything Button
+  on the controller.
+
+  Another client-server connection exists between the robot and the
+  board to allow the transmission of impact information.
+
+\subsubsection{Standalone Network (SSID starting with
+  \code{FlipperBot-Robot-})}
+  When no boards are available for connection, a robot can become an
+  access point to create a new network.
+
+  A single controller can join this network and create a
+  client-server connection with the robot, directly controlling it.
+
+\subsubsection{Isolated Network}
+  In the case in which neither boards nor robots are available, the
+  controller simply doesn't connect to any other device while
+  waiting for a suitable network to appear.
+
+\subsection*{}
+The board always uses the game mode, broadcasting the network SSID%
+\footnote{Service Set IDentifier: the \textit{name} of the WiFi
+network} to make its presence known. Robots try to connect to a game
+network if they can find it, otherwise they get into standalone
+mode. Controllers connect to whichever suitable network they can
+find, giving priority to the ones created by a board.
+
+In some cases, a WiFi network can exist and be accessible while it
+is already \textit{full} (all devices of the previously defined
+topologies are already present). Such cases are managed by FBCP%
+\footnote{See \ref{ssec:fbcp}} and lead to changes in topologies.
+

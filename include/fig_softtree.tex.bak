@@ -1,0 +1,42 @@
+\dirtree{%
+.1 .
+  .2 C++ libraries.
+    .3 ScheMo.
+      .4 schemo.h.
+    .3 FBCP.
+      .4 fbcp.command.h\DTcomment{List of all protocol commands}.
+      .4 fbcp.common.h\DTcomment{Handlers for common tasks}.
+      .4 fbcp.h\DTcomment{Base header (includes all the others)}.
+      .4 fbcp.string.h\DTcomment{Custom \texttt{string} implementation
+          for use with the library}.
+      .4 fbcp.type.h\DTcomment{Custom types definition}.
+  .2 Python modules.
+    .3 flipperbot.
+      .4 board.
+        .5 audio.
+        .5 demo\DTcomment{Allows simulation and visualisation of the
+            board even without the actual hardware}.
+          .6 fakeboard.
+          .6 fakebot.
+          .6 fakedisplay.
+          .6 fakeeb.
+          .6 fakejoystick.
+          .6 fakeled.
+        .5 display.
+        .5 everythingButton.
+        .5 game\DTcomment{Main module managing the interaction of all
+            the internal hardware}.
+        .5 led.
+        .5 server\DTcomment{Manages communication with other devices
+            making the data available to the \texttt{game} module}.
+        .5 shared\DTcomment{Utility module}.
+        .5 totems.
+      .4 controller.
+      .4 fbcp\DTcomment{Python equivalent of \texttt{fbcp.h}}.
+        .5 common.
+      .4 robot.
+      .4 shared\DTcomment{Utility module}.
+      .4 virtual\DTcomment{Virtualised devices that can interact
+          remotely with the board}.
+        .5 joystick.
+}

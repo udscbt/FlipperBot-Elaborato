@@ -1,0 +1,222 @@
+Both the robot and the controller (as will be clear later) need to
+execute multiple tasks simultaneously to work properly, however the
+ESP8266 includes only a one-core CPU, allowing for only one process
+to run at a time.
+
+The SDK\footnote{Software Development Kit} available to be used with
+the Arduino IDE\footnote{Available at
+\textit{https://github.com/esp8266/Arduino}} implements a simple
+scheduler to allow the correct functioning of the WiFi communication
+while the main program runs. Unfortunately, the related API are hard
+to use, badly documented and their use is discouraged by the
+developers.
+
+For these reasons, we developed our own scheduler, written in
+standard C++ and thus compatible with various platforms other than
+the ESP8266. It is, however, only a barebone implementation useful
+for this specific application but lacking of various features common
+to modern schedulers.
+
+\subsubsection{Control flow}
+  \begin{figure}[htbp]
+    \hspace{-1cm}
+    \schemoSetName{fig_schemoflow}
+    \import{fig_schemoflow}
+    \caption[Example flow diagram of a \ScheMo{} program.]{
+      Example flow diagram of a \ScheMo{} program.
+
+      \small
+      Each job has a distinct flow diagram, where tasks are represented
+      by circles.
+
+      The padlocks indicate if a mutex is locked/unlocked inside a task
+      and they delimit the critical sections of the program (the same
+      kind of hatch means that both critical sections refer to the same
+      mutex).
+
+      The small numbers near the tasks show the order with which they
+      are executed, alternating between jobs and remaining stuck at the
+      start of critical sections when the related mutex is busy.
+    }
+    \label{fig:schemoflow}
+  \end{figure}
+  To better understand how \ScheMo{} simulates parallel processing,
+  we first have to define some of its terminology%
+  \footnote{Note that these definitions are specific for \ScheMo{} and
+  do not necessarily correspond to the meanings that the same words
+  have in other contexts of Computer Science}:
+  
+  \begin{description}[align=right]
+    \item [Job] it represents a single (pseudo-)process that can be
+      started, stopped, paused and resumed at will. Different
+      processes are represented by different jobs.
+    \item [Task] it's a continous, non-interruptable part of a job;
+      that is, the scheduler can switch control from a job to
+      another only after a task of the first job has terminated and
+      before the next task starts. This means that it is vital to
+      split jobs in as many tasks as possible and to make sure that
+      tasks always halt (this condition is not required for jobs)
+    \item [Function] it's similar to a job in that it can run
+      concurrently with other processes, but it has some important
+      differences:
+      \begin{itemize}
+        \item it can't be scheduled by itself, it must instead be
+          called inside a job (that passes control to the function
+          until completion\footnote{Asynchronous function calling
+          has not been implemented yet})
+        \item when called, it can accept parameters that change its
+          behaviour
+        \item once finished, it returns a value that can be used for
+          subsequent computation\footnote{\code{void} functions are
+          not implemented as of now}
+        \item multiple instances of the same function can be run at
+          the same time without conflicting with each other
+      \end{itemize}
+    \item [Cycle] it represents the order of execution of the
+      various tasks. The name comes from the fact that, at any one
+      time, it only contains a small portion of the tasks necessary
+      for the program and its content is updated by a loop inside
+      the core function of the scheduler.
+  \end{description}
+  
+  \ScheMo{} manages execution of tasks in a very simple way: it has a
+  loop that, at each iteration, cycles through all started jobs and
+  adds the current task of each to the Cycle (potentially skipping
+  some jobs if they are locked\footnote{See below} or defined to be
+  run less often) and then proceeds to execute them. Once all jobs
+  have terminated, the scheduler stops\footnote{It is therefore
+  important to schedule at least one job before starting the
+  scheduler}.
+
+  A new job can be started by informing the scheduler of its first
+  task and asking for it to be executed.
+
+  Each task, then, must tell the scheduler what the next task in the
+  job is before terminating (this process can be automated by
+  \cmdline{schemop}\footnote{See \ref{sssec:schemop}}).
+
+  \ScheMo{} also incorporates a system to manage shared memory between
+  jobs by using mutexes.
+
+  A mutex is a dummy variable associated to a block of memory that
+  keeps track of whether or not that block of memory is being used by
+  some job. A job that wants to access that data must make a request
+  to the related mutex, with two possible outcomes:
+  \begin{enumerate}
+    \item the mutex changes state from \textit{free} to
+      \textit{busy} and the job continues its execution
+    \item the mutex remains in the \textit{busy} state and the job
+      locks until the mutex is freed
+  \end{enumerate}
+
+  To allow other jobs to use the same resources, a job must free the
+  mutex once it has finished accessing the data.
+
+  See Figure \ref{fig:schemoflow} to see a graphical representation
+  of how \ScheMo{} operates.
+
+  \textit{Note: \ScheMo{}'s management of shared resources is very
+  basic and it is not able to prevent deadlocks or other similar
+  problems related to mutexes.}
+ 
+\subsubsection{\ScheMo{} Preprocessor (\cmdline{schemop})}
+\label{sssec:schemop}
+  Even if the C++ library offers various functions and macros to
+  ease the writing of a multithreaded program, complex applications
+  still result in hard-to-read and cluttered code.
+
+  To avoid this, we developed a custom preprocessor
+  (\cmdline{schemop}) that lets the developer write a cleaner code,
+  focusing on the control flow of each job without worrying about
+  defining the various support variables and functions that make the
+  program run smoothly.
+
+  \cmdline{schemop} is written in Python and offers a list of directives%
+  \footnote{See Appendix \ref{app:schemop}} that can be used in the
+  source file in place of \ScheMo{}'s C++ macros or more complex statements.
+  
+  The preprocessor also tracks all used jobs, tasks, functions and
+  related variables, automating their definition and initialization.
+  
+  Lastly, \cmdline{schemop} allows the management of shared memory
+  by defining \textit{critical sections}, blocks of code that need
+  to access a particular resource. This way, the developer need not
+  to worry about defining, locking and unlocking mutexes since the
+  preprocessor automatically generates the right code to do that.
+  
+  It is however worthy of note that only statically defined jobs and
+  tasks can take advantage of the full capabilities of this tool,
+  since it can not reliably predict runtime behaviour. \ScheMo{} allows
+  dynamically created jobs and tasks, but mixing
+  \code{@}-directives and normal macros is an operation that
+  necessitates a clear understanding of the library and the
+  preprocessor.
+  
+  Once the source file is given to \cmdline{schemop}, the latter
+  converts it to a standard C++ source file, ready to be compiled
+  normally with \cmdline{g++} or any other C++ compiler.
+  
+  \textit{For an example of \ScheMo{}'s features, see Appendix
+  \ref{app:code}.}
+  
+\subsubsection{\ScheMo{} Profiler}
+\label{sssec:schemoprofile}
+  A deeper understanding of the structure of a \ScheMo{} program and the
+  way it is executed can help in its design and optimization.
+
+  Because of this, we created a tool (called \ScheMo{} Profiler) that can
+  analyse the program both by looking at the source code and at
+  run-time\footnote{The current C++ implementation of the profiler uses
+  the \code{ctime} and \code{cstdio} libraries, not available in all
+  platforms. Some useful information can still be gathered by using it
+  on the computer used to develop the software instead of the real
+  device.}. The result is a \code{.profile} file, a text file that is
+  both human-readable and easy to parse automatically.
+
+  \ScheMo{} Profiler isn't made of standalone programs but it is
+  a set of optional features built-in in both the \ScheMo{} Preprocessor
+  and the \ScheMo{} C++ Library.
+  
+  When used in conjunction with the \ScheMo{} Preprocessor, it:
+  \begin{itemize}
+    \item counts the number of jobs, functions, tasks and mutexes used
+    \item assigns a name and ID to each job, function and task for
+      additional analysis
+    \item builds a flow graph of each job and function
+  \end{itemize}
+
+  If the profiler features have been enabled during compilation, when
+  the resulting program is run it records in a \code{.profile} file
+  (either an already existing one or a new one) data about how
+  the scheduler executed the various parts of the program.
+  Each time the scheduler passes control to a different job, in fact, it
+  adds to the file:
+  \begin{itemize}
+    \item the ID of the currently running job
+    \item the ID of the task the job is currently on
+    \item a timestamp\footnote{\label{clock_note}Milliseconds elapsed
+    since the program was launched.} of when control is passed
+    \textit{to} the job
+    \item a timestamp\footref{clock_note} of when control is passed
+    \textit{away from} the job
+  \end{itemize}
+
+  Using this information it is possible to:
+  \begin{itemize}
+    \item reveal superflous pieces of code that are never accessed
+    \item decide whether or not it is convenient to merge or split
+    certain tasks based on their running time
+    \item identify bottlenecks in the program execution
+    \item recognise errors in the structure of the program
+    \item etc\ldots
+  \end{itemize}
+  As of yet, no memory-related profiling has been implemented.
+
+  We also created a tool called \ScheMoTeX{} (and in particular the
+  Python script \cmdline{smp2tikz}\footnote{PGF/Ti\textit{k}Z is a
+  \LaTeX{} package used in the output files to visualize the graphs})
+  that converts \ScheMo{} Profiler's \code{.profile} files in \LaTeX{}
+  \code{.tex} files, making it possible to visualize the whole program
+  and more intuitively analyse its structure. Figure
+  \ref{fig:schemoflow} and the diagrams in Appendix \ref{app:code} are
+  examples of \ScheMoTeX{}'s output.

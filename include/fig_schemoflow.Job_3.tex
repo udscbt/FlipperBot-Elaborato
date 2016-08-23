@@ -1,0 +1,131 @@
+\schemoSet{\schemoBase}{1.000000}%
+\schemoSet{\schemoRotation}{0.000000}%
+\schemoSet{\schemoScale}{\schemoBase*\schemoBase}%
+\schemoSet{\schemoUnit}{10*\schemoBase mm}%
+\schemoSet{\schemoWidth}{15mm}%
+\schemoSet{\schemoSmall}{2/3*\schemoScale}%
+\schemoSet{\schemoLine}{0.4*\schemoScale pt}%
+\schemoSet{\schemoThick}{2*\schemoLine}%
+\schemoSet[1]{\schemoText}{\rotatebox{\schemoRotation}{#1}}
+\schemoSet[1]{\schemoColour}{%
+  \ifnum#1=0 horizontal lines%
+  \else\ifnum#1=1 vertical lines%
+  \else\ifnum#1=2 north east lines%
+  \else\ifnum#1=3 north west lines%
+  \else\ifnum#1=4 grid%
+  \else\ifnum#1=5 crosshatch%
+  \else\ifnum#1=6 dots%
+  \else\ifnum#1=7 crosshatch dots%
+  \else\ifnum#1=8 fivepointed stars%
+  \else\ifnum#1=9 sixpointed stars%
+  \else\ifnum#1=10 %
+  \fi%
+  \fi%
+  \fi%
+  \fi%
+  \fi%
+  \fi%
+  \fi%
+  \fi%
+  \fi%
+  \fi%
+  \fi%
+}%
+%
+\begin{tikzpicture}
+[
+  x=\schemoUnit,
+  y=\schemoUnit,
+  transform shape,
+  rotate=-\schemoRotation,
+%
+  schemo job/.style={
+    scale=\schemoScale,
+    draw,
+    line width=\schemoThick,
+    font=\bfseries
+  },
+  schemo function/.style={
+    scale=\schemoScale,
+    draw,
+    line width=\schemoLine,
+    font=\itseries
+  },
+  schemo node/.style={
+    scale=\schemoScale,
+    draw,
+    line width=\schemoLine
+  },
+  schemo task/.style={
+    schemo node,
+    circle
+  },
+  schemo if/.style={
+    schemo node,
+    diamond,
+    font=\ttfamily
+  },
+  schemo while/.style={
+    schemo node,
+    diamond,
+    font=\ttfamily
+  },
+  schemo loop/.style={
+    schemo node,
+    diamond,
+    font=\ttfamily
+  },
+  schemo call/.style={
+    schemo node,
+    rectangle,
+    font=\ttfamily
+  },
+  schemo retstop/.style={
+    schemo node,
+    circle,
+    path picture={
+    \draw
+      (path picture bounding box.north west) -- (path picture bounding box.south east) 
+      (path picture bounding box.south west) -- (path picture bounding box.north east);
+    },
+    label={[above] \schemoText{#1}}
+  },
+  schemo stop/.style={
+    schemo retstop=STOP
+  },
+  schemo return/.style={
+    schemo retstop=RETURN
+  },
+  schemo shutdown/.style={
+    schemo node,
+    star,
+    star points=10,
+    font=\bfseries
+  },
+  schemo edge normal/.style={
+    -{Latex[scale=\schemoScale]},
+    line width=\schemoThick
+  },
+  schemo edge jump/.style={
+    dashed,
+    -{Latex[scale=\schemoScale]},
+    line width=\schemoLine
+  }
+]
+\node [schemo job] (j3) at (0,0) {\schemoText{Job 3}};
+\node [schemo task] (t13) at (2,0) {\schemoText{}};
+\node [scale=\schemoSmall, above right] at (t13.north east) {\rotatebox{\schemoRotation}{3}};
+\node [schemo task] (t14) at (4,0) {\schemoText{}};
+\node [scale=\schemoSmall, above right] at (t14.north east) {\rotatebox{\schemoRotation}{6}};
+\node [schemo task] (t15) at (6,0) {\schemoText{}};
+\node [scale=\schemoSmall, above right] at (t15.north east) {\rotatebox{\schemoRotation}{9}};
+\node [schemo task] (t16) at (8,0) {\schemoText{}};
+\node [scale=\schemoSmall, above right] at (t16.north east) {\rotatebox{\schemoRotation}{12}};
+\node [schemo stop] (t19) at (10,0) {\schemoText{}};
+\node [scale=\schemoSmall, right] at (t19.east) {\rotatebox{\schemoRotation}{}};
+\draw [schemo edge normal] (t13) to [out=0, in=180] (t14);
+\draw [schemo edge normal] (t14) to [out=0, in=180] (t15);
+\draw [schemo edge normal] (t15) to [out=0, in=180] (t16);
+\draw [schemo edge normal] (t16) to [out=0, in=180] (t19);
+
+\end{tikzpicture}

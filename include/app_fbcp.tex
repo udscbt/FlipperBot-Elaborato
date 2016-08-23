@@ -1,0 +1,350 @@
+Table \ref{table:fbcp_cmd} lists all currently supported FBCP commands.
+
+The first column contains the name with which each command is referred
+to in code (both using the C++ library and the Python module).
+The first letter indicates wether the command should be sent from the
+client (\textbf{Q}uestion) or the server in response to a previous
+command (\textbf{A}nswer).
+
+The second one shows how a packet must be written to be understood as
+the related command (the words in italic are mandatory parameters and
+should be replaced with appropriate strings). The terminating
+\textit{newline} character has been omitted for the sake of readability.
+
+The last column briefly explains how each command is used.
+
+The various commands are divided in the groups described in
+\ref{ssec:fbcp}.
+
+\def \cmddescwidth {0.3\textwidth}
+\begin{longtable}{llp{\cmddescwidth}}
+\addcaption{3}{table:fbcp_cmd}
+\\
+\textbf{Command name}
+& \textbf{Packet structure}
+& \textbf{Description}
+\\ \hline
+
+\hline
+\endhead
+
+\addcaption{3}{table:fbcp_cmd}
+\endfoot
+
+\endlastfoot
+
+\tablesection{3}{\textit{Generic}}
+
+\code{A\_ACCEPT}
+& \code{ON\_IT!}
+& Sent if the previous command was accepted and correctly handled.
+\\ \hline
+\code{A\_REFUSE}
+& \code{NOT\_NOW}
+& Sent if the previous command was not handled as requested.
+\\ \hline
+\code{A\_ERROR}
+& \code{WHAT?}
+& Sent if the previous command couldn't be understood or wasn't a
+correct FBCP packet.
+\\ \hline \hline
+
+\tablesection{3}{\textit{Network building}}
+
+\code{Q\_SINGLE\_PRESENTATION}
+& \code{I'M \variable{serial}}
+& Asks for permission to join a network. \variable{serial} is an unique
+identifier of the device\footnote{It must be in the form
+\code{FlipperBot-Board-\ldots} for boards,
+\code{FlipperBot-Robot-\ldots} for robots and
+\code{FlipperBot-Controller-\ldots} for controllers}.
+\\ \hline
+\code{Q\_MULTI\_PRESENTATION}
+& \code{WE'RE \variable{serial} \variable{friend}}
+& Asks for permission of the requesting device and another one to join
+a network. Used when already connected robots and controllers want to
+join a game network. The \variable{friend} device will have a reserved
+place in the network but will stillr need to send a
+\code{Q\_SINGLE\_PRESENTATION} to the server.
+\\ \hline
+\code{A\_GRANT\_ACCESS}
+& \code{WELCOME}
+& Sent if a request to join a network is accepted.
+\\ \hline
+\code{A\_DENY\_ACCESS}
+& \code{BUSY}
+& Sent if a request to join a network is refused. Usually because there
+are already enough devices connected.
+\\ \hline
+\code{Q\_HEARTBEAT}
+& \code{STILL\_THERE?}
+& \multirow{2}{\cmddescwidth}{
+Used to avoid timeouts.
+}
+\\ \cline{1-2}
+\code{A\_HEARTBEAT}
+& \code{YEP}
+%& see above
+\\ \hline
+\code{Q\_CLEAN}
+& \code{GOODBYE}
+& \multirow{2}{\cmddescwidth}{
+Used to disconnect a device from the network.
+}
+\\ \cline{1-2}
+\code{A\_CLEAN}
+& \code{BYE}
+%& see above
+\\ \hline
+\code{A\_REQUEST\_PRESENTATION}
+& \code{WHO?}
+& Sent if the previous command was sent without a prior proper
+connection.
+\\ \hline
+\code{Q\_CHANGE\_NET}
+& \code{MOVE\_TO \variable{net}}
+& Used by a robot to inform a connected controller of the wish to change
+network. The robot must have already sent a
+\code{Q\_MULTI\_PRESENTATION} command to the new network to reserve a
+place in the new network for the controller.
+The \variable{net} parameter must be set to the SSID of the new network.
+\\ \hline
+\code{A\_CHANGE\_ACCEPT}
+& \code{OK}
+& Sent by a controller to accept a change of network. It must then send
+a \code{Q\_SINGLE\_PRESENTATION} to the new network to effectively
+join it.
+\\ \hline
+\code{A\_CHANGE\_DENY}
+& \code{NO}
+& Sent by a controller if it isn't willing to join the new network. In
+answer to this, the robot must leave the new network (that was joined in
+combination with the controller) and then either:
+\begin{itemize}
+\item leave the old network too and rejoin the new one alone
+\item remain in the old network
+\end{itemize}
+\\ \hline \hline
+
+\tablesection{3}{\textit{Robot}}
+
+\code{Q\_MOTOR\_COMMAND}
+\footnote{\label{motcmd_note}These commands are also part of the
+  \textit{Controller} group}
+& \code{MOTOR \variable{motor} \variable{direction}}
+& Sets the direction of rotation of a specific motor%
+  \footnote{\label{param_note}See table \ref{table:fbcp_param} to
+    find available parameters}.
+\\ \hline
+\code{Q\_ROBOT\_COMMAND}\footref{motcmd_note}
+& \code{BOT \variable{direction}}
+& Sets the direction of motion of the whole robot%
+  \footref{param_note} by changing the speed of both
+  motors (not necessarily in the same way).
+\\ \hline
+\code{Q\_HIT}
+& \code{OUCH}
+& Sent when the bumper of the robot hits something.
+\\ \hline \hline
+
+\tablesection{3}{\textit{Controller}}
+
+\code{Q\_OPTION}
+& \code{OPT \variable{option} \variable{value}}
+& Sets/unsets (based on \variable{value}\footref{param_note}) an option%
+\footnotetext{\label{optmode_note}See \ref{sssec:optmode} for an
+explanation of options and modes}. For certain options, the value
+parameter can contain additional information.
+\\ \hline
+\code{A\_OPTION\_ACCEPT}
+& \code{OK}
+& Sent if the requested option was recognized and correctly set/unset.
+\\ \hline
+\code{A\_OPTION\_DENY}
+& \code{DUNNO}
+& Sent if the requested option wasn't recognized or its state couldn't
+be changed as wanted.
+\\ \hline
+\code{Q\_MODE\_SELECT}
+& \code{MODE \variable{mode}}
+& Enables a certain mode\footref{optmode_note}.
+\\ \hline
+\code{A\_MODE\_ACCEPT}
+& \code{OK}
+& Sent if the requested mode was recognised and enabled.
+\\ \hline
+\code{A\_MODE\_DENY}
+& \code{DUNNO}
+& Sent if the requested mode wasn't recognised or couldn't be enabled.
+\\ \hline
+\code{Q\_EVERYTHING\_ON}
+& \code{PRESSED}
+& Asks to set all available options.
+\\ \hline
+\code{Q\_EVERYTHING\_OFF}
+& \code{RELEASED}
+& Asks to unset all available options.
+\\ \hline
+\code{Q\_RAW\_COMMAND}
+& \code{RAW}
+& Used to send any kind of data with the assumption that the server will
+correctly handle it and use it to guide the robot. The right
+mode/options should be selected in advance.
+\\ \hline \hline
+
+\tablesection{3}{\textit{Debug}}
+
+\code{A\_DATA}
+& \code{DATA}
+& Can be used in various contexts and there isn't a specific way of
+handling it. It can contain any kind of data as optional parameter with
+the assumption that the requesting device knows how to interpret it.
+\\ \hline
+\code{A\_ALIKE}
+& \code{MAYBE \variable{command}}
+& Suggests a command similar with a similar signature to the received
+one in case the latter is not recognized. It makes recognizing typos
+easier.
+\\ \hline
+\code{Q\_LIST}
+& \code{LIST \variable{type}}
+& Requests a list of supported commands or options, depending on the
+\variable{type} parameter\textsuperscript{\ref{param_note}}. The answer
+should be a \code{A\_DATA} command with a list of comma-separated
+commands/options as optional parameter.
+\\ \hline
+\code{Q\_HELP}
+& \code{EXPLAIN \variable{command}}
+& Requests a description of how to use the command and/or what it does.
+The answer should be a \code{A\_DATA} command.
+The implementation can give a more or less detailed answer that isn't
+usually suitable for automatic parsing but is more useful for
+interactive interfaces during debugging.
+\\ \hline
+\code{Q\_LOG}
+& \code{LOG}
+& Requests the addition of some data to the server logs.
+\\
+\caption{List of supported FBCP commands}
+\label{table:fbcp_cmd}
+\end{longtable}
+
+Table \ref{table:fbcp_param} contains a list of all predefined parameter
+strings to be used in conjunction with the commands in table
+\ref{table:fbcp_cmd}.
+
+The first column contains the name with which each parameter is referred
+to in code (both using the C++ library and the Python module).
+
+The second one shows what the corresponding string is.
+
+The last column explains the meaning of the parameter.
+
+The various entries are divided based on the commands with which they
+are supposed to be used; the mandatory parameter to which the string
+refers is indicated in parenthesis.
+
+\def \pardescwidth {0.4\textwidth}
+\begin{longtable}{llp{\pardescwidth}}
+\addcaption{3}{table:fbcp_param}
+\\
+\textbf{Parameter name} & \textbf{String} & \textbf{Description} \\
+\hline
+
+\hline
+\endhead
+
+\addcaption{3}{table:fbcp_param}
+\endfoot
+
+\endlastfoot
+
+\tablesection{3}{\code{Q\_OPTION} (\variable{value})}
+
+\code{OPTION\_SET}
+& \code{ON}
+& \multirow{2}{\pardescwidth}{
+  Indicate whether the related \textit{option} must be set or unset.
+}
+\\ \cline{1-2}
+\code{OPTION\_UNSET}
+& \code{OFF}
+%& see above
+\\ \hline \hline
+
+\tablesection{3}{\code{Q\_LIST} (\variable{type})}
+
+\code{LIST\_OPT}
+& \code{OPT}
+& Used to list options.
+\\ \hline
+\code{LIST\_CMD}
+& \code{CMD}
+& Used to list commands.
+\\ \hline \hline
+
+\tablesection{3}{\code{Q\_MOTOR\_COMMAND} (\variable{motor})}
+
+\code{MOTOR\_LEFT}
+& \code{ML}
+& Indicates that the left motor speed must be changed.
+\\ \hline
+\code{MOTOR\_RIGHT}
+& \code{MR}
+& Indicates that the right motor speed must be changed.
+\\ \hline
+\code{MOTOR\_BOTH}
+& \code{MLR}
+& Indicates that both motors speed must be changed to the same value.
+\\ \hline \hline
+
+\tablesection{3}{\code{Q\_MOTOR\_COMMAND} (\variable{direction})
+  and \code{Q\_ROBOT\_COMMAND} (\variable{direction})}
+
+\code{DIRECTION\_FORWARD}
+& \code{FW}
+& Changes the speed of the motor/motors to move the robot forwards.
+\\ \hline
+\code{DIRECTION\_BACKWARD}
+& \code{BW}
+& Changes the speed of the motor/motors to move the robot backwards.
+\\ \hline
+\code{DIRECTION\_STOP}
+& \code{STOP}
+& Stops the motor/motors.
+
+\\ \hline \hline
+
+\tablesection{3}{\code{Q\_ROBOT\_COMMAND} (\variable{direction})}
+
+\code{DIRECTION\_FORWARD\_LEFT}
+& \code{FL}
+& Changes the motors speed to make the robot turn left while moving
+  forwards.
+\\ \hline
+\code{DIRECTION\_FORWARD\_RIGHT}
+& \code{FR}
+& Changes the motors speed to make the robot turn right while moving
+  forwards.
+\\ \hline
+\code{DIRECTION\_BACKWARD\_LEFT}
+& \code{BL}
+& Changes the motors speed to make the robot turn left while moving
+  backwards.
+\\ \hline
+\code{DIRECTION\_BACKWARD\_RIGHT}
+& \code{BR}
+& Changes the motors speed to make the robot turn right while moving
+  backwards.
+\\ \hline
+\code{DIRECTION\_LEFT}
+& \code{SL}
+& Changes the motors speed to make the robot turn left in place.
+\\ \hline
+\code{DIRECTION\_RIGHT}
+& \code{SR}
+& Changes the motors speed to make the robot turn right in place.
+\\
+\caption{List of standard FBCP parameters}
+\label{table:fbcp_param}
+\end{longtable}

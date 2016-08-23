@@ -1,0 +1,8 @@
+\newcommand{\schemoSet}[3][0]{%
+  \providecommand{#2}{}%
+  \renewcommand{#2}[#1]{#3}%
+}
+\newcommand{\schemoSetDir}[1]{\schemoSet{\schemoDir}{#1}}
+\schemoSetDir{.}
+\newcommand{\schemoSetName}[1]{\schemoSet{\schemoName}{\schemoDir/#1}}
+\schemoSetName{schemo}

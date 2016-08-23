@@ -1,0 +1,94 @@
+In order to create the above networks and share data through them,
+all devices must use a common language to communicate.
+For this reason, we created the FlipperBot Communication Protocol
+(FBCP for short).
+
+It is a plain-text, application-level protocol in which each packet
+is made of:
+\begin{itemize}
+  \item a command identifier
+  \item zero or more\footnote{The exact number is dependent on the
+    command} mandatory parameters separated by spaces
+  \item trailing data that can contain optional parameters but is
+    often ignored
+  \item a newline character (\texttt{0x0A}) to end the packet
+\end{itemize}
+
+The various FBCP commands are divided in the following groups:
+\begin{itemize}
+  \item \textbf{generic}: common commands that can be used with
+    other groups of commands
+  \item \textbf{network building}: manages requests of permission to
+    join a network and grant/denial of it, in addition to changes of
+    network topology
+  \item \textbf{robot} and \textbf{controller}: commands specific
+    for communication with robots and controllers
+  \item \textbf{debug}: utilities to thelp in the development of new
+    FBCP-compatible software
+\end{itemize}
+
+To make the use of this protocol as easy as possible, we developed
+a C++ library and a Python module that implement it.
+
+These tools, however, are only concerned with the creation and
+parsing of correct FBCP packets, completely ignoring how the device
+should react to them. In fact, a program that uses FBCP need not
+implement all supported commands but only the ones it is supposed to
+use, giving an error for everything else.
+
+The C++ library and the Python module are also built so to be easily
+extendible, making it simple to add new commands to the protocol.
+
+\textit{A full list of currently supported commands with a short
+description of each can be found in Appendix \ref{app:fbcp}.}
+
+\subsubsection{Controller modes and options}
+  \label{sssec:optmode}
+  Given the wide range of possible controllers that could be used
+  with this game (the ones described in this text being only a part
+  of them), it can be useful to also have different ways of managing
+  the sharing of information between controller and server (whether
+  it's a robot or a board).
+
+  To this end, it's possible to set or unset certain
+  \textit{options} for the connection, flags that indicate if
+  certain modifications must be applied to the normal way of
+  communicating. As an example, for the accelerometer-based
+  controller described in \ref{ssec:accel}, an useful option could
+  be one that removes the need for the controller to send a command
+  to make the robot go forwards, having the server assume that that
+  is the desired direction when no command is sent.
+
+  Other than being set or unset, options can, if needed, take a
+  particular value, making them more generic and versatile. There
+  could be, for example, an option called \texttt{timeout} that
+  contains information about how long the server should wait for a
+  command before considering the controller disconnected.
+
+  In the case that there are many options to be set or unset for the
+  correct use of a controller, it's easier to use \textit{modes}. A
+  mode is nothing more than a predefined collection of options, with
+  their set/unset states (and their additional values if needed)
+  already decided.
+
+  Enabling a mode is in no way different from setting the individual
+  options one by one from a functionality point of view, but:
+  \begin{itemize}
+  \item it is quicker
+  \item it requires fewer package exchanges
+  \item it makes it possible to modify the options needed by the
+    server to make a particular controller work without editing the
+    code of the controller (if the name of the mode doesn't change)
+  \end{itemize}
+
+  A server isn't required to support all possible modes and options,
+  so a controller should:
+  \begin{enumerate}
+  \item try to select all suitable modes, from the one that allows
+    the best performance to the worst
+  \item try to set the necessary options one by one, if the previous
+    point failed
+  \item fall back to the standard way of communicating (with direct
+    robot or motor commands) if the available options aren't
+    sufficient
+  \end{enumerate}
