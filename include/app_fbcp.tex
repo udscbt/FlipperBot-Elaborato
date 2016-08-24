@@ -1,4 +1,4 @@
-Table \ref{table:fbcp_cmd} lists all currently supported FBCP commands.
+\autoref{table:fbcp_cmd} lists all currently supported FBCP commands.
 
 The first column contains the name with which each command is referred
 to in code (both using the C++ library and the Python module).
@@ -14,7 +14,7 @@ should be replaced with appropriate strings). The terminating
 The last column briefly explains how each command is used.
 
 The various commands are divided in the groups described in
-\ref{ssec:fbcp}.
+\autoref{ssec:fbcp}.
 
 \def \cmddescwidth {0.3\textwidth}
 \begin{longtable}{llp{\cmddescwidth}}
@@ -133,7 +133,7 @@ combination with the controller) and then either:
   \textit{Controller} group}
 & \code{MOTOR \variable{motor} \variable{direction}}
 & Sets the direction of rotation of a specific motor%
-  \footnote{\label{param_note}See table \ref{table:fbcp_param} to
+  \footnote{\label{param_note}See \autoref{table:fbcp_param} to
     find available parameters}.
 \\ \hline
 \code{Q\_ROBOT\_COMMAND}\footref{motcmd_note}
@@ -152,7 +152,7 @@ combination with the controller) and then either:
 \code{Q\_OPTION}
 & \code{OPT \variable{option} \variable{value}}
 & Sets/unsets (based on \variable{value}\footref{param_note}) an option%
-\footnotetext{\label{optmode_note}See \ref{sssec:optmode} for an
+\footnotetext{\label{optmode_note}See \autoref{sssec:optmode} for an
 explanation of options and modes}. For certain options, the value
 parameter can contain additional information.
 \\ \hline
@@ -229,9 +229,8 @@ interactive interfaces during debugging.
 \label{table:fbcp_cmd}
 \end{longtable}
 
-Table \ref{table:fbcp_param} contains a list of all predefined parameter
-strings to be used in conjunction with the commands in table
-\ref{table:fbcp_cmd}.
+\autoref{table:fbcp_param} contains a list of all predefined parameter
+strings to be used in conjunction with the commands in \autoref{table:fbcp_cmd}.
 
 The first column contains the name with which each parameter is referred
 to in code (both using the C++ library and the Python module).

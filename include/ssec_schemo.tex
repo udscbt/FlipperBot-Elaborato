@@ -93,7 +93,7 @@ to modern schedulers.
 
   Each task, then, must tell the scheduler what the next task in the
   job is before terminating (this process can be automated by
-  \cmdline{schemop}\footnote{See \ref{sssec:schemop}}).
+  \cmdline{schemop}\footnote{See \autoref{sssec:schemop}}).
 
   \ScheMo{} also incorporates a system to manage shared memory between
   jobs by using mutexes.
@@ -112,7 +112,7 @@ to modern schedulers.
   To allow other jobs to use the same resources, a job must free the
   mutex once it has finished accessing the data.
 
-  See Figure \ref{fig:schemoflow} to see a graphical representation
+  See \autoref{fig:schemoflow} to see a graphical representation
   of how \ScheMo{} operates.
 
   \textit{Note: \ScheMo{}'s management of shared resources is very
@@ -132,7 +132,7 @@ to modern schedulers.
   program run smoothly.
 
   \cmdline{schemop} is written in Python and offers a list of directives%
-  \footnote{See Appendix \ref{app:schemop}} that can be used in the
+  \footnote{See \autoref{app:schemop}} that can be used in the
   source file in place of \ScheMo{}'s C++ macros or more complex statements.
   
   The preprocessor also tracks all used jobs, tasks, functions and
@@ -156,8 +156,7 @@ to modern schedulers.
   converts it to a standard C++ source file, ready to be compiled
   normally with \cmdline{g++} or any other C++ compiler.
   
-  \textit{For an example of \ScheMo{}'s features, see Appendix
-  \ref{app:code}.}
+  \textit{For an example of \ScheMo{}'s features, see \autoref{app:code}.}
   
 \subsubsection{\ScheMo{} Profiler}
 \label{sssec:schemoprofile}
@@ -217,6 +216,6 @@ to modern schedulers.
   \LaTeX{} package used in the output files to visualize the graphs})
   that converts \ScheMo{} Profiler's \code{.profile} files in \LaTeX{}
   \code{.tex} files, making it possible to visualize the whole program
-  and more intuitively analyse its structure. Figure
-  \ref{fig:schemoflow} and the diagrams in Appendix \ref{app:code} are
-  examples of \ScheMoTeX{}'s output.
+  and more intuitively analyse its structure. \autoref{fig:schemoflow}
+  and the diagrams in \autoref{app:code} are examples of
+  \ScheMoTeX{}'s output.
