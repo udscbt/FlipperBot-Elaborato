@@ -1,0 +1,44 @@
+\newsavebox{\tikzboard}
+\sbox{\tikzboard}{\hbox{\import{tikz_board}}}
+\newsavebox{\tikzcontr}
+\sbox{\tikzcontr}{\hbox{\import{tikz_controller}}}
+
+\tikzset{
+  network/robot/.style={
+    label={center:
+      \raisebox{1cm}{
+        \includegraphics[width=2cm, height=2cm]{images/esper_silouette.pdf}
+      }
+    },
+    minimum width=2cm,
+    minimum height=1.5cm,
+    %~ draw, green,
+    circle
+  },
+  network/controller/.style={
+    label={center:
+      \raisebox{0.4cm}{
+        \usebox{\tikzcontr}
+      }
+    },
+    minimum width=1cm,
+    minimum height=1.5cm,
+    rectangle,
+    %~ draw, fill=green,
+  },
+  network/board/.style={
+    execute at begin node={\usebox{\tikzboard}},
+    %~ draw, green,
+  },
+  network/connection/.style={
+    -{Triangle[scale=0.5]},
+    line width = 5pt,
+    shorten <=5pt
+  },
+  network/single connection/.style={
+    network/connection
+  },
+  network/double connection/.style={
+    bend left
+  }
+}

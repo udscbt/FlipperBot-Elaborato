@@ -1,3 +1,4 @@
+\import{style_network}
 FlipperBot is made of different devices that need to communicate
 among themselves and for this reason they have to be connected in a
 suitable network. In particular, the devices can be connected in
@@ -6,8 +7,12 @@ standalone.
 
 \subsubsection{Standard Game Network (SSID starting with
   \code{FlipperBot-Board-})}
-  \begin{figure}
-    \import{fig_netgame}
+  \begin{figure}[htbp]
+    \centering
+    \resizebox{0.7\textwidth}{!}{\import{fig_netgame}}
+
+    \caption{Standard Game Network}
+    \label{fig:gamenet}
   \end{figure}
   In game mode, the board acts as access point for all other devices
   and all communications go through it.
@@ -25,13 +30,24 @@ standalone.
   Another client-server connection exists between the robot and the
   board to allow the transmission of impact information.
 
+  See Figure \ref{fig:gamenet}
+
 \subsubsection{Standalone Network (SSID starting with
   \code{FlipperBot-Robot-})}
+  \begin{figure}[htbp]
+    \centering
+    \resizebox{0.7\textwidth}{!}{\import{fig_netrobot}}
+
+    \caption{Standalone Network}
+    \label{fig:robotnet}
+  \end{figure}
   When no boards are available for connection, a robot can become an
   access point to create a new network.
 
   A single controller can join this network and create a
   client-server connection with the robot, directly controlling it.
+  
+  See Figure \ref{fig:robotnet}
 
 \subsubsection{Isolated Network}
   In the case in which neither boards nor robots are available, the

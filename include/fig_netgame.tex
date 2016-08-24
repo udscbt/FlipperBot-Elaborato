@@ -1,0 +1,43 @@
+\begin{tikzpicture}
+\node [network/board] (b) at (0,0) {};
+
+\def\distance{6cm}
+\def\angles{0}
+\def\anglee{360}
+\def\numrob{2}
+
+\def\baseang{((\anglee-\angles)/(2*\numrob))}
+\def\offsetang{(\baseang/2)+\angles}
+
+\foreach \index in {1,...,\numrob}
+{
+  \node [network/robot] (r\index) at (
+    {(2*\index-2)*\baseang+\offsetang}
+  :\distance) {};
+  \draw [network/connection] (r\index) to[network/double connection] (b);
+  \draw [network/connection] (b) to[network/double connection] (r\index);
+  
+  \node [network/controller] (c\index) at (
+    {(2*\index-1)*\baseang+\offsetang}
+  :\distance) {};
+  \draw [network/connection] (c\index) to[network/double connection] (b);
+  \draw [network/connection] (b) to[network/double connection] (c\index);
+}
+
+%~ \foreach \index in {1,...,\numrob}
+%~ {
+  %~ \pgfmathsetmacro{\result}{(2*\index-2)*\baseang+\offsetang}
+  %~ \node (r\index) at (
+    %~ \result
+  %~ :\distance) {\result};
+  %~ \draw (r\index) to[network/double connection] (b);
+  %~ \draw (b) to[network/double connection] (r\index);
+  
+  %~ \pgfmathsetmacro{\result}{(2*\index-1)*\baseang+\offsetang}
+  %~ \node (c\index) at (
+    %~ \result
+  %~ :\distance) {\result};
+  %~ \draw (c\index) to[network/double connection] (b);
+  %~ \draw (b) to[network/double connection] (c\index);
+%~ }
+\end{tikzpicture}

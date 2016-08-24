@@ -1,0 +1,33 @@
+\begin{tikzpicture}[
+  totem/.style={
+    draw,
+    circle,
+    minimum width=0.5cm,
+    preaction={fill=white},
+    pattern=vertical lines
+  },
+  board out/.style={
+    draw,
+    rectangle,
+    minimum width=3.5cm,
+    minimum height=3.5cm,
+    line width=0pt,
+    pattern=crosshatch
+  },
+  board in/.style={
+    draw,
+    rectangle,
+    minimum width=3cm,
+    minimum height=3cm,
+    line width=0pt,
+    fill=black
+  }
+]
+\node [board out] at (1cm,1cm) {};
+\node [board in] at (1cm,1cm) {};
+\node [totem] at (0,0) {};
+\node [totem] at (0,2cm) {};
+\node [totem] at (1cm,1cm) {};
+\node [totem] at (2cm,0) {};
+\node [totem] at (2cm,2cm) {};
+\end{tikzpicture}%

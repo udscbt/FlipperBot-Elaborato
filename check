@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+./standalone.py $1
+pdflatex tmp.tex && $PDF_EDITOR tmp.pdf

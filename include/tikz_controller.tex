@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+\node [
+  draw,
+  rectangle,
+  minimum width=1cm,
+  minimum height=0.5cm,
+  fill=black,
+] (box) at (0.5cm,0) {};
+
+\node [
+  draw,
+  circle,
+  minimum width=0.5cm,
+  fill=black,
+] (ball) at (0.5cm, 0.8cm) {};
+
+\draw [
+  >={Latex[width=0.6cm, length=0.3cm]},
+  >-,
+  shorten <=-0.05cm,
+  line width=0.1cm
+] (box.north) -- (ball.center);
+
+\end{tikzpicture}%
