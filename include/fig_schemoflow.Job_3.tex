@@ -49,7 +49,7 @@
     scale=\schemoScale,
     draw,
     line width=\schemoLine,
-    font=\itseries
+    font=\itshape
   },
   schemo node/.style={
     scale=\schemoScale,
@@ -119,13 +119,10 @@
 \node [scale=\schemoSmall, above right] at (t14.north east) {\rotatebox{\schemoRotation}{6}};
 \node [schemo task] (t15) at (6,0) {\schemoText{}};
 \node [scale=\schemoSmall, above right] at (t15.north east) {\rotatebox{\schemoRotation}{9}};
-\node [schemo task] (t16) at (8,0) {\schemoText{}};
-\node [scale=\schemoSmall, above right] at (t16.north east) {\rotatebox{\schemoRotation}{12}};
-\node [schemo stop] (t19) at (10,0) {\schemoText{}};
-\node [scale=\schemoSmall, right] at (t19.east) {\rotatebox{\schemoRotation}{}};
+\node [schemo stop] (t16) at (8,0) {\schemoText{}};
+\node [scale=\schemoSmall, right] at (t16.east) {\rotatebox{\schemoRotation}{12}};
 \draw [schemo edge normal] (t13) to [out=0, in=180] (t14);
 \draw [schemo edge normal] (t14) to [out=0, in=180] (t15);
 \draw [schemo edge normal] (t15) to [out=0, in=180] (t16);
-\draw [schemo edge normal] (t16) to [out=0, in=180] (t19);
 
 \end{tikzpicture}

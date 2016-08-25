@@ -352,7 +352,7 @@ The lid of the shell is made up of two parts:
 \end{itemize}
 The joystick is secured to the fixed lid with screws.
 
-\subsubsection[Electric part]{Electric part \footnote{For the electric scheme, see \autoref{app:circuit}} \footnote{For implementation information, see \autoref{sec:software} and \autoref{app:code}}}
+\subsubsection[Electric part]{Electric part \footnote{For the electric scheme, see \autoref{app:circuit}; for implementation information, see \autoref{sec:software} and \autoref{app:code}}}
 Requirements of this part are: 
 \begin{itemize}
 \item provide power;
@@ -543,7 +543,7 @@ These processes include:
 \item management of sound effects\footnote {See \autoref{app:noise}} (when connected to output).
 
 \end{itemize}
-The implementation needed in this process is extensive and so we describe in a separate chapter\footnote{ See \autoref{sec:Software}}.
+The implementation needed in this process is extensive and so we describe in a separate chapter\footnote{ See \autoref{sec:software}}.
 Battery pack, RPi and circuitry are secured into their positions by screws and metal bands. All pieces contain the basis for the mating with the totems (described in the totem section).
 
 The board also provides some boundaries to prevent the robot from falling off the top. They come in the form of wooden planks (5cm wide) with hinges that allow them to be folded and stored. They are secured to the top layer by wooden nails as well.
@@ -613,7 +613,7 @@ On the upper rim of the core three LEDs are positioned in the upper half of the 
 LEDs sets signal the totem that is active in that moment, and blink when the target is hit. The target blinks faster and faster as time left runs out. In the menu mode, totems are lit in a circle, waiting for the user to push the \textquotedblleft everything button\textquotedblright.
 
 Lighting is controlled by the board onto which they are plugged, so totems do not need complex circuitry. The electronic part includes the contacts for the switches and LEDs (which are lighted up by RPi through a simple pull-up resistor) and power supply.
-\footnote{For the electrical scheme, see \autoref{circuit}}
+\footnote{For the electrical scheme, see \autoref{app:circuit}}
 \\
 The choice to defer the control of the lighting to the board is preferable for:
 \begin{itemize}
@@ -667,7 +667,7 @@ On the other hand, this development is potentially very interesting, since the c
 \end{figure}
 
 \section{Software}
-\label{sec:Software}
+\label{sec:software}
 \input{\includeDir/sec_software.tex}
 
 \chapter{Method Evaluation}
@@ -809,10 +809,12 @@ Thanks also to Greta, Giada and Giammarco, who contributed to give voice to ESPe
 Finally, we would like to thank all those people that started doubting our own existence during the months dedicated to the FlipperBot experience. Thank you, your patience was priceless.
 
 \begin{appendices}
+
 \chapter{Circuits and Electric Schemes}
 \label{app:circuit}
 
 \chapter{External Resources}
+\label{app:external}
 
 \section{Raspberry Pi (RPi)}
 \label{app:RPi}

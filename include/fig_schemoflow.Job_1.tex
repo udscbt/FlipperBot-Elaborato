@@ -49,7 +49,7 @@
     scale=\schemoScale,
     draw,
     line width=\schemoLine,
-    font=\itseries
+    font=\itshape
   },
   schemo node/.style={
     scale=\schemoScale,
@@ -123,15 +123,12 @@
 \node [scale=\schemoSmall, above right] at (t4.north east) {\rotatebox{\schemoRotation}{15}};
 \node [schemo task, pattern=\schemoColour{1}] (t5) at (10,0) {\schemoText{\faUnlockAlt}};
 \node [scale=\schemoSmall, above right] at (t5.north east) {\rotatebox{\schemoRotation}{17}};
-\node [schemo task] (t6) at (12,0) {\schemoText{}};
-\node [scale=\schemoSmall, above right] at (t6.north east) {\rotatebox{\schemoRotation}{18}};
-\node [schemo stop] (t17) at (14,0) {\schemoText{}};
-\node [scale=\schemoSmall, right] at (t17.east) {\rotatebox{\schemoRotation}{}};
+\node [schemo stop] (t6) at (12,0) {\schemoText{}};
+\node [scale=\schemoSmall, right] at (t6.east) {\rotatebox{\schemoRotation}{18}};
 \draw [schemo edge normal] (t1) to [out=0, in=180] (t2);
 \draw [schemo edge normal] (t2) to [out=0, in=180] (t3);
 \draw [schemo edge normal] (t3) to [out=0, in=180] (t4);
 \draw [schemo edge normal] (t4) to [out=0, in=180] (t5);
 \draw [schemo edge normal] (t5) to [out=0, in=180] (t6);
-\draw [schemo edge normal] (t6) to [out=0, in=180] (t17);
 
 \end{tikzpicture}
