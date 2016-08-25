@@ -1,0 +1,10 @@
+**/*.aux
+**/*.log
+**/*.bbl
+**/*.blg
+**/*.toc
+**/*.out
+**/*.dvi
+**/*.pdf
+!/images/esper_silouette.pdf
+**/__pycache__/
