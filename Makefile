@@ -2,7 +2,7 @@ pdf: ElaboratoFinale.tex ElaboratoFinale.bbl include/
 	pdflatex -shell-escape ElaboratoFinale.tex
 
 ElaboratoFinale.bbl: ElaboratoFinale.tex biblio.bib
-	pdflatex -shell-escape ElaboratoFinale
+	pdflatex ElaboratoFinale
 	bibtex ElaboratoFinale
 
 clean:

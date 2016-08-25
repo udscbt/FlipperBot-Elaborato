@@ -6,5 +6,6 @@
 **/*.out
 **/*.dvi
 **/*.pdf
-!/images/esper_silouette.pdf
+!/img/esper_silouette.pdf
+!ElaboratoFinale.pdf
 **/__pycache__/
