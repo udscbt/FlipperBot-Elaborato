@@ -6,10 +6,15 @@
 %~ \usepackage[T1]{fontenc} % Pretty underscore
 \usepackage{footmisc} % Multiple references to same footnote
 \usepackage[labelfont=bf,parindent=1em]{caption} % Prettier caption
+\usepackage{fancyvrb} % To display code
 
+% ScheMoTeX preamble
 \import{schemotex.utils}
 \schemoSetDir{\includeDir}
 \import{schemotex.preamble.full}
+
+% Code preamble
+\import{codestyle}
 
 \usepackage{hyperref} % includes \autoref
 

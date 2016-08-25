@@ -1,0 +1,84 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}schemo.h\PYZdq{}}
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}fbcp.common.h\PYZdq{}}
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}FBNet.h\PYZdq{}}
+
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZlt{}ESP8266WiFi.h\PYZgt{}}
+
+\PY{k}{typedef} \PY{k+kt}{unsigned} \PY{k+kt}{char} \PY{n}{byte}\PY{p}{;}
+
+\PY{k}{const} \PY{k+kt}{unsigned} \PY{k+kt}{char} \PY{n}{LED}     \PY{o}{=} \PY{l+m+mi}{15}\PY{p}{;} \PY{c+c1}{//RED}
+
+\PY{n}{WiFiClient} \PY{n}{sockOut}\PY{p}{;}
+\PY{n}{WiFiServer} \PY{n+nf}{server}\PY{p}{(}\PY{n}{FBNet}\PY{o}{:}\PY{o}{:}\PY{n}{PORT}\PY{p}{)}\PY{p}{;}
+
+\PY{k+kt}{bool} \PY{n}{hit} \PY{o}{=} \PY{n+nb}{false}\PY{p}{;}
+\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string} \PY{n}{hitCmd}\PY{p}{;}
+\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string} \PY{n}{kalCmd}\PY{p}{;}
+
+\PY{k}{typedef} \PY{k}{enum}
+\PY{p}{\PYZob{}}
+  \PY{n}{READ\PYZus{}TIMEOUT}\PY{p}{,}
+  \PY{n}{READ\PYZus{}SUCCESS}\PY{p}{,}
+  \PY{n}{READ\PYZus{}FAIL}
+\PY{p}{\PYZcb{}} \PY{n}{READ\PYZus{}RESULT}\PY{p}{;}
+
+\PY{err}{@}\PY{n}{DECLARE}
+
+\PY{err}{@}\PY{n}{FUNCTION}\PY{p}{(}\PY{n}{read\PYZus{}command}\PY{p}{)}
+\PY{err}{@}\PY{n}{PARAM}\PY{p}{(}\PY{n+nl}{sock}\PY{p}{:}\PY{n}{WiFiClient}\PY{o}{*}\PY{p}{)}
+\PY{err}{@}\PY{n}{PARAM}\PY{p}{(}\PY{n+nl}{cmd}\PY{p}{:}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{COMMAND\PYZus{}LINE}\PY{o}{*}\PY{p}{)}
+\PY{err}{@}\PY{n}{PARAM}\PY{p}{(}\PY{n+nl}{timeout}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
+\PY{err}{@}\PY{n}{RETURN}\PY{p}{(}\PY{n}{READ\PYZus{}RESULT}\PY{p}{)}
+\PY{p}{\PYZob{}}
+  \PY{err}{@}\PY{n}{MEMORY}
+  \PY{p}{\PYZob{}}
+    \PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n+nl}{msg}\PY{p}{:}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string}\PY{p}{)}
+    \PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n+nl}{t}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
+  \PY{p}{\PYZcb{}}  
+  
+  \PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}\PY{p}{;}
+  \PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{=} \PY{n}{millis}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+  \PY{err}{@}\PY{n}{WHILE} \PY{p}{(}\PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{err}{@}\PY{n}{PARAM}\PY{p}{(}\PY{n}{timeout}\PY{p}{)}\PY{p}{)}
+  \PY{p}{\PYZob{}}
+    \PY{k+kt}{int} \PY{n}{nc} \PY{o}{=} \PY{err}{@}\PY{n}{PARAM}\PY{p}{(}\PY{n}{sock}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{available}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+    \PY{k}{for} \PY{p}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{nc}\PY{p}{;} \PY{o}{+}\PY{o}{+}\PY{n}{i}\PY{p}{)}
+    \PY{p}{\PYZob{}}
+      \PY{k+kt}{char} \PY{n}{c} \PY{o}{=} \PY{err}{@}\PY{n}{PARAM}\PY{p}{(}\PY{n}{sock}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+      \PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)} \PY{o}{+}\PY{o}{=} \PY{n}{c}\PY{p}{;}
+      
+      \PY{k}{if} \PY{p}{(}\PY{n}{c} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}n\PYZsq{}} \PY{n}{or} \PY{n}{c} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}0\PYZsq{}}\PY{p}{)}
+      \PY{p}{\PYZob{}}
+        \PY{err}{@}\PY{n}{BREAK}
+      \PY{p}{\PYZcb{}}
+    \PY{p}{\PYZcb{}}
+  \PY{p}{\PYZcb{}}
+  
+  \PY{n}{Serial}\PY{p}{.}\PY{n}{print}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Received: \PYZsq{}}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+  \PY{n}{Serial}\PY{p}{.}\PY{n}{print}\PY{p}{(}\PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+  \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+  
+  \PY{err}{@}\PY{n}{IF} \PY{p}{(}\PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{err}{@}\PY{n}{PARAM}\PY{p}{(}\PY{n}{timeout}\PY{p}{)}\PY{p}{)}
+  \PY{p}{\PYZob{}}
+    \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Timeout}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+    \PY{err}{@}\PY{n}{RETURN}\PY{p}{(}\PY{n}{READ\PYZus{}TIMEOUT}\PY{p}{)}\PY{p}{;}
+  \PY{p}{\PYZcb{}}
+  
+  \PY{err}{@}\PY{n}{IF} \PY{p}{(}\PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{[}\PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{.}\PY{n}{length}\PY{p}{(}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}0\PYZsq{}}\PY{p}{)}
+  \PY{p}{\PYZob{}}
+    \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Remote host said something REALLY strange :S}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+    \PY{err}{@}\PY{n}{RETURN}\PY{p}{(}\PY{n}{READ\PYZus{}FAIL}\PY{p}{)}\PY{p}{;}
+  \PY{p}{\PYZcb{}}
+  
+  \PY{err}{@}\PY{n}{RETURN}\PY{p}{(}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{parseCommand}\PY{p}{(}\PY{err}{@}\PY{n}{VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{,} \PY{o}{*}\PY{err}{@}\PY{n}{PARAM}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{)}\PY{o}{?}\PY{n+nl}{READ\PYZus{}SUCCESS}\PY{p}{:}\PY{n}{READ\PYZus{}FAIL}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n}{setup}\PY{p}{(}\PY{p}{)}
+\PY{p}{\PYZob{}}
+  \PY{err}{@}\PY{n}{INIT}
+  \PY{err}{@}\PY{n}{SCHEDULE\PYZus{}ALL}
+  \PY{n}{schemo}\PY{o}{:}\PY{o}{:}\PY{n}{start\PYZus{}cycle}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n}{loop}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\end{Verbatim}
