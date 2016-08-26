@@ -3,12 +3,26 @@
 \PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}fbcp.common.h\PYZdq{}}
 \PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}FBNet.h\PYZdq{}}
 \PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZlt{}ESP8266WiFi.h\PYZgt{}}
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}ssidheap.h\PYZdq{}}
+
+\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial}\PY{p}{;}
+\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string} \PY{n}{ssid}\PY{p}{;}
+
+\PY{n}{WiFiClient} \PY{n}{sockOut}\PY{p}{;}
+
+\PY{k}{enum}
+\PY{p}{\PYZob{}}
+  \PY{n}{MODE\PYZus{}IDLE}\PY{p}{,}
+  \PY{n}{MODE\PYZus{}CONNECTING}\PY{p}{,}
+  \PY{n}{MODE\PYZus{}GAME}\PY{p}{,}
+  \PY{n}{MODE\PYZus{}STANDALONE}
+\PY{p}{\PYZcb{}} \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{;}
 
 \PY{k}{typedef} \PY{k}{enum}
 \PY{p}{\PYZob{}}
- \PY{n}{READ\PYZus{}TIMEOUT}\PY{p}{,}
- \PY{n}{READ\PYZus{}SUCCESS}\PY{p}{,}
- \PY{n}{READ\PYZus{}FAIL}
+  \PY{n}{READ\PYZus{}TIMEOUT}\PY{p}{,}
+  \PY{n}{READ\PYZus{}SUCCESS}\PY{p}{,}
+  \PY{n}{READ\PYZus{}FAIL}
 \PY{p}{\PYZcb{}} \PY{n}{READ\PYZus{}RESULT}\PY{p}{;}
 
 \PY{k}{@DECLARE}
@@ -19,176 +33,145 @@
 \PY{k}{@PARAM}\PY{p}{(}\PY{n+nl}{timeout}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
 \PY{k}{@RETURN}\PY{p}{(}\PY{n}{READ\PYZus{}RESULT}\PY{p}{)}
 \PY{p}{\PYZob{}}
- \PY{k}{@MEMORY}
- \PY{p}{\PYZob{}}
-  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{msg}\PY{p}{:}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string}\PY{p}{)}
-  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{t}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
- \PY{p}{\PYZcb{}} 
- 
- \PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}\PY{p}{;}
- \PY{k}{@VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{=} \PY{n}{millis}\PY{p}{(}\PY{p}{)}\PY{p}{;}
- \PY{k}{@WHILE} \PY{p}{(}\PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{timeout}\PY{p}{)}\PY{p}{)}
- \PY{p}{\PYZob{}}
-  \PY{k+kt}{int} \PY{n}{nc} \PY{o}{=} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{sock}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{available}\PY{p}{(}\PY{p}{)}\PY{p}{;}
-  \PY{k}{for} \PY{p}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{nc}\PY{p}{;} \PY{o}{+}\PY{o}{+}\PY{n}{i}\PY{p}{)}
+  \PY{k}{@MEMORY}
   \PY{p}{\PYZob{}}
-   \PY{k+kt}{char} \PY{n}{c} \PY{o}{=} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{sock}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{;}
-   \PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)} \PY{o}{+}\PY{o}{=} \PY{n}{c}\PY{p}{;}
-   
-   \PY{k}{if} \PY{p}{(}\PY{n}{c} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}n\PYZsq{}} \PY{n}{or} \PY{n}{c} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}0\PYZsq{}}\PY{p}{)}
-   \PY{p}{\PYZob{}}
-    \PY{k}{@BREAK}
-   \PY{p}{\PYZcb{}}
+    \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{msg}\PY{p}{:}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string}\PY{p}{)}
+    \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{t}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
+  \PY{p}{\PYZcb{}}  
+  
+  \PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}\PY{p}{;}
+  \PY{k}{@VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{=} \PY{n}{millis}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+  \PY{k}{@WHILE} \PY{p}{(}\PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{timeout}\PY{p}{)}\PY{p}{)}
+  \PY{p}{\PYZob{}}
+    \PY{k+kt}{int} \PY{n}{nc} \PY{o}{=} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{sock}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{available}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+    \PY{k}{for} \PY{p}{(}\PY{k+kt}{int} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{nc}\PY{p}{;} \PY{o}{+}\PY{o}{+}\PY{n}{i}\PY{p}{)}
+    \PY{p}{\PYZob{}}
+      \PY{k+kt}{char} \PY{n}{c} \PY{o}{=} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{sock}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+      \PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)} \PY{o}{+}\PY{o}{=} \PY{n}{c}\PY{p}{;}
+      
+      \PY{k}{if} \PY{p}{(}\PY{n}{c} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}n\PYZsq{}} \PY{n}{or} \PY{n}{c} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}0\PYZsq{}}\PY{p}{)}
+      \PY{p}{\PYZob{}}
+        \PY{k}{@BREAK}
+      \PY{p}{\PYZcb{}}
+    \PY{p}{\PYZcb{}}
   \PY{p}{\PYZcb{}}
- \PY{p}{\PYZcb{}}
- 
- \PY{k}{@IF} \PY{p}{(}\PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{timeout}\PY{p}{)}\PY{p}{)}
- \PY{p}{\PYZob{}}
-  \PY{k}{@RETURN}\PY{p}{(}\PY{n}{READ\PYZus{}TIMEOUT}\PY{p}{)}\PY{p}{;}
- \PY{p}{\PYZcb{}}
- 
- \PY{k}{@IF} \PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{[}\PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{.}\PY{n}{length}\PY{p}{(}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}0\PYZsq{}}\PY{p}{)}
- \PY{p}{\PYZob{}}
-  \PY{k}{@RETURN}\PY{p}{(}\PY{n}{READ\PYZus{}FAIL}\PY{p}{)}\PY{p}{;}
- \PY{p}{\PYZcb{}}
- 
- \PY{k}{@RETURN}\PY{p}{(}
-  \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{parseCommand}\PY{p}{(}
-   \PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{,}
-   \PY{o}{*}\PY{k}{@PARAM}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}
-  \PY{p}{)}\PY{o}{?}\PY{n+nl}{READ\PYZus{}SUCCESS}\PY{p}{:}\PY{n}{READ\PYZus{}FAIL}
- \PY{p}{)}\PY{p}{;}
+  
+  \PY{k}{@IF} \PY{p}{(}\PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{timeout}\PY{p}{)}\PY{p}{)}
+  \PY{p}{\PYZob{}}
+    \PY{k}{@RETURN}\PY{p}{(}\PY{n}{READ\PYZus{}TIMEOUT}\PY{p}{)}\PY{p}{;}
+  \PY{p}{\PYZcb{}}
+  
+  \PY{k}{@IF} \PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{[}\PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{.}\PY{n}{length}\PY{p}{(}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=}\PY{o}{=} \PY{l+s+sc}{\PYZsq{}\PYZbs{}0\PYZsq{}}\PY{p}{)}
+  \PY{p}{\PYZob{}}
+    \PY{k}{@RETURN}\PY{p}{(}\PY{n}{READ\PYZus{}FAIL}\PY{p}{)}\PY{p}{;}
+  \PY{p}{\PYZcb{}}
+  
+  \PY{k}{@RETURN}\PY{p}{(}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{parseCommand}\PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{,} \PY{o}{*}\PY{k}{@PARAM}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{)}\PY{o}{?}\PY{n+nl}{READ\PYZus{}SUCCESS}\PY{p}{:}\PY{n}{READ\PYZus{}FAIL}\PY{p}{)}\PY{p}{;}
 \PY{p}{\PYZcb{}}
 
 \PY{k}{@FUNCTION}\PY{p}{(}\PY{n}{wait}\PY{p}{)}
 \PY{k}{@PARAM}\PY{p}{(}\PY{n+nl}{dt}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{int}\PY{p}{)}
 \PY{k}{@RETURN}\PY{p}{(}\PY{k+kt}{char}\PY{p}{)}
 \PY{p}{\PYZob{}}
- \PY{k}{@MEMORY}
- \PY{p}{\PYZob{}}
-  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{t0}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{int}\PY{p}{)}
- \PY{p}{\PYZcb{}}
- \PY{k}{@VAR}\PY{p}{(}\PY{n}{t0}\PY{p}{)} \PY{o}{=} \PY{n}{millis}\PY{p}{(}\PY{p}{)}\PY{p}{;}
- \PY{k}{@WHILE} \PY{p}{(}\PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{t0}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{dt}\PY{p}{)}\PY{p}{)} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
- \PY{k}{@RETURN}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+  \PY{k}{@MEMORY}
+  \PY{p}{\PYZob{}}
+    \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{t0}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{int}\PY{p}{)}
+  \PY{p}{\PYZcb{}}
+  \PY{k}{@VAR}\PY{p}{(}\PY{n}{t0}\PY{p}{)} \PY{o}{=} \PY{n}{millis}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+  \PY{k}{@WHILE} \PY{p}{(}\PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{t0}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{k}{@PARAM}\PY{p}{(}\PY{n}{dt}\PY{p}{)}\PY{p}{)} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+  \PY{k}{@RETURN}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
 \PY{p}{\PYZcb{}}
 
 \PY{k}{@JOB} \PY{p}{(}\PY{n}{job\PYZus{}network}\PY{p}{)}
 \PY{p}{\PYZob{}}
- \PY{k}{@MEMORY}
- \PY{p}{\PYZob{}}
-  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{i}\PY{p}{:}\PY{k+kt}{int}\PY{p}{)}
-  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{n}\PY{p}{:}\PY{k+kt}{int}\PY{p}{)}
-  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{connected}\PY{p}{:}\PY{k+kt}{bool}\PY{p}{)}
-
-  \PY{c+c1}{//tryConnect}
-  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{t1}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
-  
-  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{cmd}\PY{p}{:}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{COMMAND\PYZus{}LINE}\PY{p}{)}
- \PY{p}{\PYZcb{}}
-
- \PY{k}{@WHILE}
- \PY{p}{\PYZob{}}
-  \PY{k}{@IF} \PY{p}{(}\PY{n}{mode} \PY{o}{=}\PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{)}
+  \PY{k}{@MEMORY}
   \PY{p}{\PYZob{}}
-   \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}SCAN}\PY{p}{;}
-   \PY{k}{@VAR}\PY{p}{(}\PY{n}{connected}\PY{p}{)} \PY{o}{=} \PY{n+nb}{false}\PY{p}{;}
-
-   \PY{n}{WiFi}\PY{p}{.}\PY{n}{scanNetworks}\PY{p}{(}\PY{n+nb}{true}\PY{p}{)}\PY{p}{;}
-   \PY{k}{@WHILE} \PY{p}{(}\PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{o}{=} \PY{n}{WiFi}\PY{p}{.}\PY{n}{scanComplete}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{=}\PY{o}{=} \PY{n}{WIFI\PYZus{}SCAN\PYZus{}RUNNING}\PY{p}{)}
-   \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
-   \PY{k}{@IF} \PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}
-   \PY{p}{\PYZob{}}
-    \PY{n}{Serial}\PY{p}{.}\PY{n}{print}\PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}\PY{p}{;}
-    \PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{;}
-    \PY{k}{@VAR}\PY{p}{(}\PY{n}{connected}\PY{p}{)} \PY{o}{=} \PY{n+nb}{false}\PY{p}{;}
-    \PY{k}{@WHILE} \PY{p}{(}\PY{o}{+}\PY{o}{+}\PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}
-    \PY{p}{\PYZob{}}     
-     \PY{k}{if} \PY{p}{(}\PY{o}{!}\PY{n}{ssid}\PY{p}{.}\PY{n}{startsWith}\PY{p}{(}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{BOARD\PYZus{}PREFIX}\PY{p}{)}\PY{p}{)}
-     \PY{p}{\PYZob{}}
-      \PY{k}{@CONTINUE}
-     \PY{p}{\PYZcb{}}
-     \PY{n}{node} \PY{o}{=} \PY{n}{MODE\PYZus{}NETCON}\PY{p}{;}
-     
-     \PY{k}{@VAR}\PY{p}{(}\PY{n}{t1}\PY{p}{)} \PY{o}{=} \PY{n}{millis}\PY{p}{(}\PY{p}{)}\PY{p}{;}
-
-     \PY{k}{@WHILE} \PY{p}{(}
-      \PY{n}{status} \PY{o}{!}\PY{o}{=} \PY{n}{WL\PYZus{}CONNECTED} \PY{o}{\PYZam{}}\PY{o}{\PYZam{}}
-      \PY{n}{millis}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{t1}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{HARD\PYZus{}TIMEOUT}
-     \PY{p}{)}
-     \PY{p}{\PYZob{}}
-      \PY{n}{status} \PY{o}{=} \PY{n}{WiFi}\PY{p}{.}\PY{n}{begin}\PY{p}{(}\PY{n}{ssid}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
-      \PY{k}{@CALL}\PY{p}{(}\PY{n}{wait}\PY{p}{;}\PY{l+m+mi}{500}\PY{p}{)}\PY{o}{:}\PY{n}{null}\PY{p}{;}
-     \PY{p}{\PYZcb{}}
-     \PY{k}{if} \PY{p}{(}\PY{n}{status} \PY{o}{!}\PY{o}{=} \PY{n}{WL\PYZus{}CONNECTED}\PY{p}{)}
-     \PY{p}{\PYZob{}}
-      \PY{k}{@CONTINUE}
-     \PY{p}{\PYZcb{}}
-     \PY{n}{status} \PY{o}{=} \PY{n}{WL\PYZus{}IDLE\PYZus{}STATUS}\PY{p}{;}
-
-     \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}SERCON}\PY{p}{;}
-
-     \PY{k}{@VAR}\PY{p}{(}\PY{n}{connected}\PY{p}{)} \PY{o}{=} \PY{n}{sockOut}\PY{p}{.}\PY{n}{connect}\PY{p}{(}\PY{n}{gateway}\PY{p}{,} \PY{n}{FBNet}\PY{o}{:}\PY{o}{:}\PY{n}{PORT}\PY{p}{)}\PY{p}{;}
-      
-     \PY{k}{if} \PY{p}{(}\PY{o}{!}\PY{k}{@VAR}\PY{p}{(}\PY{n}{connected}\PY{p}{)}\PY{p}{)}
-     \PY{p}{\PYZob{}}
-      \PY{k}{@CONTINUE}
-     \PY{p}{\PYZcb{}}
-
-     \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{command} \PY{o}{=} \PY{o}{\PYZam{}}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{Q\PYZus{}SINGLE\PYZus{}PRESENTATION}\PY{p}{;}
-     \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{params}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{serial}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial}\PY{p}{;}
-     \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string} \PY{n}{s} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{writeCommand}\PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{)}\PY{p}{;}
-     \PY{n}{sockOut}\PY{p}{.}\PY{n}{print}\PY{p}{(}\PY{n}{s}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
-     
-     \PY{k}{@CALL}\PY{p}{(}
-      \PY{n}{read\PYZus{}command}\PY{p}{;}
-      \PY{o}{\PYZam{}}\PY{n}{sockOut}\PY{p}{;}
-      \PY{o}{\PYZam{}}\PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{;}
-      \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{HARD\PYZus{}TIMEOUT}
-     \PY{p}{)}\PY{o}{:}\PY{n}{understood}\PY{p}{;}
-     \PY{k}{@VAR}\PY{p}{(}\PY{n}{connected}\PY{p}{)} \PY{o}{=} \PY{n+nb}{false}\PY{p}{;}
-     \PY{k}{if} \PY{p}{(}
-      \PY{n}{understood} \PY{o}{=}\PY{o}{=} \PY{n}{READ\PYZus{}SUCCESS} \PY{o}{\PYZam{}}\PY{o}{\PYZam{}}
-      \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{command}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{code} \PY{o}{=}\PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{A\PYZus{}GRANT\PYZus{}ACCESS}\PY{p}{.}\PY{n}{code}
-     \PY{p}{)}
-     \PY{p}{\PYZob{}}
-      \PY{k}{@VAR}\PY{p}{(}\PY{n}{connected}\PY{p}{)} \PY{o}{=} \PY{n+nb}{true}\PY{p}{;}
-      \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}GAME}\PY{p}{;}
-      \PY{k}{@BREAK}
-     \PY{p}{\PYZcb{}}
-    \PY{p}{\PYZcb{}}
-   \PY{p}{\PYZcb{}}
-
-   \PY{k}{if} \PY{p}{(}\PY{o}{!}\PY{k}{@VAR}\PY{p}{(}\PY{n}{connected}\PY{p}{)}\PY{p}{)}
-   \PY{p}{\PYZob{}}
-    \PY{n}{ssid} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial}\PY{p}{;}
-    \PY{n}{WiFi}\PY{p}{.}\PY{n}{softAP}\PY{p}{(}\PY{n}{ssid}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
-    \PY{n}{WiFi}\PY{p}{.}\PY{n}{softAPConfig}\PY{p}{(}\PY{n}{host}\PY{p}{,} \PY{n}{gateway}\PY{p}{,} \PY{n}{submask}\PY{p}{)}\PY{p}{;}
-    \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}STANDALONE}\PY{p}{;}
-   \PY{p}{\PYZcb{}}
+    \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{i}\PY{p}{:}\PY{n}{byte}\PY{p}{)}
+    \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{n}\PY{p}{:}\PY{k+kt}{int}\PY{p}{)}
+    \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{boardrobot}\PY{p}{:}\PY{k+kt}{bool}\PY{p}{)}
+    \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{cmd}\PY{p}{:}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{COMMAND\PYZus{}LINE}\PY{p}{)}
   \PY{p}{\PYZcb{}}
- \PY{p}{\PYZcb{}}
+
+  \PY{k}{@WHILE}
+  \PY{p}{\PYZob{}}
+    \PY{k}{@IF} \PY{p}{(}\PY{n}{mode} \PY{o}{=}\PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{)}
+    \PY{p}{\PYZob{}} 
+      \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}CONNECTING}\PY{p}{;}
+      \PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{o}{=} \PY{n}{WiFi}\PY{p}{.}\PY{n}{scanNetworks}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+
+      \PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;}
+      \PY{n}{clearSsidHeap}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+      \PY{k}{@WHILE} \PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}
+      \PY{p}{\PYZob{}}
+        \PY{n}{insertSsid}\PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{o}{+}\PY{o}{+}\PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{;}
+      \PY{p}{\PYZcb{}}
+      \PY{k}{@WHILE} \PY{p}{(} \PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{o}{=}\PY{n}{popSsid}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}
+      \PY{p}{\PYZob{}}
+        \PY{n}{ssid} \PY{o}{=} \PY{n}{WiFi}\PY{p}{.}\PY{n}{SSID}\PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+        \PY{k}{if} \PY{p}{(}\PY{n}{ssid}\PY{p}{.}\PY{n}{startsWith}\PY{p}{(}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{BOARD\PYZus{}PREFIX}\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZob{}}
+          \PY{k}{@VAR}\PY{p}{(}\PY{n}{boardrobot}\PY{p}{)} \PY{o}{=} \PY{n+nb}{true}\PY{p}{;}
+        \PY{p}{\PYZcb{}}
+        \PY{k}{else} \PY{k}{if} \PY{p}{(}\PY{n}{ssid}\PY{p}{.}\PY{n}{startsWith}\PY{p}{(}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{ROBOT\PYZus{}PREFIX}\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZob{}}
+          \PY{k}{@VAR}\PY{p}{(}\PY{n}{boardrobot}\PY{p}{)} \PY{o}{=} \PY{n+nb}{false}\PY{p}{;}
+        \PY{p}{\PYZcb{}}
+        \PY{k}{else}
+        \PY{p}{\PYZob{}}
+          \PY{k}{@CONTINUE}
+        \PY{p}{\PYZcb{}}
+        
+        \PY{n}{WiFi}\PY{p}{.}\PY{n}{begin}\PY{p}{(}\PY{n}{ssid}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{n}{sockOut}\PY{p}{.}\PY{n}{connect}\PY{p}{(}\PY{n}{IPAddress}\PY{p}{(}\PY{l+m+mi}{192}\PY{p}{,}\PY{l+m+mi}{168}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{FBNet}\PY{o}{:}\PY{o}{:}\PY{n}{PORT}\PY{p}{)}\PY{p}{;}
+        
+        \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{command} \PY{o}{=} \PY{o}{\PYZam{}}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{Q\PYZus{}SINGLE\PYZus{}PRESENTATION}\PY{p}{;}
+        \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{params}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{serial}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial}\PY{p}{;}
+        \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string} \PY{n}{s} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{writeCommand}\PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{n}{sockOut}\PY{p}{.}\PY{n}{print}\PY{p}{(}\PY{n}{s}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        
+        \PY{k}{@CALL}\PY{p}{(}
+          \PY{n}{read\PYZus{}command}\PY{p}{;}
+          \PY{o}{\PYZam{}}\PY{n}{sockOut}\PY{p}{;}\PY{o}{\PYZam{}}\PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{;}
+          \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{HARD\PYZus{}TIMEOUT}
+        \PY{p}{)} \PY{o}{:} \PY{n}{understood}\PY{p}{;}
+        \PY{k}{if} \PY{p}{(}\PY{n}{understood} \PY{o}{=}\PY{o}{=} \PY{n}{READ\PYZus{}SUCCESS} \PY{o}{\PYZam{}}\PY{o}{\PYZam{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{command}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{code} \PY{o}{=}\PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{A\PYZus{}GRANT\PYZus{}ACCESS}\PY{p}{.}\PY{n}{code}\PY{p}{)}
+        \PY{p}{\PYZob{}}
+          \PY{k}{if} \PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{boardrobot}\PY{p}{)}\PY{p}{)}
+          \PY{p}{\PYZob{}}
+            \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}GAME}\PY{p}{;}
+          \PY{p}{\PYZcb{}}
+          \PY{k}{else}
+          \PY{p}{\PYZob{}}
+            \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}STANDALONE}\PY{p}{;}
+          \PY{p}{\PYZcb{}}
+          \PY{k}{@BREAK}
+        \PY{p}{\PYZcb{}}
+        \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{;}
+      \PY{p}{\PYZcb{}}
+
+      \PY{k}{@IF} \PY{p}{(}\PY{n}{mode} \PY{o}{!}\PY{o}{=} \PY{n}{MODE\PYZus{}GAME} \PY{o}{\PYZam{}}\PY{o}{\PYZam{}} \PY{n}{mode} \PY{o}{!}\PY{o}{=} \PY{n}{MODE\PYZus{}STANDALONE}\PY{p}{)}
+      \PY{p}{\PYZob{}}
+        \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{;}
+        \PY{k}{@CALL}\PY{p}{(}\PY{n}{wait}\PY{p}{;}\PY{l+m+mi}{10000}\PY{p}{)}\PY{o}{:}\PY{n}{null}\PY{p}{;}
+      \PY{p}{\PYZcb{}}
+    \PY{p}{\PYZcb{}}
+  \PY{p}{\PYZcb{}}
 \PY{p}{\PYZcb{}}
 
 \PY{k+kt}{void} \PY{n}{setup}\PY{p}{(}\PY{p}{)}
-\PY{p}{\PYZob{}}
- \PY{c+c1}{// FBCP}
- \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{ROBOT\PYZus{}PREFIX}\PY{p}{;}
- \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial} \PY{o}{+}\PY{o}{=} \PY{n}{serial}\PY{p}{;}
- \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{;}
- \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{COMMAND\PYZus{}LINE} \PY{n}{cmd}\PY{p}{;}
- \PY{n}{cmd}\PY{p}{.}\PY{n}{command} \PY{o}{=} \PY{o}{\PYZam{}}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{Q\PYZus{}HIT}\PY{p}{;}
- \PY{n}{hitCmd} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{writeCommand}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{;}
- \PY{n}{cmd}\PY{p}{.}\PY{n}{command} \PY{o}{=} \PY{o}{\PYZam{}}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{Q\PYZus{}HEARTBEAT}\PY{p}{;}
- \PY{n}{kalCmd} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{writeCommand}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{;}
- 
- \PY{c+c1}{//ScheMo}
- \PY{k}{@INIT}
+\PY{p}{\PYZob{}}  
+  \PY{c+c1}{// FBCP}
+  \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{CONTR\PYZus{}PREFIX}\PY{p}{;}
+  \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial} \PY{o}{+}\PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{00001}\PY{l+s}{\PYZdq{}}\PY{p}{;}
+  \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{;}
+  
+  \PY{c+c1}{//ScheMo}
+  \PY{k}{@INIT}
+  \PY{k}{@SCHEDULE\PYZus{}ALL}
 
- \PY{k}{@SCHEDULE\PYZus{}ALL}
-
- \PY{n}{schemo}\PY{o}{:}\PY{o}{:}\PY{n}{start\PYZus{}cycle}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+  \PY{n}{schemo}\PY{o}{:}\PY{o}{:}\PY{n}{start\PYZus{}cycle}\PY{p}{(}\PY{p}{)}\PY{p}{;}
 \PY{p}{\PYZcb{}}
 
-\PY{k+kt}{void} \PY{n}{loop}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{k+kt}{void} \PY{n}{loop}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
 \end{Verbatim}

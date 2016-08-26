@@ -35,5 +35,5 @@ else
   echo "Assuming \"$dot$ext\"."
 fi
 
-newname=`echo "$1" | sed "s/\./-/"`
-pygmentize -f $form -l $lang -P linenos=true -P verboptions=frame=leftline,numbersep=0pt -o ../"$newname$dot$ext" "$1"
+newname=`echo "$(basename $1)" | sed "s/\./-/"`
+pygmentize -f $form -l $lang -P linenos=true -P verboptions=frame=leftline,numbersep=0pt -o $(dirname $0)/../"$newname$dot$ext" "$1"
