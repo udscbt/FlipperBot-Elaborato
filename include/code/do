@@ -1,0 +1,39 @@
+if [ $# -lt 1 ]
+then
+  echo "File missing"
+  exit 1
+fi
+
+if [ $# -ge 2 ]
+then
+  lang=$2
+else
+  echo "Language missing."
+  lang=C++
+  echo "Assuming $lang."
+fi
+
+if [ $# -ge 3 ]
+then
+  form=$3
+  dot=
+  ext=
+else
+  echo "Formatter missing."
+  form=latex
+  echo "Assuming $form."
+  dot=.
+  ext=tex
+fi
+
+if [ $# -ge 4 ]
+then
+  dot=.
+  ext=$4
+else
+  echo "Extension missing."
+  echo "Assuming \"$dot$ext\"."
+fi
+
+newname=`echo "$1" | sed "s/\./-/"`
+pygmentize -f $form -l $lang -P linenos=true -P verboptions=frame=leftline,numbersep=0pt -o ../"$newname$dot$ext" "$1"
