@@ -270,7 +270,7 @@ other requirements:
 
 \section{Creation of Game/Rules}
 
-\includegraphics[width=\textwidth]{img/logo}
+\includegraphics[width=\textwidth]{img/logo_finito}
 \subsection{The Story}
 
 ESPer is a little owl\textendash shaped alien, employed at the PIAP Inc. (Pluto is a Planet), a company based on Volcano, in a not so far	extendash galaxy. His job is to keep an eye on some old satellites in the orbit of the planet Dab\'{o}n. These satellites are very old and sometimes their program stops working. The way to fix them is to crash Esper's pod onto their panels. The network of these satellites is owned by Sirocco Studios, that creates cartoons for children, and therefore it is very important to keep it active. When the satellite is lighted up it means it is broken and needs fixing. If the satellite does not start working again in 13 seconds, the whole network crashes and needs a whole day to be brought back to normality. ESPer is short\textendash sighted and needs help to do his job.
@@ -283,13 +283,33 @@ We took inspiration from pinball and bumper cars to create a game in which the g
 The vehicle (from now referred to as Robot) is controlled by the child with a very simple joystick, while the lighting of the totem is controlled by circuitry inside the board. The board also provides a display onto which the score and time is showed, and is fit with some barriers on the borders that prevent the robot from falling out. Both the robot and the board are fit with sound/light effects to make them appealing.
 \\
 \\
-\textbf{Single Player Mode:} every set time, the board would decide to light up one of the five totems, and the child should try to hit it as quickly as possible. If he/she succeeds before time is over, he/she scores. The time given to complete the task is 13 seconds.
-\\
-\\
+\textbf{Single Player Mode:} every set time, the board would decide to light up one of the five totems, and the child should try to hit it as quickly as possible. If he/she succeeds before time is over, he/she scores.
+
+The time given to complete the task is 13 seconds for the first 15 points, then 10 for the following 15 points, then 7 seconds for the last 15 points. Is the user manages to hit all of the totems, then he/she wins the game.
+
+
 \textbf{Two Players Mode:} two children may play one against the other to reach the higher score by hitting totems more quickly.
 (due to little time available for  design and construction, we focused only on single player mode)
 
 In order to even the abilities of the two players, it would be interesting to program robots to randomly not execute the command from players but to go randomly around, as if it was their choice. More details about this can be find in the Robot section.
+\\
+\\
+\textbf{Simon-Says Mode:} playing mode inspired by the popular children's play. It can be suitable for younger children, or if robot batteries are recharging, for it relies on board and joystick only. When the board sees that only the joystick is connected, it asks the user if he/she wishes to enter this mode. The user must confirm he/she wants to enter Simon-Says mode by pushing down the joystick, or wait for the robot to connect. 
+\\
+The game starts with a set of ten lives. The board will tell the user when the sequence is given and when is it his/her turn to repeat it. The sequence is showed lighting up randomly four totems (the one in the middle is excluded). The user must then replicate exactly the sequence shown by tilting the joystick to light up the totems. Each time the user fails, he/she loses one life. The last sequence is then re proposed.  The game ends when no lives are left.
+\\
+The length of the sequence is determined randomly through the following formula, depending on the difficulty. 
+\\
+$L_{max} = \frac{\mathrm{Difficulty}}{5}+1$
+
+$L = \left \lceil \frac{1}{10}\sum_{i=1}^{10} rand\left(L_{max}\right) \right \rceil$
+\\
+Difficulty increases linearly with every success in a row (that is, if the user makes a mistake, then difficulty is reset to zero).
+\\
+The scoring increases as the number of successes in a row: for example, if the user gets three sequences correct in a row, he/she will receive 1 point for the first, then 2 for the second, then 3 for the third. If the user makes a mistake, the score for the following success drops back to one.
+
+
+
 
 \section{Controller}
 
@@ -418,11 +438,15 @@ Moreover, the robot needs to be small enough to move freely on the board (approx
 
 \subsection{Frame}
 
-The frame consists of a round plastic basis and a carton cylinder. On the basis are secured the motors and circuitry onto which are placed batteries. There are LEDs on the cylinder (green and red).
-
-On the side cylinder also there are two switches covered by a plastic plaque that form the bumper, and the ON/OFF switch on the back.
-
-On the bottom part, the motors are directly connected to wheels and there is a small metal sphere secured on the front part of the robot to prevent it from tilting forward. The motors are actually servomotors that have been modified so that they can spin at 360\degree. This is due to lack of time, poor information supplied by data\textendash sheets on online markets, and cost of components. This arrangement causes the two motors not to spin at the same rate, so that it may be useful to verify that this problem does not affect manoeuvrability too much. Anyway, considering the size of the board (70cm) and placement of totems, the robot needs not to move on straight line for more than 30cm, so that we can accept some deviation without the game to suffer from this.
+The frame is made up of four layers (from top to bottom):
+\begin{itemize}
+\item Battery slot \textemdash ensures that the user's only contact with batteries is through the connectors pinned on the wood;
+\item Circuitry slot \textemdash accommodates all circuitry and it is connected above to batteries and below to motors. Also lodges rear LEDs, ON/OFF switch and bumper structure (micro switches with plaques on the outside);
+\item Motor slot \textemdash used to store the two motors, which are secured to the wood to ensure stability, and front LEDs;
+\item Bottom layer \textemdash serves as lid for the stack and as a base for a small spinning wheel that allows the robot to be balanced.
+\end{itemize}
+Sections are carved in lightweight wood and secured by screws, the shape is hexagonal, inscribed in a circle approximately 7cm in diameter. The mask is set on top of everything. The strict detachment of compartments is needed both to minimize the eventuality of accidental electric contacts and to increase stability.
+The motors are actually servomotors that have been modified so that they can spin at 360\degree. This is due to lack of time, poor information supplied by data\textendash sheets on online markets, and cost of components. This arrangement causes the two motors not to spin at the same rate, so that it may be useful to verify that this problem does not affect manoeuvrability too much. Anyway, considering the size of the board (70cm) and placement of totems, the robot needs not to move on straight line for more than 30cm, so that we can accept some deviation without the game to suffer from this.
 
 On the other hand, an advantage of using servomotors is that speed con be selected directly from the control unit, with no need for a driver.
 
@@ -480,7 +504,7 @@ The sounds from the robot are provided by the board, and they are divided accord
 \item resuming the game from pause menu;
 \item scoring (hitting the totems);
 \item running out of time (last 5 seconds of time allotted, when the totem starts flashing);
-\item failure (not hitting the totem in time);
+\item failure (not hitting the totem in time, or not hitting the right one in Simon-Says mode);
 \end{enumerate}
 
 
@@ -674,8 +698,10 @@ On the other hand, this development is potentially very interesting, since the c
 Some of these tests either would require too long time or cannot be performed due to difficulties in organisation (e.g. too small a sample to have statistically relevant results). We propose here some ideas to verify our assumptions, but unfortunately was not possible to carry out them all.
 \\
 Since we chose to focus on realization, we tried to finish the projects by the time given, neglecting a proper planning of measures of success and tests.
+\\
+\section{Proposed tests}
 
-\section{Tests During Realization}
+\subsection{Tests During Realization}
 
 \textbf{Battery Regulation Circuit Accuracy}
 \\
@@ -697,14 +723,6 @@ Impacts would be simulated on separate parts: robot (1), totem(2) and between th
 $Accuracy=\frac{\#Recognized\ impacts}{\#Total\ impacts\ given}$
 \\
 \\
-\textbf{Motor Coordination}
-\\
-\\
-Since motors were originally servomotors modified to be used at a 360\degree rotation we expected a slight difference in the speed of rotation on each. Also, this difference could be dependent on the rotation, whether clockwise (CW) or counter\textendash clockwise (CCW). Also, since the robot doesn't need to move much further in line generally (the board is 70x70cm square), small differences would not affect the overall functionality of robot. We consider acceptable a deviation from a straight line of 10\degree/m.
-
-Coordination would be tested by recording the robot moving in straight line (1m long), using a camera hanging above. Robot direction would be identified by a red stripe pointing forward. We would calculate total deviation form the straight line the robot is supposed to follow. This would be done both moving forward and backwards. We will expect maximum deviation to be lower than 10\degree/m.
-\\
-\\
 \textbf{Wi-Fi Network Robustness}
 \\
 \\
@@ -712,7 +730,7 @@ The network among robot, board and totem should be robust to interferences from 
 
 The protocol created should minimize this problem for every time a packet is sent there has to be an answer for the receiver, and if there is not, the packet is sent again. Since the network is simple and does not need to protect possibly private information, there was not need to provide it with protection from possible hackings.
 
-\section{Tests After Realisation}
+\subsection{Tests After Realisation}
 
 \textbf{Measurement of time played (in minutes)}
 \\
@@ -739,6 +757,27 @@ The same considerations for the two populations as B.1 can be applied here to ve
 \\
 \\
 Questionnaire should be possibly with some numerical responses (such as \textquotedblleft How would you rate the child's enthusiasm for playing with others? From 0 (no enthusiasm at all) to 5 (very eager to)\textquotedblright). However, the rating here are personal ad rather qualitative, and probably should be used only to support statistic results.
+\\
+\section{Performed tests}
+\textbf{Motor Coordination}
+\\
+\\
+As previously said, motors on the robot are actually modified servomotors. This may undermine the required synchronism. Therefore, we decided to test both coordination between wheels and, for the same wheel, coordination between clockwise rotation (from now CW) and counter clockwise rotation (from now CCW). 
+\\
+\\
+\textbf{Protocol:}
+The procedure for the evaluations is here described:
+\begin{enumerate}
+\item it was recorded the period of rotation (in s) for each wheel for both CW and CCW, for 30 turns each;
+\item to test normality of the four populations, an Anderson Darling test was performed;
+\item for the same wheel, it was performed a T-test (in case the distribution resulted normal), or a Wilcoxon Test (in case the distributions deviated from normal) to verify the means of CCW and CW to be equal;
+\item for the separate wheel, the same test as above were performed, in order to verify the coordination between left CW and right CCW (forward) and left CCW and right CW (backwards);
+\item box plots were drawn to exemplify conclusions for each of the four tests.
+\end{enumerate}
+Calculations and graphics were performed using Matlab \textregistered. All tests were performed with default 5\% significance.
+\\
+\\
+\textbf{Results:}
 
 \chapter{Future Developments}
 
