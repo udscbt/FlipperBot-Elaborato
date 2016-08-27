@@ -482,13 +482,13 @@ This requires also the frame to be robust. Unfortunately, we had to neglect this
 
 Being responsible for an important part of interaction with the patient, it should have a range of sound/lighting effects.
 \begin{itemize}
-\item red and green LED lights (2 couple) that signal the state of the robot, like they are used in the controller;
+\item green and red LED lights (2 couples) that signal the state of the robot, like they are used in the controller;
 	\begin{itemize}
-	\item \textbf{idle} red on, green off;
-	\item \textbf{scanning} searching for available networks: red on, green slowly blinking;
-	\item \textbf{connecting} attempting connection with suitable server on the network: red on, green quickly blinking;
-	\item \textbf{standard game mode} connected to board and ready to play: red and green alternately blinking (this does not change during the pause);
-	\item \textbf{standalone mode} directly controlling the robot: red and green both on.
+	\item \textbf{idle} green on, red off;
+	\item \textbf{scanning} searching for available networks: green on, red slowly blinking;
+	\item \textbf{connecting} attempting connection with suitable server on the network: green on, red quickly blinking;
+	\item \textbf{standard game mode} connected to board and ready to play: green and red alternately blinking (this does not change during the pause);
+	\item \textbf{standalone mode} directly controlling the robot: green and red both on.
 	\end{itemize}
 \item Buzzer that emits sounds when the robot crashes, etc. We decided to delegate this part to the board as well, for the RPi can control the buzzer more efficiently than the ESP in the robot, providing more effective interaction, although sacrificing realism.
 \end{itemize}
