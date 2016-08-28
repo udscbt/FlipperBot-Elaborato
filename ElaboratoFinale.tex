@@ -349,6 +349,12 @@ In the case the patient is tetraplegic, the controller can be adapted to fit on 
 
 \subsection{Joystick}
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{img/IMG_20160613_153916_1} 
+\caption{Realized Joystick.}
+\end{figure}
+
 Very weak children may not be able to swing/push the controller long enough to play effectively. If they have sufficient control over at least one upper limb, it is possible to create a joystick. It is sensitive enough to allow the patients to drive the robot without tiring, and has four positions: forward, backward, left and right. There should be also a ON/OFF switch and a slot for batteries. Joystick and its shell are smaller than the joypad and can be positioned where the patients can reach it without difficulty (using straps).
 \\
 \\
@@ -407,6 +413,12 @@ There are two possible configurations, depending on the mobility of the child: t
 In order to test and debug the game while work was still in progress, we created a graphic interface that can simulate both the totem system (with display) and the joystick. From this interface we created a simplified version of joystick that could be used to adapt the controller to different users. By creating an actual virtual controller, the child has the possibility to use his/her own tablet or laptop to play. Patients with most severe restrictions are often provided with personal computer interfaces (e.g. to drive wheelchairs) and a controller application would represent an immediate and flexible approach in order to broaden the range of suitable users.
 
 \section{Robot}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{img/IMG_20160827_163033_1} 
+\caption{Realized Robot.}
+\end{figure}
 
 The second most interactive part of the game is represented by the robot (ESPer). If the controller allows the child freedom of expression, the robot is the part that deals with him/her as a peer. 
 \footnote{For implementation information, see \autoref{sec:software} and \autoref{app:code} }
@@ -510,6 +522,11 @@ The sounds from the robot are provided by the board, and they are divided accord
 
 \section{Board}
 
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{img/IMG_20160616_111353} 
+\caption{Realized board with totems.}
+\end{figure}
+
 The board offers mechanical support the robot and totems, as well as central control unit and Wi-Fi network connection. Also, it provides lighting and sound effects to the whole interface and it is decorated accordingly to the theme.
 \\
 It consists of three main layers:
@@ -520,13 +537,6 @@ It consists of three main layers:
 \item bottom layer, that provides basis for the totem mating and onto which middle layer is secured.
 \end{itemize}
 The display for scoring is located on the sides, as well as LEDs signalling the state of game, ON/OFF switch, and the \textquotedblleft everything button\textquotedblright. On the top there are also small holes that show the battery charge (being located above the battery pack).
-
-
-\begin{figure}
-\centering 
-\includegraphics[width=0.9\textwidth]{img/BoardVistaInsieme3.eps}
-\caption{CAD of Assembled board (top removed).}
-\end{figure}
 
 The board was designed to be divided in four quarters that could be disassembled and transported more easily. The pieces are not the same size because of the middle totem: it would have been extremely difficult to create the basis for the  mating if we had had to split it into fourths.
 
@@ -615,6 +625,11 @@ All of these passages are supported by the change in music themes
 
 \section{Totems}
 
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{img/IMG_20160616_111854} 
+\caption{Realized Totems.}
+\end{figure}
+
 Totems are the targets into which the robot must crash in order to score.
 
 They consist of cylinders containing the light set and switches (to detect impacts through plaques). The outside of the cylinder be decorated accordingly to the theme (e.g. as a satellite as we chose). In order to move the game more comfortably they are designed to be easily removable from the board.
@@ -646,6 +661,11 @@ The choice to defer the control of the lighting to the board is preferable for:
 \end{itemize}
 
 \subsubsection{Mating}
+
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{img/IMG_20160616_114517} 
+\caption{Detail of realized totem base and mating.}
+\end{figure}
 
 The mating provides ease of use, mechanical stability, electronically safe connexions. These are ensured by using the same 4 channel 3.5mm jack plugs as used to connect the board sections. They are stiff enough to ensure the totems do not tilt when hit by the robot. Moreover, they are quite a common component, so it is easy to find and replace them if needed.
 
@@ -850,6 +870,16 @@ Finally, we would like to thank all those people that started doubting our own e
 
 \chapter{Circuits and Electric Schemes}
 \label{app:circuit}
+
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{img/ControllerCircuitry} 
+\caption{Scheme of Joystick Circuit.}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{img/Totem} 
+\caption{Scheme of Totem Circuit.}
+\end{figure}
 
 \chapter{External Resources}
 \label{app:external}
