@@ -2,12 +2,14 @@
 \sbox{\tikzboard}{\hbox{\import{tikz_board}}}
 \newsavebox{\tikzcontr}
 \sbox{\tikzcontr}{\hbox{\import{tikz_controller}}}
+\newsavebox{\tikzrobot}
+\sbox{\tikzrobot}{\hbox{\import{tikz_robot}}}
 
 \tikzset{
   network/robot/.style={
     label={center:
       \raisebox{1cm}{
-        \includegraphics[width=2cm, height=2cm]{img/esper_silouette.pdf}
+        \import{tikz_robot}
       }
     },
     minimum width=2cm,

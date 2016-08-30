@@ -5,15 +5,38 @@ suitable network. In particular, the devices can be connected in
 different ways depending on the current mode: standard game or
 standalone.
 
-\subsubsection{Standard Game Network (SSID starting with
-  \code{FlipperBot-Board-})}
-  \begin{figure}[htbp]
-    \centering
-    \resizebox{0.7\textwidth}{!}{\import{fig_netgame}}
-
+\begin{figure}[htbp]
+  \begin{subfigure}[c]{0.5\textwidth}
+    \resizebox{\textwidth}{!}{\import{fig_netgame}}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.5\textwidth}
+    \resizebox{\textwidth}{!}{\import{fig_netrobot}}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
     \caption{Standard Game Network}
     \label{fig:gamenet}
-  \end{figure}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+    \caption{Standalone Network}
+    \label{fig:robotnet}
+  \end{subfigure}
+  \captionsetup{singlelinecheck=off}
+  \caption[Network topologies]{%
+  \centering
+  Network topologies
+  \\
+  \small
+  \resizebox{1em}{!}{\usebox{\tikzboard}} Board\quad
+  \resizebox{1em}{!}{\usebox{\tikzcontr}} Controller\quad
+  \resizebox{1em}{!}{\usebox{\tikzrobot}} Robot
+  \\
+  Arrows go from the client to the server in a connection.
+  }
+  \label{fig:network}
+\end{figure}
+
+\subsubsection{Standard Game Network (SSID starting with
+  \code{FlipperBot-Board-})}
   In game mode, the board acts as access point for all other devices
   and all communications go through it.
 
@@ -34,13 +57,6 @@ standalone.
 
 \subsubsection{Standalone Network (SSID starting with
   \code{FlipperBot-Robot-})}
-  \begin{figure}[htbp]
-    \centering
-    \resizebox{0.7\textwidth}{!}{\import{fig_netrobot}}
-
-    \caption{Standalone Network}
-    \label{fig:robotnet}
-  \end{figure}
   When no boards are available for connection, a robot can become an
   access point to create a new network.
 
