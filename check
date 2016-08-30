@@ -1,4 +1,9 @@
 #!/usr/bin/bash
 
+if [ -z $PDF_EDITOR ]
+then
+  PDF_EDITOR=firefox
+fi
+
 ./standalone.py $1
 pdflatex tmp.tex && $PDF_EDITOR tmp.pdf
