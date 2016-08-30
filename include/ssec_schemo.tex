@@ -19,9 +19,10 @@ to modern schedulers.
 
 \subsubsection{Control flow}
   \begin{figure}[htbp]
-    \hspace{-1cm}
     \schemoSetName{fig_schemoflow}
-    \import{fig_schemoflow}
+    \centerline{
+      \import{fig_schemoflow}
+    }
     \caption[Example flow diagram of a \ScheMo{} program.]{
       Example flow diagram of a \ScheMo{} program.
 
@@ -46,7 +47,7 @@ to modern schedulers.
   do not necessarily correspond to the meanings that the same words
   have in other contexts of Computer Science}:
   
-  \begin{description}[align=right]
+  \begin{description}[align=right, itemindent=0pt]
     \item [Job] it represents a single (pseudo-)process that can be
       started, stopped, paused and resumed at will. Different
       processes are represented by different jobs.
@@ -209,6 +210,7 @@ to modern schedulers.
     \item recognise errors in the structure of the program
     \item etc\ldots
   \end{itemize}
+  
   As of yet, no memory-related profiling has been implemented.
 
   We also created a tool called \ScheMoTeX{} (and in particular the
