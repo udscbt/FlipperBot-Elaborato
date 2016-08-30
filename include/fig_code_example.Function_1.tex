@@ -1,7 +1,7 @@
-\schemoSet{\schemoBase}{0.800000}%
+\schemoSet{\schemoBase}{1.000000}%
 \schemoSet{\schemoRotation}{90.000000}%
 \schemoSet{\schemoScale}{\schemoBase*\schemoBase}%
-\schemoSet{\schemoUnit}{10*\schemoBase mm}%
+\schemoSet{\schemoUnit}{8*\schemoBase mm}%
 \schemoSet{\schemoWidth}{15mm}%
 \schemoSet{\schemoSmall}{2/3*\schemoScale}%
 \schemoSet{\schemoLine}{0.4*\schemoScale pt}%
@@ -131,42 +131,42 @@
   }
 ]
 \node [schemo function] (j1) at (0,0) {\schemoText{Read command}};
-\node [schemo task] (t1) at (2,0) {\schemoText{}};
+\node [schemo task] (t1) at (1.0,0) {\schemoText{}};
 \node [scale=\schemoSmall, above right] at (t1.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo while] (t34) at (3.6,0) {\schemoText{\texttt{while}}};
-\node [scale=\schemoSmall, above right] at (t34.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo task] (t2) at (5.2,1) {\schemoText{}};
+\node [schemo while] (t96) at (3.0,0) {\schemoText{\texttt{while}}};
+\node [scale=\schemoSmall, above right] at (t96.north east) {\rotatebox{\schemoRotation}{}};
+\node [schemo task] (t2) at (5.0,1) {\schemoText{}};
 \node [scale=\schemoSmall, above right] at (t2.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo task] (t3) at (6.800000000000001,0) {\schemoText{}};
+\node [schemo task] (t3) at (7.0,0) {\schemoText{}};
 \node [scale=\schemoSmall, above right] at (t3.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo if] (t35) at (8.4,0) {\schemoText{\texttt{if}}};
-\node [scale=\schemoSmall, above right] at (t35.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo task] (t4) at (10.0,1) {\schemoText{}};
+\node [schemo if] (t97) at (9.0,0) {\schemoText{\texttt{if}}};
+\node [scale=\schemoSmall, above right] at (t97.north east) {\rotatebox{\schemoRotation}{}};
+\node [schemo task] (t4) at (11.0,1) {\schemoText{}};
 \node [scale=\schemoSmall, above right] at (t4.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo task] (t5) at (11.600000000000001,0) {\schemoText{}};
+\node [schemo task] (t5) at (13.0,0) {\schemoText{}};
 \node [scale=\schemoSmall, above right] at (t5.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo return] (t33) at (18.0,0) {\schemoText{}};
-\node [scale=\schemoSmall, right] at (t33.east) {\rotatebox{\schemoRotation}{}};
-\node [schemo if] (t36) at (13.200000000000001,0) {\schemoText{\texttt{if}}};
-\node [scale=\schemoSmall, above right] at (t36.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo task] (t6) at (14.8,1) {\schemoText{}};
+\node [schemo return] (t95) at (21.0,0) {\schemoText{}};
+\node [scale=\schemoSmall, right] at (t95.east) {\rotatebox{\schemoRotation}{}};
+\node [schemo if] (t98) at (15.0,0) {\schemoText{\texttt{if}}};
+\node [scale=\schemoSmall, above right] at (t98.north east) {\rotatebox{\schemoRotation}{}};
+\node [schemo task] (t6) at (17.0,1) {\schemoText{}};
 \node [scale=\schemoSmall, above right] at (t6.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo task] (t7) at (16.4,0) {\schemoText{}};
+\node [schemo task] (t7) at (19.0,0) {\schemoText{}};
 \node [scale=\schemoSmall, above right] at (t7.north east) {\rotatebox{\schemoRotation}{}};
-\draw [schemo edge normal] (t1) to [out=0, in=180] (t34);
-\draw [schemo edge normal] (t34.east) to [out=0, in=-90] node [scale=0.426667, at start, below right] {\rotatebox{90.0}{true}} (t2);
-\draw [schemo edge normal] (t34.south) to [out=-90, in=-135] node [scale=0.426667, at start, below left] {\rotatebox{90.0}{false}} (t3);
-\draw [schemo edge normal] (t2) to [out=90, in=90] (t34.north);
-\draw [schemo edge normal] (t3) to [out=0, in=180] (t35);
-\draw [schemo edge normal] (t35.north) to [out=90, in=180] node [scale=0.426667, at start, above left] {\rotatebox{90.0}{true}} (t4);
-\draw [schemo edge normal] (t35.south) to [out=-90, in=-135] node [scale=0.426667, at start, below left] {\rotatebox{90.0}{false}} (t5);
-\draw [schemo edge jump] (t4) to [out=-90, in=-135] node [scale=\schemoSmall, at start, below right] {\schemoText{return}} (t33);
+\draw [schemo edge normal] (t1) to [out=0, in=180] (t96);
+\draw [schemo edge normal] (t96.east) to [out=0, in=-90] node [scale=0.666667, at start, below right] {\rotatebox{90.0}{true}} (t2);
+\draw [schemo edge normal] (t96.south) to [out=-90, in=-135] node [scale=0.666667, at start, below left] {\rotatebox{90.0}{false}} (t3);
+\draw [schemo edge normal] (t2) to [out=90, in=90] (t96.north);
+\draw [schemo edge normal] (t3) to [out=0, in=180] (t97);
+\draw [schemo edge normal] (t97.north) to [out=90, in=180] node [scale=0.666667, at start, above left] {\rotatebox{90.0}{true}} (t4);
+\draw [schemo edge normal] (t97.south) to [out=-90, in=-135] node [scale=0.666667, at start, below left] {\rotatebox{90.0}{false}} (t5);
+\draw [schemo edge jump] (t4) to [out=-90, in=-135] node [scale=\schemoSmall, at start, below right] {\schemoText{return}} (t95);
 \draw [schemo edge normal] (t4) to [out=0, in=135] (t5);
-\draw [schemo edge normal] (t5) to [out=0, in=180] (t36);
-\draw [schemo edge normal] (t36.north) to [out=90, in=180] node [scale=0.426667, at start, above left] {\rotatebox{90.0}{true}} (t6);
-\draw [schemo edge normal] (t36.south) to [out=-90, in=-135] node [scale=0.426667, at start, below left] {\rotatebox{90.0}{false}} (t7);
-\draw [schemo edge jump] (t6) to [out=-90, in=-135] node [scale=\schemoSmall, at start, below right] {\schemoText{return}} (t33);
+\draw [schemo edge normal] (t5) to [out=0, in=180] (t98);
+\draw [schemo edge normal] (t98.north) to [out=90, in=180] node [scale=0.666667, at start, above left] {\rotatebox{90.0}{true}} (t6);
+\draw [schemo edge normal] (t98.south) to [out=-90, in=-135] node [scale=0.666667, at start, below left] {\rotatebox{90.0}{false}} (t7);
+\draw [schemo edge jump] (t6) to [out=-90, in=-135] node [scale=\schemoSmall, at start, below right] {\schemoText{return}} (t95);
 \draw [schemo edge normal] (t6) to [out=0, in=135] (t7);
-\draw [schemo edge normal] (t7) to [out=0, in=180] (t33);
+\draw [schemo edge normal] (t7) to [out=0, in=180] (t95);
 
 \end{tikzpicture}

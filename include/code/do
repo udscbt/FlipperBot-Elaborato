@@ -1,3 +1,12 @@
+#!/bin/bash
+DEF_LANG="C++"
+DEF_FORM="latex"
+DEF_EXT="tex"
+
+COMMENT="§"
+START=">"
+END="<"
+
 if [ $# -lt 1 ]
 then
   echo "File missing"
@@ -9,7 +18,7 @@ then
   lang=$2
 else
   echo "Language missing."
-  lang=C++
+  lang=$DEF_LANG
   echo "Assuming $lang."
 fi
 
@@ -20,10 +29,10 @@ then
   ext=
 else
   echo "Formatter missing."
-  form=latex
+  form=$DEF_FORM
   echo "Assuming $form."
   dot=.
-  ext=tex
+  ext=$DEF_EXT
 fi
 
 if [ $# -ge 4 ]
@@ -35,5 +44,37 @@ else
   echo "Assuming \"$dot$ext\"."
 fi
 
-newname=`echo "$(basename $1)" | sed "s/\./-/"`
-pygmentize -f $form -l $lang -P linenos=true -P verboptions=frame=leftline,numbersep=0pt -o $(dirname $0)/../"$newname$dot$ext" "$1"
+codedir=$(dirname $0)
+outdir=$codedir/..
+
+name=$(basename $1)
+tmpname=$codedir/tmp_$name
+newname=`echo "$name" | sed "s/\./-/"`
+outname=$newname$dot$ext
+outpath=$outdir/$outname
+
+cp $1 $tmpname
+
+echo "Splitting file $name"
+$codedir/split.py $COMMENT $START $END $tmpname $codedir
+#~ cat -n $tmpname | awk "/$START/,/$END/ {print}"
+rm $tmpname
+
+OPT="-f $form -l $lang"
+OPT=$OPT" -P envname=CodeSnippet"
+OPT=$OPT" -P linenos=True"
+
+nline=0
+echo "\\noindent" > $outpath
+for f in `ls $codedir/ | grep .*\.tmp | sort -g`
+do
+  n=${f%.tmp}
+  f=$codedir/$f
+  nline=$[$nline+`wc -l < $f`]
+  echo "Highlighting block starting at line $n"
+  pygmentize $OPT -P linenostart=$n "$f" >> "$outpath"
+done
+rm $codedir/*.tmp
+
+echo "Output written to $outpath"
+echo "Total $nline lines written"

@@ -1,0 +1,370 @@
+\noindent
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=1,stepnumber=1]
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}schemo.h\PYZdq{}      //ScheMo C++ Library}
+\PY{c+c1}{//\PYZsh{}include \PYZdq{}fbcp.h\PYZdq{}      //FBCP C++ Library}
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}fbcp.common.h\PYZdq{} // Additionally includes default}
+                         \PY{c+c1}{// handlers for common commands}
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZdq{}FBNet.h\PYZdq{}       //IP addresses and ports used}
+\PY{c+cp}{\PYZsh{}}\PY{c+cp}{include} \PY{c+cpf}{\PYZlt{}ESP8266WiFi.h\PYZgt{} //From the ESP8266 SDK}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=40,stepnumber=1]
+\PY{c+cm}{/*}
+\PY{c+cm}{ * Every FBCP\PYZhy{}compliant program should define its own serial code. A}
+\PY{c+cm}{ * suitable variable is already declared as extern in fbcp.h.}
+\PY{c+cm}{ */}
+\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial}\PY{p}{;}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=95,stepnumber=1]
+\PY{k}{typedef} \PY{k}{enum}
+\PY{p}{\PYZob{}}
+ \PY{n}{READ\PYZus{}TIMEOUT}\PY{p}{,}
+ \PY{n}{READ\PYZus{}SUCCESS}\PY{p}{,}
+ \PY{n}{READ\PYZus{}FAIL}
+\PY{p}{\PYZcb{}} \PY{n}{READ\PYZus{}RESULT}\PY{p}{;}
+\PY{c+cm}{/* Note that types definitions are put before the @DECLARE directive.}
+\PY{c+cm}{ * This is necessay because there are ScheMo\PYZhy{}related entities that use}
+\PY{c+cm}{ * them (e.g. the function read\PYZus{}command returns a variable of type}
+\PY{c+cm}{ * READ\PYZus{}RESULT)}
+\PY{c+cm}{ */}
+ 
+\PY{c+cm}{/*}
+\PY{c+cm}{ * This declares all variables and functions needed by ScheMo to make}
+\PY{c+cm}{ * the program work properly. Since all declarations happen here, the}
+\PY{c+cm}{ * order in which the jobs and functions are defined is not important}
+\PY{c+cm}{ * even if they refer to each other}
+\PY{c+cm}{ */}
+\PY{k}{@DECLARE}
+\PY{c+c1}{//All other directives should be AFTER it.}
+
+\PY{c+cm}{/*}
+\PY{c+cm}{ * Here is a function definition.}
+\PY{c+cm}{ * The first line must always defines the name of the function. This}
+\PY{c+cm}{ * name shouldn\PYZsq{}t be accessed directly and only with a @CALL directive.}
+\PY{c+cm}{ * All @PARAM lines are optional and define a parameter of the}
+\PY{c+cm}{ * function by setting the name with which they can be accessed inside}
+\PY{c+cm}{ * the function and the type of variable in which they are stored. The}
+\PY{c+cm}{ * order in which they are written is important since they are passed}
+\PY{c+cm}{ * to the function in that order.}
+\PY{c+cm}{ * The @RETURN line is mandatory and must be unique. It doesn\PYZsq{}t have}
+\PY{c+cm}{ * to be the last one but it makes the code more readable. It defines}
+\PY{c+cm}{ * the type of variable returned by the function. All comments are}
+\PY{c+cm}{ * removed by schemop before parsing the source file and this allows}
+\PY{c+cm}{ * to insert them anywhere without causing problems. This is}
+\PY{c+cm}{ * particularly useful for writing documentation comments AFTER the}
+\PY{c+cm}{ * function signature like in this example.}
+\PY{c+cm}{ */}
+\PY{k}{@FUNCTION} \PY{p}{(}\PY{n}{read\PYZus{}command}\PY{p}{)}
+\PY{k}{@PARAM} \PY{p}{(}\PY{n+nl}{sock}    \PY{p}{:} \PY{n}{WiFiClient}\PY{o}{*}\PY{p}{)}
+\PY{k}{@PARAM} \PY{p}{(}\PY{n+nl}{cmd}     \PY{p}{:} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{COMMAND\PYZus{}LINE}\PY{o}{*}\PY{p}{)}
+\PY{c+cm}{/* The fbcp::COMMAND\PYZus{}LINE structure contains parsed data about a full}
+\PY{c+cm}{ * FBCP command string.}
+\PY{c+cm}{ */}
+\PY{k}{@PARAM} \PY{p}{(}\PY{n+nl}{timeout} \PY{p}{:} \PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
+\PY{k}{@RETURN} \PY{p}{(}\PY{n}{READ\PYZus{}RESULT}\PY{p}{)}
+\PY{l+s+sd}{/**}
+\PY{l+s+sd}{ * Tries to read a command from the socket @PARAM(sock) and}
+\PY{l+s+sd}{ * stores it in *@PARAM(cmd) if successful.}
+\PY{l+s+sd}{ * The possible return values are:}
+\PY{l+s+sd}{ * READ\PYZus{}SUCCESS : A valid FBCP command was received and}
+\PY{l+s+sd}{ *                correctly parsed}
+\PY{l+s+sd}{ * READ\PYZus{}TIMEOUT : @PARAM(timeout) time without receiving a}
+\PY{l+s+sd}{ *                complete FBCP command}
+\PY{l+s+sd}{ * READ\PYZus{}FAIL    : Protocol error, no valid FBCP command was}
+\PY{l+s+sd}{ *                received}
+\PY{l+s+sd}{ */}
+\PY{p}{\PYZob{}}
+ \PY{k}{@MEMORY}
+ \PY{p}{\PYZob{}}
+  \PY{c+cm}{/*}
+\PY{c+cm}{   * This is a memory block. All variables with job/function\PYZhy{}wide}
+\PY{c+cm}{   * scope must be put here.}
+\PY{c+cm}{   *}
+\PY{c+cm}{   * The following directive declares a variable called msg of type}
+\PY{c+cm}{   * fbcp::string. The fbcp::string class is a reduced version of}
+\PY{c+cm}{   * std::string, only implementing the necessary features and}
+\PY{c+cm}{   * allowing the addition of non\PYZhy{}standard ones if future developments}
+\PY{c+cm}{   * of the FBCP implementation require them.}
+\PY{c+cm}{   */}
+  \PY{k}{@VAR} \PY{p}{(}\PY{n+nl}{msg} \PY{p}{:} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string}\PY{p}{)}
+ \PY{p}{\PYZcb{}}
+ \PY{k}{@MEMORY}
+ \PY{p}{\PYZob{}}
+  \PY{c+cm}{/*}
+\PY{c+cm}{   * Multiple memory blocks can be put in the same job/function block}
+\PY{c+cm}{   * and they will be joined together by schemop.}
+\PY{c+cm}{   */}
+  \PY{k}{@VAR} \PY{p}{(}\PY{n+nl}{t} \PY{p}{:} \PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
+ \PY{p}{\PYZcb{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=210,stepnumber=1]
+ \PY{c+cm}{/*}
+\PY{c+cm}{  * This @RETURN directive is not the same as the one used in the}
+\PY{c+cm}{  * function definition (notice the semicolon at the end). It}
+\PY{c+cm}{  * specifies what value should be returned to the caller and stops}
+\PY{c+cm}{  * the function. More than one of this directive can be (and usually}
+\PY{c+cm}{  * is) present in the same function.}
+\PY{c+cm}{  */} 
+ \PY{k}{@RETURN}\PY{p}{(}            \PY{c+c1}{// This is the standard way to pars ean FBCP}
+  \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{parseCommand}\PY{p}{(}\PY{c+c1}{// command contained in a fbcp::string. The}
+   \PY{k}{@VAR}\PY{p}{(}\PY{n}{msg}\PY{p}{)}\PY{p}{,}        \PY{c+c1}{// result is stored in the second parameter which}
+   \PY{o}{*}\PY{k}{@PARAM}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}      \PY{c+c1}{// is of type fbcp::COMMAND\PYZus{}LINE\PYZam{}. I also returns}
+  \PY{p}{)}                  \PY{c+c1}{// whether or not the parsing was successful.}
+  \PY{o}{?}\PY{n+nl}{READ\PYZus{}SUCCESS}\PY{p}{:}\PY{n}{READ\PYZus{}FAIL}
+ \PY{p}{)}\PY{p}{;}
+\PY{p}{\PYZcb{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=240,stepnumber=1]
+\PY{c+cm}{/*}
+\PY{c+cm}{ * This is a job definition. Its name can be used to either schedule}
+\PY{c+cm}{ * or deschedule it.}
+\PY{c+cm}{ */}
+\PY{k}{@JOB} \PY{p}{(}\PY{n}{job\PYZus{}network}\PY{p}{)}
+\PY{l+s+sd}{/**}
+\PY{l+s+sd}{ * Job that manages the connection to a network.}
+\PY{l+s+sd}{ * When the robot is idle (neither in game mode nor in standalone}
+\PY{l+s+sd}{ * mode), it first tries to connect to a board and pass to game mode,}
+\PY{l+s+sd}{ * if it fails it gets into standalone mode.}
+\PY{l+s+sd}{ */}
+\PY{p}{\PYZob{}}
+ \PY{c+c1}{// Memory blocks in jobs are identical to the ones in functions}
+ \PY{k}{@MEMORY}
+ \PY{p}{\PYZob{}}
+  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{i}\PY{p}{:}\PY{k+kt}{int}\PY{p}{)}
+  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{n}\PY{p}{:}\PY{k+kt}{int}\PY{p}{)}
+  
+  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{t1}\PY{p}{:}\PY{k+kt}{unsigned} \PY{k+kt}{long}\PY{p}{)}
+  
+  \PY{k}{@VAR}\PY{p}{(}\PY{n+nl}{cmd}\PY{p}{:}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{COMMAND\PYZus{}LINE}\PY{p}{)}
+ \PY{p}{\PYZcb{}}
+
+ \PY{k}{@WHILE} \PY{c+c1}{// This is an infinite loop}
+ \PY{p}{\PYZob{}}
+  \PY{k}{@IF} \PY{p}{(}\PY{n}{mode} \PY{o}{=}\PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{)} \PY{c+c1}{// Using a ScheMo @IF here allows to use}
+  \PY{p}{\PYZob{}}                       \PY{c+c1}{// other directives inside}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=270,stepnumber=1]
+   \PY{c+cm}{/*}
+\PY{c+cm}{    * The (true) argument makes this function asynchronous, making it}
+\PY{c+cm}{    * possible to write the following @WHILE statement to make the job}
+\PY{c+cm}{    * wait for scan completion without blocking other jobs. This shows}
+\PY{c+cm}{    * the real importance of using @WHILE directives instead of normal}
+\PY{c+cm}{    * while statements.}
+\PY{c+cm}{    */}
+   \PY{n}{WiFi}\PY{p}{.}\PY{n}{scanNetworks}\PY{p}{(}\PY{n+nb}{true}\PY{p}{)}\PY{p}{;}
+   \PY{k}{@WHILE} \PY{p}{(}
+    \PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{o}{=} \PY{n}{WiFi}\PY{p}{.}\PY{n}{scanComplete}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{o}{=}\PY{o}{=} \PY{n}{WIFI\PYZus{}SCAN\PYZus{}RUNNING}
+   \PY{p}{)} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+   \PY{c+cm}{/*}
+\PY{c+cm}{    * Notice the use of a job\PYZhy{}wide @VAR variable inside the loop,}
+\PY{c+cm}{    * making it possible to still use it in the following code.}
+\PY{c+cm}{    */}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=298,stepnumber=1]
+   \PY{k}{@IF} \PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}
+   \PY{p}{\PYZob{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=302,stepnumber=1]
+    \PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{;}
+    \PY{k}{@WHILE} \PY{p}{(}\PY{o}{+}\PY{o}{+}\PY{k}{@VAR}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{k}{@VAR}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)} 
+    \PY{p}{\PYZob{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=324,stepnumber=1]
+     \PY{c+cm}{/*}
+\PY{c+cm}{      * BOARD\PYZus{}PREFIX is included in the FBCP library instead of the}
+\PY{c+cm}{      * FBNet one because it refers to the prefix of the serial code}
+\PY{c+cm}{      * of the board and thus it is part of the protocol.}
+\PY{c+cm}{      * The fact that it is also used for the SSID of the}
+\PY{c+cm}{      * board\PYZhy{}related network is just for convenience.}
+\PY{c+cm}{      */}
+     \PY{k}{if} \PY{p}{(}\PY{n}{ssid}\PY{p}{.}\PY{n}{startsWith}\PY{p}{(}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{BOARD\PYZus{}PREFIX}\PY{p}{)}\PY{p}{)}
+     \PY{p}{\PYZob{}}
+      \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Found suitable board network}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+     \PY{p}{\PYZcb{}}
+     \PY{k}{else}
+     \PY{p}{\PYZob{}}
+      \PY{c+cm}{/*}
+\PY{c+cm}{       * @CONTINUE and @BREAK directives must be placed inside @WHILE}
+\PY{c+cm}{       * blocks, but they can be contained inside normal C++ blocks}
+\PY{c+cm}{       * inside of them such as this if\PYZhy{}else statement. It\PYZsq{}s important}
+\PY{c+cm}{       * to note however that they refer to the innermost @WHILE loop,}
+\PY{c+cm}{       * not any loop.}
+\PY{c+cm}{       * @WHILE (true)}
+\PY{c+cm}{       * \PYZob{}}
+\PY{c+cm}{       *  while (true)}
+\PY{c+cm}{       *  \PYZob{}}
+\PY{c+cm}{       *   if (condition)}
+\PY{c+cm}{       *   \PYZob{}}
+\PY{c+cm}{       *    break; //stops the while loop}
+\PY{c+cm}{       *   \PYZcb{}}
+\PY{c+cm}{       *   else}
+\PY{c+cm}{       *   \PYZob{}}
+\PY{c+cm}{       *    @BREAK //stops the @WHILE loop}
+\PY{c+cm}{       *   \PYZcb{}}
+\PY{c+cm}{       *  \PYZcb{}}
+\PY{c+cm}{       * \PYZcb{}}
+\PY{c+cm}{       */}
+      \PY{k}{@CONTINUE}
+     \PY{p}{\PYZcb{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=424,stepnumber=1]
+     \PY{k}{if} \PY{p}{(}\PY{o}{!}\PY{n}{sockOut}\PY{p}{.}\PY{n}{connect}\PY{p}{(}\PY{n}{gateway}\PY{p}{,} \PY{n}{FBNet}\PY{o}{:}\PY{o}{:}\PY{n}{PORT}\PY{p}{)}\PY{p}{)}
+     \PY{p}{\PYZob{}}
+      \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Can\PYZsq{}t connect to server}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+      \PY{k}{@CONTINUE}
+     \PY{p}{\PYZcb{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=432,stepnumber=1]
+     \PY{c+cm}{/*}
+\PY{c+cm}{      * Here is shown how to obtain a valid FBCP command string. As}
+\PY{c+cm}{      * defined above, @VAR(cmd) is a fbcp::COMMAND\PYZus{}LINE, a structured}
+\PY{c+cm}{      * representation of an FBCP command string.}
+\PY{c+cm}{      * The .command member is of type fbcp::COMMAND* and specifies}
+\PY{c+cm}{      * the type of command used; all FBCP commands are available in}
+\PY{c+cm}{      * the library and accessible with their name.}
+\PY{c+cm}{      * The .params member contains all mandatory parameters, mapped}
+\PY{c+cm}{      * by their name to the actual parameter string.}
+\PY{c+cm}{      * Additional parameters added to .params are ignored, but they}
+\PY{c+cm}{      * can be put in a third member (unused here) called .other which}
+\PY{c+cm}{      * content is simply appended to the end of the command line.}
+\PY{c+cm}{      */}
+     \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{command} \PY{o}{=} \PY{o}{\PYZam{}}\PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{Q\PYZus{}SINGLE\PYZus{}PRESENTATION}\PY{p}{;}
+     \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{params}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{serial}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial}\PY{p}{;}
+     \PY{c+cm}{/*}
+\PY{c+cm}{      * The actual string to be sent out is generated using the}
+\PY{c+cm}{      * fbcp::writeCommand function. In case invalid data are supplied}
+\PY{c+cm}{      * (e.g. missing mandatory parameters) an empty string is}
+\PY{c+cm}{      * returned instead.}
+\PY{c+cm}{      */}
+     \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{string} \PY{n}{s} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{writeCommand}\PY{p}{(}\PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=456,stepnumber=1]
+     \PY{n}{sockOut}\PY{p}{.}\PY{n}{flush}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+     \PY{n}{sockOut}\PY{p}{.}\PY{n}{print}\PY{p}{(}\PY{n}{s}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+     
+     \PY{c+cm}{/*}
+\PY{c+cm}{      * This is a ScheMo function call. The function will temporarily}
+\PY{c+cm}{      * take the place of the job from the scheduler point of view,}
+\PY{c+cm}{      * being treated as the latter. The function, however, isn\PYZsq{}t}
+\PY{c+cm}{      * really part of the job and can\PYZsq{}t access job\PYZhy{}wide variables.}
+\PY{c+cm}{      */}
+     \PY{k}{@CALL}\PY{p}{(}
+      \PY{n}{read\PYZus{}command}\PY{p}{;} \PY{c+c1}{// Function to be called}
+      \PY{o}{\PYZam{}}\PY{n}{sockOut}\PY{p}{;}          \PY{c+c1}{//}
+      \PY{o}{\PYZam{}}\PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{;}        \PY{c+c1}{// Parameters}
+      \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{HARD\PYZus{}TIMEOUT} \PY{c+c1}{//}
+     \PY{p}{)} \PY{o}{:} \PY{n}{understood}\PY{p}{;} \PY{c+c1}{// Return value, its type is defined by the}
+                     \PY{c+c1}{// function definition (in this case READ\PYZus{}RESULT)}
+     \PY{c+cm}{/*}
+\PY{c+cm}{      * The return value has scope in the task right after the}
+\PY{c+cm}{      * function call, making it accessible here. If a ScheMo control}
+\PY{c+cm}{      * flow directive is used, however, it will go out of scope.}
+\PY{c+cm}{      */}
+     \PY{k}{if} \PY{p}{(}\PY{n}{understood} \PY{o}{=}\PY{o}{=} \PY{n}{READ\PYZus{}FAIL}\PY{p}{)}
+     \PY{p}{\PYZob{}}
+      \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}
+       \PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Couldn\PYZsq{}t understand server response}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+      \PY{p}{)}\PY{p}{;}
+     \PY{p}{\PYZcb{}}
+     \PY{k}{else} \PY{k}{if} \PY{p}{(}\PY{n}{understood} \PY{o}{=} \PY{n}{READ\PYZus{}TIMEOUT}\PY{p}{)}
+     \PY{p}{\PYZob{}}
+      \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Server timed out}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+     \PY{p}{\PYZcb{}}
+     \PY{k}{else} \PY{k}{if} \PY{p}{(}
+      \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{command}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{code}      \PY{c+c1}{// This is the correct way to check}
+      \PY{o}{=}\PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{A\PYZus{}GRANT\PYZus{}ACCESS}\PY{p}{.}\PY{n}{code} \PY{c+c1}{// for command equality}
+     \PY{p}{)}
+     \PY{p}{\PYZob{}}
+      \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Server allowed connection}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+      \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Connection estabilished}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+      \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}GAME}\PY{p}{;}
+      \PY{k}{@BREAK}
+     \PY{p}{\PYZcb{}}
+     \PY{k}{else} \PY{k}{if} \PY{p}{(}
+      \PY{k}{@VAR}\PY{p}{(}\PY{n}{cmd}\PY{p}{)}\PY{p}{.}\PY{n}{command}\PY{o}{\PYZhy{}}\PY{o}{\PYZgt{}}\PY{n}{code}
+      \PY{o}{=}\PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{A\PYZus{}DENY\PYZus{}ACCESS}\PY{p}{.}\PY{n}{code}
+     \PY{p}{)}
+     \PY{p}{\PYZob{}}
+      \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Server refused connection}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+     \PY{p}{\PYZcb{}}
+     \PY{k}{else}
+     \PY{p}{\PYZob{}}
+      \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}
+       \PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Server answered something strange}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+      \PY{p}{)}\PY{p}{;}
+     \PY{p}{\PYZcb{}}
+     
+     \PY{n}{sockOut}\PY{p}{.}\PY{n}{stop}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+     \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Connection failed}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+    \PY{p}{\PYZcb{}}
+   \PY{p}{\PYZcb{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=517,stepnumber=1]
+   \PY{k}{if} \PY{p}{(}\PY{n}{mode} \PY{o}{!}\PY{o}{=} \PY{n}{MODE\PYZus{}GAME}\PY{p}{)}
+   \PY{p}{\PYZob{}}
+    \PY{c+cm}{/*}
+\PY{c+cm}{     * If the robot failed to connect to a board and get in game mode,}
+\PY{c+cm}{     * it passes to standalone mode and makes itself visible to}
+\PY{c+cm}{     * controllers by becoming a WiFi access point.}
+\PY{c+cm}{     */}
+    \PY{n}{Serial}\PY{p}{.}\PY{n}{print}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Starting AccessPoint: }\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{;}
+    \PY{n}{ssid} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial}\PY{p}{;}
+    \PY{n}{Serial}\PY{p}{.}\PY{n}{println}\PY{p}{(}\PY{n}{ssid}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+    \PY{n}{WiFi}\PY{p}{.}\PY{n}{softAP}\PY{p}{(}\PY{n}{ssid}\PY{p}{.}\PY{n}{c\PYZus{}str}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+    \PY{n}{WiFi}\PY{p}{.}\PY{n}{softAPConfig}\PY{p}{(}\PY{n}{host}\PY{p}{,} \PY{n}{gateway}\PY{p}{,} \PY{n}{submask}\PY{p}{)}\PY{p}{;}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=531,stepnumber=1]
+    \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}STANDALONE}\PY{p}{;}
+   \PY{p}{\PYZcb{}}
+  \PY{p}{\PYZcb{}}
+ \PY{p}{\PYZcb{}}
+\PY{p}{\PYZcb{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=1040,stepnumber=1]
+\PY{k+kt}{void} \PY{n+nf}{setup}\PY{p}{(}\PY{p}{)}
+\PY{p}{\PYZob{}}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=1062,stepnumber=1]
+ \PY{c+cm}{/*}
+\PY{c+cm}{  * As already stated above, it\PYZsq{}s important to define a serial code}
+\PY{c+cm}{  * before starting any communications.}
+\PY{c+cm}{  */}
+ \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial} \PY{o}{=} \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{ROBOT\PYZus{}PREFIX}\PY{p}{;}
+ \PY{n}{fbcp}\PY{o}{:}\PY{o}{:}\PY{n}{serial} \PY{o}{+}\PY{o}{=} \PY{n}{serial}\PY{p}{;}
+ \PY{n}{mode} \PY{o}{=} \PY{n}{MODE\PYZus{}IDLE}\PY{p}{;}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=1077,stepnumber=1]
+ \PY{c+cm}{/*}
+\PY{c+cm}{  * This initializes both the scheduler and all variables containing}
+\PY{c+cm}{  * job/function/task data.}
+\PY{c+cm}{  * While @DECLARE should be the first directive to be written in the}
+\PY{c+cm}{  * source file and has only effect at compile time, @INIT should be}
+\PY{c+cm}{  * placed in such a way that its generated code is executed before}
+\PY{c+cm}{  * any other schemop\PYZhy{}generated code.}
+\PY{c+cm}{  */}
+ \PY{k}{@INIT}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=1090,stepnumber=1]
+ \PY{c+cm}{/*}
+\PY{c+cm}{  * Here two ways to schedule a job are shown.}
+\PY{c+cm}{  * The first one uses a C++ function and adds a single job to the}
+\PY{c+cm}{  * scheduler queue, the second one uses a schemop directive and}
+\PY{c+cm}{  * schedules all tracked jobs (i.e. the ones defined with @JOB).}
+\PY{c+cm}{  */}
+ \PY{c+c1}{//schemo::schedule\PYZus{}job(job\PYZus{}network)}
+ \PY{k}{@SCHEDULE\PYZus{}ALL}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=1100,stepnumber=1]
+ \PY{c+cm}{/*}
+\PY{c+cm}{  * The following function actually starts the scheduler.}
+\PY{c+cm}{  * All code written inside functions, jobs or tasks is actually}
+\PY{c+cm}{  * executed inside this function.}
+\PY{c+cm}{  */}
+ \PY{n}{schemo}\PY{o}{:}\PY{o}{:}\PY{n}{start\PYZus{}cycle}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+ \PY{c+cm}{/*}
+\PY{c+cm}{  * Code put here will be executed after ALL jobs have terminated.}
+\PY{c+cm}{  */}
+\PY{p}{\PYZcb{}}
+
+\PY{k+kt}{void} \PY{n}{loop}\PY{p}{(}\PY{p}{)} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\end{CodeSnippet}

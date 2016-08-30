@@ -1,0 +1,84 @@
+\noindent
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=4,stepnumber=1]
+\PY{c+c1}{\PYZsh{} fbcp.h \PYZhy{}\PYZgt{} fbcp}
+\PY{k+kn}{from} \PY{n+nn}{..} \PY{k+kn}{import} \PY{n}{fbcp}
+\PY{c+c1}{\PYZsh{} fbcp.common.h \PYZhy{}\PYZgt{} fbcp.common}
+\PY{k+kn}{from} \PY{n+nn}{..fbcp} \PY{k+kn}{import} \PY{n}{common}
+\PY{k+kn}{from} \PY{n+nn}{.shared} \PY{k+kn}{import} \PY{n}{ThreadEx} \PY{c+c1}{\PYZsh{} An extended version of threading.Thread}
+                             \PY{c+c1}{\PYZsh{} that adds features such as pausing,}
+                             \PY{c+c1}{\PYZsh{} resuming and stopping the thread.}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=18,stepnumber=1]
+\PY{c+c1}{\PYZsh{} This function loads information about FBCP commands and default}
+\PY{c+c1}{\PYZsh{} parameters from a configuration file, making it easier to add custom}
+\PY{c+c1}{\PYZsh{} ones without directly editing the module source files.}
+\PY{c+c1}{\PYZsh{} If no configuration file is supplied, the default one is used.}
+\PY{n}{fbcp}\PY{o}{.}\PY{n}{loadCommands}\PY{p}{(}\PY{p}{)}
+
+\PY{k}{class} \PY{n+nc}{ClientThread} \PY{p}{(}\PY{n}{ThreadEx}\PY{p}{)}\PY{p}{:}
+\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Represents a new client connected to the server.}
+
+\PY{l+s+sd}{Manages the FBCP connection and any subsequent communication, sending}
+\PY{l+s+sd}{the relevant data to the game module.}
+\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+ 
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=70,stepnumber=1]
+ \PY{k}{def} \PY{n+nf}{setup}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=72,stepnumber=1]
+  \PY{c+c1}{\PYZsh{} fbcp::COMMAND\PYZus{}LINE \PYZhy{}\PYZgt{} fbcp.CommandLine}
+  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdIn} \PY{o}{=} \PY{n}{fbcp}\PY{o}{.}\PY{n}{CommandLine}\PY{p}{(}\PY{p}{)}
+  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdOut} \PY{o}{=} \PY{n}{fbcp}\PY{o}{.}\PY{n}{CommandLine}\PY{p}{(}\PY{p}{)}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=121,stepnumber=1]
+ \PY{k}{def} \PY{n+nf}{manageConnection}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+  \PY{n}{buf} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sockIn}\PY{o}{.}\PY{n}{recv}\PY{p}{(}\PY{l+m+mi}{256}\PY{p}{)}\PY{o}{.}\PY{n}{decode}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{UTF\PYZhy{}8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=124,stepnumber=1]
+  \PY{c+c1}{\PYZsh{} fbcp::parseCommand \PYZhy{}\PYZgt{} fbcp.CommandLine.parse}
+  \PY{k}{if} \PY{o+ow}{not} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdIn}\PY{o}{.}\PY{n}{parse}\PY{p}{(}\PY{n}{buf}\PY{p}{)}\PY{p}{:}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{debug}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Can}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{t understand message}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+   \PY{c+c1}{\PYZsh{} fbcp::COMMAND\PYZus{}LINE.command \PYZhy{}\PYZgt{} fbcp.CommandLine.command}
+   \PY{c+c1}{\PYZsh{} Note that it is an object instead of a pointer (thus normal}
+   \PY{c+c1}{\PYZsh{} assignment by reference can be used)}
+   \PY{c+c1}{\PYZsh{}}
+   \PY{c+c1}{\PYZsh{} fbcp::COMMAND \PYZhy{}\PYZgt{} fbcp.Command}
+   \PY{c+c1}{\PYZsh{} While in the C++ library commands are accessible from the fbcp}
+   \PY{c+c1}{\PYZsh{} namespace, in the Python module they are contained in the}
+   \PY{c+c1}{\PYZsh{}fbcp.Command class.}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdOut}\PY{o}{.}\PY{n}{command} \PY{o}{=} \PY{n}{fbcp}\PY{o}{.}\PY{n}{Command}\PY{o}{.}\PY{n}{A\PYZus{}ERROR}
+   \PY{c+c1}{\PYZsh{} fbcp::writeCommand \PYZhy{}\PYZgt{} fbcp.CommandLine.write}
+   \PY{n}{s} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdOut}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{p}{)}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sockIn}\PY{o}{.}\PY{n}{send}\PY{p}{(}\PY{n}{s}\PY{o}{.}\PY{n}{encode}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{UTF\PYZhy{}8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{debug}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sent:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{s}\PY{p}{)}
+   \PY{k}{return}
+  \PY{k}{if} \PY{p}{(}
+   \PY{c+c1}{\PYZsh{} The == operator (\PYZus{}\PYZus{}eq\PYZus{}\PYZus{}) has been overloaded to allow for the}
+   \PY{c+c1}{\PYZsh{} correct comparison of two Command objects}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdIn}\PY{o}{.}\PY{n}{command} 
+   \PY{o}{==} \PY{n}{fbcp}\PY{o}{.}\PY{n}{Command}\PY{o}{.}\PY{n}{Q\PYZus{}SINGLE\PYZus{}PRESENTATION}
+  \PY{p}{)}\PY{p}{:}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{debug}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Client asked for access}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+   \PY{c+c1}{\PYZsh{} fbcp::COMMAND\PYZus{}LINE.params \PYZhy{}\PYZgt{} fbcp.CommandLine.params}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdIn}\PY{o}{.}\PY{n}{params}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{serial}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+   \PY{n}{accepted} \PY{o}{=} \PY{n+nb+bp}{False}
+   \PY{c+c1}{\PYZsh{} fbcp::ROBOT\PYZus{}PREFIX \PYZhy{}\PYZgt{} fbcp.ROBOT\PYZus{}PREFIX}
+   \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{o}{.}\PY{n}{startswith}\PY{p}{(}\PY{n}{fbcp}\PY{o}{.}\PY{n}{ROBOT\PYZus{}PREFIX}\PY{p}{)}\PY{p}{:}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=163,stepnumber=1]
+     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{debug}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Robot connected:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{serial}\PY{p}{)}
+     \PY{n}{accepted} \PY{o}{=} \PY{n+nb+bp}{True}
+\end{CodeSnippet}
+\begin{CodeSnippet}[commandchars=\\\{\},numbers=left,firstnumber=208,stepnumber=1]
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdOut}\PY{o}{.}\PY{n}{command} \PY{o}{=} \PY{p}{(}
+    \PY{n}{fbcp}\PY{o}{.}\PY{n}{Command}\PY{o}{.}\PY{n}{A\PYZus{}GRANT\PYZus{}ACCESS} \PY{k}{if} \PY{n}{accepted}
+    \PY{k}{else} \PY{n}{fbcp}\PY{o}{.}\PY{n}{Command}\PY{o}{.}\PY{n}{A\PYZus{}DENY\PYZus{}ACCESS}
+   \PY{p}{)}
+   \PY{n}{s} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{cmdOut}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{p}{)}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sockIn}\PY{o}{.}\PY{n}{send}\PY{p}{(}\PY{n}{s}\PY{o}{.}\PY{n}{encode}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{UTF\PYZhy{}8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+   \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{debug}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sent:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{s}\PY{p}{)}
+   \PY{k}{if} \PY{n}{accepted}\PY{p}{:}
+    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{connected} \PY{o}{=} \PY{n+nb+bp}{True}
+    \PY{k}{return}
+\end{CodeSnippet}

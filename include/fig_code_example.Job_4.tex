@@ -1,7 +1,7 @@
-\schemoSet{\schemoBase}{0.800000}%
+\schemoSet{\schemoBase}{1.000000}%
 \schemoSet{\schemoRotation}{90.000000}%
 \schemoSet{\schemoScale}{\schemoBase*\schemoBase}%
-\schemoSet{\schemoUnit}{10*\schemoBase mm}%
+\schemoSet{\schemoUnit}{8*\schemoBase mm}%
 \schemoSet{\schemoWidth}{15mm}%
 \schemoSet{\schemoSmall}{2/3*\schemoScale}%
 \schemoSet{\schemoLine}{0.4*\schemoScale pt}%
@@ -130,21 +130,21 @@
     line width=\schemoLine
   }
 ]
-\node [schemo function] (j2) at (0,0) {\schemoText{Wait}};
-\node [schemo task] (t8) at (2,0) {\schemoText{}};
-\node [scale=\schemoSmall, above right] at (t8.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo while] (t38) at (3.6,0) {\schemoText{\texttt{while}}};
-\node [scale=\schemoSmall, above right] at (t38.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo task] (t9) at (5.2,1) {\schemoText{}};
-\node [scale=\schemoSmall, above right] at (t9.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo task] (t10) at (6.800000000000001,0) {\schemoText{}};
-\node [scale=\schemoSmall, above right] at (t10.north east) {\rotatebox{\schemoRotation}{}};
-\node [schemo return] (t37) at (8.4,0) {\schemoText{}};
-\node [scale=\schemoSmall, right] at (t37.east) {\rotatebox{\schemoRotation}{}};
-\draw [schemo edge normal] (t8) to [out=0, in=180] (t38);
-\draw [schemo edge normal] (t38.east) to [out=0, in=-90] node [scale=0.426667, at start, below right] {\rotatebox{90.0}{true}} (t9);
-\draw [schemo edge normal] (t38.south) to [out=-90, in=-135] node [scale=0.426667, at start, below left] {\rotatebox{90.0}{false}} (t10);
-\draw [schemo edge normal] (t9) to [out=90, in=90] (t38.north);
-\draw [schemo edge normal] (t10) to [out=0, in=180] (t37);
+\node [schemo job] (j4) at (0,0) {\schemoText{Job link and bumper}};
+\node [schemo task] (t56) at (1.0,0) {\schemoText{}};
+\node [scale=\schemoSmall, above right] at (t56.north east) {\rotatebox{\schemoRotation}{}};
+\node [schemo loop] (t91) at (3.0,0) {\schemoText{\texttt{loop}}};
+\node [scale=\schemoSmall, above right] at (t91.north east) {\rotatebox{\schemoRotation}{}};
+\node [schemo task] (t57) at (5.0,1) {\schemoText{}};
+\node [scale=\schemoSmall, above right] at (t57.north east) {\rotatebox{\schemoRotation}{}};
+\node [schemo call] (t92) at (7.0,1) {\schemoText{\begin{varwidth}{\schemoWidth}call \textrm{\textit{Wait}}\end{varwidth}}};
+\node [scale=\schemoSmall, above right] at (t92.north east) {\rotatebox{\schemoRotation}{}};
+\node [schemo task] (t58) at (9.0,1) {\schemoText{}};
+\node [scale=\schemoSmall, above right] at (t58.north east) {\rotatebox{\schemoRotation}{}};
+\draw [schemo edge normal] (t56) to [out=0, in=180] (t91);
+\draw [schemo edge normal] (t91.east) to [out=0, in=-90] (t57);
+\draw [schemo edge normal] (t57) to [out=0, in=180] (t92);
+\draw [schemo edge normal] (t92) to [out=0, in=180] (t58);
+\draw [schemo edge normal] (t58) to [out=90, in=90] (t91.north);
 
 \end{tikzpicture}
