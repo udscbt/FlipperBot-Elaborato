@@ -1,0 +1,20 @@
+As explained in \autoref{ssec:vint}, we developed a virtual interface that can
+be used instead of the real joystick.
+
+This application is written in Python and uses the Tkinter package for the
+graphical interface; it can thus be run on a wide range of devices, from PCs
+to Android smartphones (although not natively for the latter).
+
+Note that this program is not to be intended as a definitive and unimprovable
+alternative version to the standard controller, but more as a proof of concept.
+In fact, it shows that the way the transission of commands is handled allows for
+different kind of controllers, making it possible to use or build the most
+suitable for the individual user.
+
+This virtual interface fully takes advantage of the \Verb|flipperbot.fbcp|
+module to implement the protocol in a simple and efficient way and they same
+could be done when developing in C++ instead of Python. While no other languages
+are currently supported\footnote{While the lack of a Java library seems to
+indicate the current impossibility to write an Android app, it is theoretically
+possible to use the C++ library in conjunction with the Android NDK.}, the simple structure of FBCP makes it easy
+to implement it in a language of choice without any deep technical knowledge.
