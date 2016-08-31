@@ -54,38 +54,20 @@
 %~ }
 \newcommand{\ScheMoTeX}{\ScheMo{}\TeX{}}
 
+% Labels for interface parts
+\newcounter{intfcount}
+\renewcommand{\theintfcount}{\Alph{intfcount}}
 \makeatletter
-% Control vertical space between Verbatim blocks by using
-% the \fanctvrbtopsep and \fancyvrbpartopsep lengths
-\newlength{\fancyvrbtopsep}
-\newlength{\fancyvrbpartopsep}
-\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+\newcommand{\intflabel}{\@ifstar\@intflabel\@@intflabel}
+\newcommand{\@intflabel}[1]{%
+  \refstepcounter{intfcount}\label{intf:#1}%
+}
+\newcommand{\@@intflabel}[1]{%
+  \@intflabel{#1}%
+  \ref*{intf:#1}%
+}
 
-% Save default value
-\let\fancyvrbtopsep@\fancyvrbtopsep
-\let\fancyvrbpartopsep@\fancyvrbpartopsep
-
-% Define custom environment CodeSnippet
-\DefineVerbatimEnvironment{CodeSnippet@}{Verbatim}
-{
-numbersep=0pt,
-frame=single,
-tabsize=1,
-fontfamily=DejaVuSansMono-TLF,
-fontsize=\relsize{-1},
-%~ ,showtabs=true
-}
-\newenvironment{CodeSnippet}
-{%
-  \VerbatimEnvironment
-  % Remove vertical space
-  \setlength{\fancyvrbtopsep}{0pt}
-  \setlength{\fancyvrbpartopsep}{0pt}
-  \CodeSnippet@%
-}
-{%Restore default vertical space
-  \setlength{\fancyvrbtopsep}{\fancyvrbtopsep@}
-  \setlength{\fancyvrbpartopsep}{\fancyvrbpartopsep@}
-  \endCodeSnippet@%
-}
+\newcommand{\intfref}{\@ifstar\@intfref\@@intfref}
+\newcommand{\@intfref}[1]{\ref*{intf:#1}}
+\newcommand{\@@intfref}[1]{\ref{intf:#1}}
 \makeatother
