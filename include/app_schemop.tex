@@ -1,5 +1,5 @@
 \autoref{table:schemop_cmd} shows a list of directives currently
-supported by the ScheMo Preprocessor.
+supported by the \ScheMo{} Preprocessor.
 
 Each directive is identified by a string name (shown in the first
 column of the table\footnote{When present, a number between square
@@ -60,7 +60,7 @@ It initializes all needed variables and the scheduler itself.
 \code{@SCHEDULE\_ALL}
 
 Shortcut command to schedule all recognized jobs. Jobs that have been
-defined without the use of the ScheMo Preprocessor are not automatically
+defined without the use of the \ScheMo{} Preprocessor are not automatically
 scheduled this way.
 
 To schedule jobs individually the C++ function
@@ -233,7 +233,7 @@ the function.
 \code{@RETURN (\variable{type})}
 
 Defines the type of variable returned by the function when placed among
-its \variable{options}. ScheMo functions can not be declared
+its \variable{options}. \ScheMo{} functions can not be declared
 \code{void}.
 \\ \hline
 \code{PARAM[2]} &
@@ -250,7 +250,7 @@ to the caller.
 \code{CALL[1]} &
 \code{@CALL (\variable{function}) : \variable{result};}
 
-Calls a ScheMo function with name \variable{function} without parameters
+Calls a \ScheMo{} function with name \variable{function} without parameters
 and places the returned value in a new variable called \variable{result}.
 
 The type of the variable is inferred from the function definition.
@@ -266,7 +266,7 @@ function. The parameters must be passed in the same order with which
 they were defined in the function's \variable{options}.
 \\ \hline
 
-\caption{List of ScheMo Preprocessor directives}
+\caption{List of \ScheMo{} Preprocessor directives}
 \label{table:schemop_cmd}
 
 \end{longtable}

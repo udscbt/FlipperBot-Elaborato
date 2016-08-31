@@ -29,43 +29,6 @@
 %~ \import{style-code-native}
 \import{style-code-lovelace}
 
-\makeatletter
-
-% Control vertical space between Verbatim blocks by using
-% the \fanctvrbtopsep and \fancyvrbpartopsep lengths
-\newlength{\fancyvrbtopsep}
-\newlength{\fancyvrbpartopsep}
-\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
-
-% Save default value
-\let\fancyvrbtopsep@\fancyvrbtopsep
-\let\fancyvrbpartopsep@\fancyvrbpartopsep
-
-% Define custom environment CodeSnippet
-\DefineVerbatimEnvironment{CodeSnippet@}{Verbatim}
-{
-numbersep=0pt,
-frame=single,
-tabsize=1,
-fontfamily=DejaVuSansMono-TLF,
-fontsize=\relsize{-1},
-%~ ,showtabs=true
-}
-\newenvironment{CodeSnippet}
-{%
-  \VerbatimEnvironment
-  % Remove vertical space
-  \setlength{\fancyvrbtopsep}{0pt}
-  \setlength{\fancyvrbpartopsep}{0pt}
-  \CodeSnippet@%
-}
-{%Restore default vertical space
-  \setlength{\fancyvrbtopsep}{\fancyvrbtopsep@}
-  \setlength{\fancyvrbpartopsep}{\fancyvrbpartopsep@}
-  \endCodeSnippet@%
-}
-\makeatother
-
 % Bigger line numbers
 \renewcommand{\theFancyVerbLine}{%
   {\ttfamily\normalsize\arabic{FancyVerbLine}}
@@ -74,7 +37,6 @@ fontsize=\relsize{-1},
 %~ \renewcommand{\FancyVerbFormatLine}[1]{%
   %~ {\underline{#1\hspace*{\fill}}%
 %~ }
-
 
 \usepackage[hidelinks]{hyperref} % includes \autoref
 
