@@ -113,6 +113,7 @@ Playing:
 \item develops social, physical, cognitive, abilities;
 \item  improves psychological and emotional strength.
 \end{itemize}
+
 What is even more interesting is that it is not necessary for the game to have a specific educational target, but also playing for its own sake serves the purpose. Moreover, there is evidence that  deprivation of playing may affect negatively the child in the future.
 \\
 Despite this, many children are still denied this opportunity, and this can be due to:
@@ -121,11 +122,13 @@ Despite this, many children are still denied this opportunity, and this can be d
 \item progressive emphasis on academics in schools and highly scheduled lifestyle trends in middle and upper class families \cite{art4};
 \item children disabilities.
 \end{itemize}
+
 Consequences of this in adulthood and adolescence may be: (only relating to the second and third classes)
 \begin{itemize}
 \item  anxiety, depression and lack of self-confidence and self-esteem in general \cite{art4};
 \item lowered motivation, dependence on others, underdeveloped social skills with particular regards to disabled children \cite{art9}.
 \end{itemize}
+
 Children affected by disabilities seem more prone than the others to suffer the consequences of deprivation of play and proper stimuli. We can define a  \textquotedblleft physical\textquotedblright deprivation (lack of sensory and motor information received by the child), and a \textquotedblleft
  social\textquotedblright deprivation (secondary disabilities as an indirect result of the former). The reasons for this are various, such as physical limitations of the child him/herself, environmental barriers, and social barriers (integration with peers) \cite{art2},\cite{art4},\cite{art8},\cite{art9}.
 
@@ -189,6 +192,7 @@ Difficulties encountered by researchers were mainly:
 \item low playfulness of patients (whether due to physical impairments or to the child's mood);
 \item wide range of possible impairments; that is, every patient, especially those affected by ASD or motor disabilities, has his/her own peculiar situation.
 \end{enumerate}
+
 The main limitations of the above\textendash mentioned studies (and in general, studies related to the use of social robotics in children playing) were:
 
 \begin{enumerate}
@@ -229,7 +233,7 @@ We focused in particular with children with motor disabilities, although some pa
 In fact, up to now, the main addressees of the experiments were children with ASD, and therefore the games were designed for children who could move (in most cases) with little physical restrictions.
 
 Little in comparison has been made for children with motor disabilities, and the employ of robotics up to now hasn't produced the same results as with children with ASD.
-\\
+
 This has 4 main reasons:
 
 \begin{enumerate}
@@ -243,19 +247,20 @@ This has 4 main reasons:
 
 Since time was short to design interfaces able to deal with all of possible impairments, we needed first to select a specific target of patients.
 \\
-\\
+
 \textbf{Inclusion Criteria:} We chose to work for children with medium motor impairments, and which do not have severe cognitive and sensitive problems (reserving the option to adapt the interface for other types of conditions, such as tetraplegic patients, at least in a future development\textendash perspective).
 \\
-\\
+
 \textbf{Age:} 7\textendash 12 years (or mentally equal in case of cognitive disabilities).
 \\
-\\
+
 \textbf{Limitations:}
 \begin{enumerate}
 \item the child is possibly sat on a wheelchair and may not be able to move much further from it;
 \item his/her movements may be imprecise and/or sudden, he/she may not be able to calculate strength;
 \item child is possibly not able to speak properly and may need time to plan the movement as he/she may not hear/see perfectly.
 \end{enumerate}
+
 \textbf{Problems to be solved:}
 \begin{enumerate}
 \item the game must not be boring after a few times,
@@ -292,23 +297,21 @@ The time given to complete the task is 13 seconds for the first 15 points, then 
 (due to little time available for  design and construction, we focused only on single player mode)
 
 In order to even the abilities of the two players, it would be interesting to program robots to randomly not execute the command from players but to go randomly around, as if it was their choice. More details about this can be find in the Robot section.
-\\
-\\
+
+
 \textbf{Simon-Says Mode:} playing mode inspired by the popular children's play. It can be suitable for younger children, or if robot batteries are recharging, for it relies on board and joystick only. When the board sees that only the joystick is connected, it asks the user if he/she wishes to enter this mode. The user must confirm he/she wants to enter Simon-Says mode by pushing down the joystick, or wait for the robot to connect. 
-\\
+
 The game starts with a set of ten lives. The board will tell the user when the sequence is given and when is it his/her turn to repeat it. The sequence is showed lighting up randomly four totems (the one in the middle is excluded). The user must then replicate exactly the sequence shown by tilting the joystick to light up the totems. Each time the user fails, he/she loses one life. The last sequence is then re proposed.  The game ends when no lives are left.
-\\
+
 The length of the sequence is determined randomly through the following formula, depending on the difficulty. 
 \\
 $L_{max} = \frac{\mathrm{Difficulty}}{5}+1$
 
 $L = \left \lceil \frac{1}{10}\sum_{i=1}^{10} rand\left(L_{max}\right) \right \rceil$
-\\
+
 Difficulty increases linearly with every success in a row (that is, if the user makes a mistake, then difficulty is reset to zero).
-\\
+
 The scoring increases as the number of successes in a row: for example, if the user gets three sequences correct in a row, he/she will receive 1 point for the first, then 2 for the second, then 3 for the third. If the user makes a mistake, the score for the following success drops back to one.
-
-
 
 
 \section{Controller}
@@ -326,10 +329,10 @@ Controller with 3 very large buttons that order the robot to accelerate forward 
 
 The joypad may be set on the table with the board or secured to the wheelchair armrests using straps.
 \\
-\\
+
 \textbf{Advantages:} this type of controller offers the possibility to patients affected by distonia or spasms to drive the robot without accidentally hitting the wrong buttons. It also can be decorated easily and provided with sounds or lights to make it more appealing, since it is quite large (approximately 50cm wide)
 \\
-\\
+
 \textbf{Disadvantages:} not suitable if the patient is unable to reach the correct position to press the button (because of spasticity or paresis) or if is very weak, so that he/she tires easily.
 This controller was not developed because of lack of time and materials needed.
 
@@ -337,10 +340,10 @@ This controller was not developed because of lack of time and materials needed.
 \label{ssec:accel}
 Wearable controller that can be tied to the child's wrist. The controller is simply an accelerometer and a control circuit that allows the patient to spin the robot on the left or right by swinging the arm (in this case the robot moves forward by itself).
 \\
-\\
+
 \textbf{Advantages:} useful for patients who cannot reach the joypad/joystick or are too weak to push the buttons.
 \\
-\\
+
 \textbf{Disadvantages:} may be still not useful if patient is tetraplegic or affected by spasm and sudden movements. Moreover, the use of accelerometers requires an accurate signal analysis. This is especially true when considering the filtering needed to adapt the interface to the movements of the patients, which can be imprecise, jittery or discontinuous. 
 
 Therefore, because mainly of lack of time, we chose not to develop such a controller, but it stands as a future development, in the perspective to create multiple interfaces that can cover the widest range of possible impairments.
@@ -357,13 +360,13 @@ In the case the patient is tetraplegic, the controller can be adapted to fit on 
 
 Very weak children may not be able to swing/push the controller long enough to play effectively. If they have sufficient control over at least one upper limb, it is possible to create a joystick. It is sensitive enough to allow the patients to drive the robot without tiring, and has four positions: forward, backward, left and right. There should be also a ON/OFF switch and a slot for batteries. Joystick and its shell are smaller than the joypad and can be positioned where the patients can reach it without difficulty (using straps).
 \\
-\\
+
 \textbf{Advantages:} can be fit onto wheelchair's armrests, just like normal controls of a scooter. These patients are very practical in driving their scooters and therefore they should fare well with such an interface. It does not need strength.
 \\
-\\
+
 \textbf{Disadvantages:} the patient needs control over one arm at least. Therefore it is not suitable for tetraplegic or distonic patients.
 \\
-\\
+
 We chose to develop the joystick for it looked more immediate, since it resembles a well\textendash known interface for wheelchair driving patients.
 \\
 \subsubsection{Mechanical part}
@@ -375,6 +378,7 @@ The lid of the shell is made up of two parts:
 \item a sliding part that can be easily moved and allows to change batteries (which is the part the user should have access to);
 \item a fixed part that covers circuitry and provides support for the joystick, button and LED. This part can be removed by screws, so that control unit program or circuitry can be modified, but should not be accessible to children.
 \end{itemize}
+
 The joystick is secured to the fixed lid with screws.
 
 \subsubsection[Electric part]{Electric part \footnote{For the electric scheme, see \autoref{app:circuit}; for implementation information, see \autoref{sec:software} and \autoref{app:code}}}
@@ -385,6 +389,7 @@ Requirements of this part are:
 \item transfer data to board and receive from it (or from/to robot);
 \item give sensory feedback on the state of the controller;
 \end{itemize}
+
 The circuitry is powered by 3 regular 1.5V AA batteries, provided with their battery slot. We made this choice basing on the ease to find the batteries, size, and possibility to recharge them. Control unit (ESP12) receives right input voltage from 3.3V regulator (AMS1117), that also provides power to Op\textendash Amp (LM378) and analog MUX (PC74HC4053)
 \footnote{For more information about ESP, see \autoref{app:ESP}}.
 The choice was made mainly on order to give the ESP a regulated tension, that should remain stable for a while also when the batteries start running out.
@@ -429,6 +434,7 @@ It consists of three main parts:
 \item electronics: batteries, regulation circuitry, lights, motors, control unit;
 \item outer shell (or \textquotedblleft head \textquotedblright) that can be decorated to form a personalised\textquotedblleft outfit \textquotedblright and provides further protection for electronics;
 \end{itemize}
+
 It receives instructions from the controller through wi-fi connection. The wireless network developed allows the child to control the robot with the controller independently from the board: if the robot sees the board activated, it connects with it and the game can start (standard game mode), while if the board is not active (its network is not on), the robot can used alone (stand alone mode). We chose to create also this second mode in order to allow the child to use the game even when the board is charging batteries, or if the board set-up is made difficult, due to its dimensions. In this mode the robot can be used on the floor as well.
 
 The batteries are accessible by removing the outer shell from the top of the robot. To prevent the user from touching the circuitry inside, the batteries are stored in a separate section of the robot and only the connectors are accessible.
@@ -439,10 +445,10 @@ Moreover, the robot needs to be small enough to move freely on the board (approx
 \begin{figure}[b]
  
 \begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth]{img/robot} 
+\includegraphics[width=0.9\linewidth]{img/VistaAssieme1} 
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
-\includegraphics[width=0.9\linewidth]{img/robot1}
+\includegraphics[width=0.9\linewidth]{img/VistaAssieme2}
 \end{subfigure}
  
 \caption{CAD models of the inner structure of the robot.}
@@ -457,6 +463,7 @@ The frame is made up of four layers (from top to bottom):
 \item Motor slot \textemdash used to store the two motors, which are secured to the wood to ensure stability, and front LEDs;
 \item Bottom layer \textemdash serves as lid for the stack and as a base for a small spinning wheel that allows the robot to be balanced.
 \end{itemize}
+
 Sections are carved in lightweight wood and secured by screws, the shape is hexagonal, inscribed in a circle approximately 7cm in diameter. The mask is set on top of everything. The strict detachment of compartments is needed both to minimize the eventuality of accidental electric contacts and to increase stability.
 The motors are actually servomotors that have been modified so that they can spin at 360\degree. This is due to lack of time, poor information supplied by data\textendash sheets on online markets, and cost of components. This arrangement causes the two motors not to spin at the same rate, so that it may be useful to verify that this problem does not affect manoeuvrability too much. Anyway, considering the size of the board (70cm) and placement of totems, the robot needs not to move on straight line for more than 30cm, so that we can accept some deviation without the game to suffer from this.
 
@@ -504,6 +511,7 @@ Being responsible for an important part of interaction with the patient, it shou
 	\end{itemize}
 \item Buzzer that emits sounds when the robot crashes, etc. We decided to delegate this part to the board as well, for the RPi can control the buzzer more efficiently than the ESP in the robot, providing more effective interaction, although sacrificing realism.
 \end{itemize}
+
 In a future development perspective, it was our intention to give the robot the possibility to disobey the user's commands from time to time, and randomly act on its own decision. This should not be as if openly helping the disabled child (in case the other player in not disabled).
 
 It also should give the impression that the robots have actually their own will, but are not capable of doing thing on their own, so that the child perceives that he/she must help them (in the story, we justify this by saying that ESPer is short-sighted). We believe this is very important to develop self-confidence and social skills.
@@ -536,6 +544,7 @@ It consists of three main layers:
 \item middle layer, that creates the room for inner circuitry and power supply and creates the connection between the sections;
 \item bottom layer, that provides basis for the totem mating and onto which middle layer is secured.
 \end{itemize}
+
 The display for scoring is located on the sides, as well as LEDs signalling the state of game, ON/OFF switch, and the \textquotedblleft everything button\textquotedblright. On the top there are also small holes that show the battery charge (being located above the battery pack).
 
 The board was designed to be divided in four quarters that could be disassembled and transported more easily. The pieces are not the same size because of the middle totem: it would have been extremely difficult to create the basis for the  mating if we had had to split it into fourths.
@@ -547,6 +556,7 @@ The sections are made out of lightweight wood and plastic and are connected with
 \item mechanically (through wooden nails);
 \item electrically (through 4 channel 3.5mm jack plugs);
 \end{itemize}
+
 In order to ease the use of the game, all the circuitry and control unit (Raspberry Pi or RPi\footnote{For more information about Raspberry Pi, see \autoref{app:RPi}}) are located in the largest plaque (the one with two totems), from now referred to a \textquotedblleft main section \textquotedblright.
 
 The main section contains also a battery pack and a pin (micro USB) to access it. This ensures the RPi to receive its proper input voltage (5V) and that the board can be recharged without extracting batteries but simply by plugging in the main section.
@@ -562,6 +572,7 @@ We chose Wi-Fi over other type of connections (e.g. Blue-tooth) for:
 \item ESPs and RPi provide built-in Wi-Fi connection;
 \item Wi-Fi connection is supported by a wide range of devices: laptops, tablets, cellphones \textellipsis while others may not always be. 
 \end{itemize}
+
 The drawback is that this kind of procedure is more energy consuming compared to Blue-tooth, for example.
 The RPi is responsible for collecting this information, processing it and sending it back.
 \\
@@ -574,8 +585,8 @@ These processes include:
 \item transfer information from controller to robot;
 \item management of display;
 \item management of sound effects\footnote {See \autoref{app:noise}} (when connected to output).
-
 \end{itemize}
+
 The implementation needed in this process is extensive and so we describe in a separate chapter\footnote{ See \autoref{sec:software}}.
 Battery pack, RPi and circuitry are secured into their positions by screws and metal bands. All pieces contain the basis for the mating with the totems (described in the totem section).
 
@@ -619,6 +630,7 @@ The big round button besides the ON/OFF switch allows the child to:
 \item resume the game \textemdash by pushing once from pause menu;
 \item return to main menu \textemdash by holding the button 3s at least during pause.
 \end{enumerate}
+
 All of these passages are supported by the change in music themes 
 \footnote {See \autoref{app:noise} for more information}.
 
@@ -691,6 +703,7 @@ two complimentary plaques would be fixed to the totems and board bottom. They wo
 \item \textbf{Magnets}: 2 small button magnets (6mm diameter) with opposite polarity. When totem is connected, only appropriate orientation (corresponding to the complimentary magnets on the board) would allowed;
 \item \textbf{Electric contacts}: The connection would be provided by small screws and flat nuts for two contacts, while for the other two contacts it would be possible the magnets themselves.
 \end{itemize}
+
 On the board the corresponding plaque would be secured to the bottom layer. The plaque is lightly raised so that wires from the contacts can be gathered together and transferred to the pins, as with the current solution.
 
 We tried to realize one of this plaques, but we had significant contact losses, especially when the totem was hit, for it tended to tilt and rotate. This is due to the facts that the magnets were not perfectly in contact, and also to the not exact alignment of the nuts. This is mainly dued to the availability of technical means we had, since this mating requires such a precision we cannot reach with manual construction alone.
@@ -716,7 +729,7 @@ On the other hand, this development is potentially very interesting, since the c
 \chapter{Method Evaluation}
 
 Some of these tests either would require too long time or cannot be performed due to difficulties in organisation (e.g. too small a sample to have statistically relevant results). We propose here some ideas to verify our assumptions, but unfortunately was not possible to carry out them all.
-\\
+
 Since we chose to focus on realization, we tried to finish the projects by the time given, neglecting a proper planning of measures of success and tests.
 \\
 \section{Proposed tests}
@@ -756,7 +769,7 @@ The protocol created should minimize this problem for every time a packet is sen
 \\
 \\
 For the same person, trend in playing time over sessions should be calculated (if the game is not boring it should not be negative);
-\\
+
 For the two populations (single and double player) the playing should be tested to be significantly different (our thesis is that double player population should have a longer playing-time).
 \\
 \\
@@ -765,11 +778,11 @@ For the two populations (single and double player) the playing should be tested 
 \\
 $PAIT (Percentage\ of\ Active\ Interaction\ Time)=\frac{T(active\ interaction)}{Total\ time}$
 \\
-\\
+
 For the same session, difference in mean PAIT between the registrations taken before and after every session should be checked (our thesis being that if the child is happy with the game, the active interaction time should be longer after sessions).
-\\
+
 For the same person, we also should calculate trend, as with playing tome. Our thesis is that is the game is boring, trend should be negative, for the child may loose enthusiasm.
-\\
+
 The same considerations for the two populations as B.1 can be applied here to verify if double player	extendash mode is more effective in promoting social skills. In this case the coefficients in the trend of PAIT after game session should be confronted.
 \\
 \\
@@ -784,20 +797,78 @@ Questionnaire should be possibly with some numerical responses (such as \textquo
 \\
 As previously said, motors on the robot are actually modified servomotors. This may undermine the required synchronism. Therefore, we decided to test both coordination between wheels and, for the same wheel, coordination between clockwise rotation (from now CW) and counter clockwise rotation (from now CCW). 
 \\
-\\
+
 \textbf{Protocol:}
 The procedure for the evaluations is here described:
 \begin{enumerate}
-\item it was recorded the period of rotation (in s) for each wheel for both CW and CCW, for 30 turns each;
+\item it was recorded the period of rotation (in s) for each wheel for both CW and CCW, for 1 minute of observation;
 \item to test normality of the four populations, an Anderson Darling test was performed;
 \item for the same wheel, it was performed a T-test (in case the distribution resulted normal), or a Wilcoxon Test (in case the distributions deviated from normal) to verify the means of CCW and CW to be equal;
 \item for the separate wheel, the same test as above were performed, in order to verify the coordination between left CW and right CCW (forward) and left CCW and right CW (backwards);
-\item box plots were drawn to exemplify conclusions for each of the four tests.
+\item box plots were drawn to exemplify conclusions for each of the four tests;
+\item the same passages were performed after removing outliers using Chauvenet's criterion.
 \end{enumerate}
-Calculations and graphics were performed using Matlab \textregistered. All tests were performed with default 5\% significance.
+
+Data were acquired using a Python program written by us to analyse video clips of rotating wheels. The program used red colour marks placed on the centre and on the rim of the wheel to determine in which frame a rotation was completed. Knowing the frame rate of the camera (50fps), it was possible to estimate period of rotation, and the maximum error of measures (20ms).
 \\
-\\
+
 \textbf{Results:}
+Observations were:
+\begin{itemize}
+\item for left wheel: 74 CW (no outliers), 81 CCW (10 outliers);
+\item for right wheel: 60 CW (1 outlier), 87 for CCW (1 outlier);
+\end{itemize}
+
+Unfortunately it appears that motors are not well coordinated. None of the distributions appeared normal, and the situation did not improve after removing outliers. P-values were all in the range of 0.05\%.
+
+Also, it appears that the distributions medians are significantly different, and this applies both to the comparison of the same wheel CW and CCW rotation, and in the comparison of the opposite wheels.
+
+\textbf{Observations and Conclusions:} 
+It can be inferred that the scarce quality of the result can be ascribed to a consistent slowing in the rotation as time passed by, as shown in the graph above. 
+
+% @Fabio: ho scritto che il grafico con i periodi è sopra perchè nel mio documento di prova lo mette sopra questo paragrafo, però stai all'occhio che potrebbe cambiarlo a seconda di come è il resto scritto prima della parte sul test. Se ti senti più sicuro ci si può fare una \ref però visto che a me non compila gli \autoref lascerei fare a te :)
+
+\begin{figure}[h]
+\includegraphics[width=\paperwidth, center]{img/figure_1}
+\caption{Plot of the periods of rotation for each sample.}
+\end{figure}
+
+Nevertheless, since for the purpose of the game the robot does not need to move in a straight line for 1 minute, this does not affect the use of it too heavily. 
+In conclusion, we can say that modified servomotors do not make a suitable substitute for regular motors, although it is not so patent during the playing of the game.
+
+\begin{figure}[h]
+
+\includegraphics[width=\paperwidth, height=9cm, center]{img/forward} 
+\includegraphics[width=\paperwidth, height=9cm, center]{img/forward2}
+\caption{Boxplots of rotation for forward progression.}
+
+\end{figure}
+
+
+\begin{figure}[h]
+ 
+\includegraphics[width=\paperwidth, height=9cm, center]{img/backward} 
+\includegraphics[width=\paperwidth, height=9cm, center]{img/backward2}
+\caption{Boxplots of rotation for backward progression.}
+
+\end{figure}
+
+\begin{figure}[h]
+ 
+\includegraphics[width=\paperwidth, height=9cm, center]{img/left} 
+\includegraphics[width=\paperwidth, height=9cm, center]{img/left2}
+\caption{Boxplots of rotation for left wheel.}
+
+\end{figure}
+
+\begin{figure}[h]
+ 
+\includegraphics[width=\paperwidth, height=9cm, center]{img/right} 
+\includegraphics[width=\paperwidth, height=9cm, center]{img/right2}
+\caption{Boxplots of rotation for right wheel.}
+
+\end{figure}
+
 
 \chapter{Future Developments}
 
@@ -808,6 +879,7 @@ As said in Abstract, sometimes we had to deviate from what we planned in order t
 \item faulty components;
 \item poor resources available (both because of monetary costs or because of long time needed for components to be shipped);
 \item programming needed was too complex or too time-consuming;
+
 Nevertheless, it seemed fair to point out where it happened so that it could be discerned what was due to mistakes in design and what difficulties could be avoided instead with more time/resources. Also, this may be useful to anyone who would like to improve our achievements.
 \end{itemize}
 
@@ -823,7 +895,7 @@ Due to little time, we chose not to develop the second player interface. All the
 \\
 \\
 The controller is the component that resulted most affected by the large variety of possible impairments found in patients. Due mostly to the little time, and second	extendash handedly to the delay in shipping of components, we decided only to fully design and realise the joystick interface, which looked to us as the one who could cover the widest range of limitations.
-\\
+
 Extended considerations over the other options are provided in the dedicated chapter.
 \\
 \\
@@ -855,15 +927,15 @@ We would contact an association, \textquotedblleft L'Abilit\`{a}\textquotedblrig
 \chapter{Aknowledgements}
 
 We would like to set aside this little space to thank those who contributed to our effort.
-\\
+
 First of all, our supervisor professor Andrea Bonarini for the precious advice, and Elena De Momi, the teacher responsible for the \textquotedblleft Project in Instrumentation and Functional Assestment \textquotedblright, as well as the course tutors, Elisabetta Peri and Noelia Chia Bejarano.
-\\
+
 We would like to thank Dr. Giulio Fontana from AIRLab for helping coordinating our work.
-\\
+
 A special thank to professor Franco Zappa for helping us out with a faulty component.
-\\
+
 Thanks also to Greta, Giada and Giammarco, who contributed to give voice to ESPer.
-\\
+
 Finally, we would like to thank all those people that started doubting our own existence during the months dedicated to the FlipperBot experience. Thank you, your patience was priceless.
 
 \begin{appendices}
