@@ -67,7 +67,21 @@
   \ref*{intf:#1}%
 }
 
+% Interface labels and references
 \newcommand{\intfref}{\@ifstar\@intfref\@@intfref}
 \newcommand{\@intfref}[1]{\ref*{intf:#1}}
 \newcommand{\@@intfref}[1]{\ref{intf:#1}}
+\makeatother
+
+% Questionable typografical choices
+\makeatletter
+\newcommand{\beforelist}{\@ifstar\@beforelist\@@beforelist}
+\newcommand{\@beforelist}{} % Multiple lines before the start of a list
+\newcommand{\@@beforelist}{\noindent} % One line before the start of a list
+
+\newcommand{\afterlist}{\@ifstar\@afterlist\@@afterlist}
+\newcommand{\@afterlist}{\par} % Multiple lines after the start of a list
+\newcommand{\@@afterlist}{\par} % One line before the start of a list
+
+\newcommand{\spacedlist}{\newline \newline}
 \makeatother

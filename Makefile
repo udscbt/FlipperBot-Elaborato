@@ -26,3 +26,4 @@ clean:
 	-rm *.blg
 	-rm *.bbl
 	-rm *.out
+	-rm img/*converted-to.pdf

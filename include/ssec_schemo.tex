@@ -41,13 +41,13 @@ to modern schedulers.
     }
     \label{fig:schemoflow}
   \end{figure}
-  To better understand how \ScheMo{} simulates parallel processing,
+
+  \beforelist* To better understand how \ScheMo{} simulates parallel processing,
   we first have to define some of its terminology%
   \footnote{Note that these definitions are specific for \ScheMo{} and
   do not necessarily correspond to the meanings that the same words
   have in other contexts of Computer Science}:
-  
-  \begin{description}[align=right, itemindent=0pt]
+  \begin{description}[align=right]
     \item [Job] it represents a single (pseudo-)process that can be
       started, stopped, paused and resumed at will. Different
       processes are represented by different jobs.
@@ -79,7 +79,7 @@ to modern schedulers.
       for the program and its content is updated by a loop inside
       the core function of the scheduler.
   \end{description}
-  
+  \afterlist*
   \ScheMo{} manages execution of tasks in a very simple way: it has a
   loop that, at each iteration, cycles through all started jobs and
   adds the current task of each to the Cycle (potentially skipping
@@ -99,7 +99,7 @@ to modern schedulers.
   \ScheMo{} also incorporates a system to manage shared memory between
   jobs by using mutexes.
 
-  A mutex is a dummy variable associated to a block of memory that
+  \beforelist* A mutex is a dummy variable associated to a block of memory that
   keeps track of whether or not that block of memory is being used by
   some job. A job that wants to access that data must make a request
   to the related mutex, with two possible outcomes:
@@ -109,7 +109,7 @@ to modern schedulers.
     \item the mutex remains in the \textit{busy} state and the job
       locks until the mutex is freed
   \end{enumerate}
-
+  \afterlist*
   To allow other jobs to use the same resources, a job must free the
   mutex once it has finished accessing the data.
 
@@ -177,15 +177,15 @@ to modern schedulers.
   a set of optional features built-in in both the \ScheMo{} Preprocessor
   and the \ScheMo{} C++ Library.
   
-  When used in conjunction with the \ScheMo{} Preprocessor, it:
+  \beforelist When used in conjunction with the \ScheMo{} Preprocessor, it:
   \begin{itemize}
     \item counts the number of jobs, functions, tasks and mutexes used
     \item assigns a name and ID to each job, function and task for
       additional analysis
     \item builds a flow graph of each job and function
   \end{itemize}
-
-  If the profiler features have been enabled during compilation, when
+  \afterlist*
+  \beforelist* If the profiler features have been enabled during compilation, when
   the resulting program is run it records in a \code{.profile} file
   (either an already existing one or a new one) data about how
   the scheduler executed the various parts of the program.
@@ -200,8 +200,8 @@ to modern schedulers.
     \item a timestamp\footref{clock_note} of when control is passed
     \textit{away from} the job
   \end{itemize}
-
-  Using this information it is possible to:
+  \afterlist
+  \beforelist Using this information it is possible to:
   \begin{itemize}
     \item reveal superflous pieces of code that are never accessed
     \item decide whether or not it is convenient to merge or split
@@ -210,7 +210,7 @@ to modern schedulers.
     \item recognise errors in the structure of the program
     \item etc\ldots
   \end{itemize}
-  
+  \afterlist
   As of yet, no memory-related profiling has been implemented.
 
   We also created a tool called \ScheMoTeX{} (and in particular the
