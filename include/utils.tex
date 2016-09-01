@@ -1,4 +1,66 @@
-\newcommand{\import}[1]{\input{\includeDir/#1}}
+% Set code snippets style
+%~ \import{style-code-default}
+%~ \import{style-code-bw}
+%~ \import{style-code-friendly}
+%~ \import{style-code-borland}
+%~ \import{style-code-manni}
+%~ \import{style-code-trac}
+%~ \import{style-code-native}
+\import{style-code-lovelace}
+
+\makeatletter
+% Control vertical space between Verbatim blocks by using
+% the \fanctvrbtopsep and \fancyvrbpartopsep lengths
+\newlength{\fancyvrbtopsep}
+\newlength{\fancyvrbpartopsep}
+\FV@AddToHook{\FV@ListParameterHook}{\topsep=\fancyvrbtopsep\partopsep=\fancyvrbpartopsep}
+
+% Save default value
+\let\fancyvrbtopsep@\fancyvrbtopsep
+\let\fancyvrbpartopsep@\fancyvrbpartopsep
+
+% Define custom environment CodeSnippet
+\DefineVerbatimEnvironment{CodeSnippet@}{Verbatim}
+{
+numbersep=0pt,
+frame=single,
+tabsize=1,
+fontfamily=DejaVuSansMono-TLF,
+fontsize=\relsize{-1},
+%~ ,showtabs=true
+}
+\newenvironment{CodeSnippet}
+{%
+  \VerbatimEnvironment
+  % Remove vertical space
+  \setlength{\fancyvrbtopsep}{0pt}
+  \setlength{\fancyvrbpartopsep}{0pt}
+  \CodeSnippet@%
+}
+{%Restore default vertical space
+  \setlength{\fancyvrbtopsep}{\fancyvrbtopsep@}
+  \setlength{\fancyvrbpartopsep}{\fancyvrbpartopsep@}
+  \endCodeSnippet@%
+}
+\makeatother
+
+% Bigger line numbers
+\renewcommand{\theFancyVerbLine}{%
+  {\ttfamily\normalsize\arabic{FancyVerbLine}}
+}
+%~ \renewcommand{\FancyVerbTab}{\rule{.1pt}{1ex}}
+%~ \renewcommand{\FancyVerbFormatLine}[1]{%
+  %~ {\underline{#1\hspace*{\fill}}%
+%~ }
+
+
+% Nicer references to (sub)subsections and appendices
+\def\?#1{}
+\addto\extrasenglish{
+  \def\subsectionautorefname{\?}
+  \def\subsubsectionautorefname{\?}
+  \def\Appendixautorefname{Appendix}
+}
 
 % \nobreakhline : \hline that doesn't break pages
 \makeatletter
@@ -33,6 +95,8 @@
   \\* \nobreakhline%
 }
 
+% Basically semantic \texttt
+\CustomVerbatimCommand{\Code}{Verb}{}
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\variable}[1]{\texttt{\textit{#1}}}
 \newcommand{\cmdline}[1]{\texttt{#1}}

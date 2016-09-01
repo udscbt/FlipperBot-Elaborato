@@ -22,8 +22,9 @@
 
 %%%%% FABIO FA BRUTTE COSE
 \newcommand{\includeDir}{include}
-\input{\includeDir/utils}
+\newcommand{\import}[1]{\input{\includeDir/#1}}
 \import{fabiopkg}
+\import{utils}
 
 \setlist[description]{itemindent=0pt}
 %%%%% FABIO SMETTE
