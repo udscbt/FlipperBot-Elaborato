@@ -2,6 +2,7 @@ TEX=pdflatex
 
 pdf: ElaboratoFinale.tex ElaboratoFinale.bbl include/ code tab
 	$(TEX) ElaboratoFinale.tex
+	cat ElaboratoFinale.log | grep -n --color Warning
 
 ElaboratoFinale.bbl: ElaboratoFinale.tex biblio.bib
 	$(TEX) ElaboratoFinale
