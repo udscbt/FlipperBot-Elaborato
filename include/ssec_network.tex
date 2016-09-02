@@ -25,11 +25,12 @@ standalone.
   \centering
   Network topologies
 
-  \small
-  \noindent
-  \resizebox{1em}{!}{\usebox{\tikzboard}} Board\quad
-  \resizebox{1em}{!}{\usebox{\tikzcontr}} Controller\quad
-  \resizebox{1em}{!}{\usebox{\tikzrobot}} Robot
+  \small\noindent
+  \begin{enumerate*}[itemjoin=\quad]
+  \item[\resizebox{1em}{!}{\usebox{\tikzboard}}]  Board
+  \item[\resizebox{1em}{!}{\usebox{\tikzcontr}}]  Controller
+  \item[\resizebox{1em}{!}{\usebox{\tikzrobot}}]  Robot
+  \end{enumerate*}
 
   \noindent
   Arrows go from the client to the server in a connection.
