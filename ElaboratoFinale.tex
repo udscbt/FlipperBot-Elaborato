@@ -22,8 +22,9 @@
 
 %%%%% FABIO FA BRUTTE COSE
 \newcommand{\includeDir}{include}
-\input{\includeDir/utils}
+\newcommand{\import}[1]{\input{\includeDir/#1}}
 \import{fabiopkg}
+\import{utils}
 
 \setlist[description]{itemindent=0pt}
 %%%%% FABIO SMETTE
@@ -659,6 +660,7 @@ The board also provides some boundaries to prevent the robot from falling off th
 \end{figure}
 
 \subsection[Display]{Display \footnote{For details on implementation, see \autoref{sec:software} and \autoref{app:code}}}
+\label{ssec:display}
 
 The display is a LTC4727G 7-segment common cathode, with four digits and seven points. It is controlled directly by ARDUINO UNO\footnote{For more information about ARDUINO, see \autoref{app:Arduino}}, that receives serial instructions from RPi. This is because, having many processes concurrently running, the Raspberry Pi does not manage to control the display most effectively, so that it tends to flicker quite visibly if directly controlling the display.
 
@@ -1118,6 +1120,10 @@ The format used for audio files is Ogg Vorbis, and is reproduced using VLC Media
 \chapter{FBCP commands}
 \label{app:fbcp}
 \import{app_fbcp}
+
+\chapter{External display messages}
+\label{app:display}
+\import{app_display}
 
 \chapter{Code Snippets}
 \label{app:code}

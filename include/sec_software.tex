@@ -5,14 +5,17 @@ software needed to make the various devices operate as wanted.
 The main programming languages used were C++ and Python, with some
 utilities written as Bash scripts.
 
-Snippets of the code contained in this project can be found in
-\autoref{app:code}, together with examples of use of the various tools.
+\autoref{fig:softtree} shows the main software components of this project,
+ignoring the utility tools only used during development.
 
-%~ \begin{figure}[htbp]
-  %~ \import{fig_softtree}
-  %~ \caption{Structure of the libraries and modules developed for this project}
-  %~ \label{fig:softtree}
-%~ \end{figure}
+Snippets of the code contained in this project can be found in
+\autoref{app:code}, presented as examples of use of the various tools.
+
+\begin{figure}[htbp]
+  \import{fig_softtree}
+  \caption{Structure of the main software components of this project}
+  \label{fig:softtree}
+\end{figure}
 
 \subsection{Scheduler Module (\ScheMo{})}
   \label{ssec:schemo}
@@ -26,18 +29,17 @@ Snippets of the code contained in this project can be found in
   \label{ssec:fbcp}
   \import{ssec_fbcp}
   
+\subsection{Joystick}
+  \label{ssec:contr}
+  \import{ssec_contr}
+
 \subsection{Robot}
   \label{ssec:robot}
   \import{ssec_robot}
-  
-\subsection{Controller}
-  \label{ssec:contr}
-  \import{ssec_contr}
-  
+
 \subsection{Board}
   \label{ssec:board}
   \import{ssec_board}
-  \subsubsection{\code{demo} module}
   
 \subsection{Virtual Interface}
   \label{ssec:vcontr}

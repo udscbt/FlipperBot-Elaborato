@@ -1,0 +1,61 @@
+The Arduino controlling the display accepts string messages and parses them to
+understand what text to show on the display and how to do it.
+
+A message is a list of zero or more colon-separated symbols, terminated by a
+semicolon.
+A symbol represents what should be shown in one of the four seven-segments units
+of the display and it can be selected from \autoref{table:dispsym}.
+Each one of the default symbols also have a \emph{dotted} version, enabled by
+adding a dot after the symbol\footnote{E.g.\ ``\Verb+0+''$\rightarrow$
+``\Verb+0.+''.}, that lights up the decimal-point dot of the seven-segments unit
+in addition to the segments that form the symbol.
+Additionally, symbols can be combined together by placing a \Verb|+| between
+them\footnote{So that ``\Verb|r+J|'' has the same meaning of ``\Verb|d|''.}.
+
+\beforelist* In any point of the message, an \emph{options} command can be
+inserted.
+It is delimited by parentheses and contains a list of zero or more
+semicolon-separated options.
+In the current version of the program, up to three options can be interpreted
+(the other ones being ignored if present) and they represent:
+\begin{enumerate}
+  \item the refresh rate
+  \item the scroll speed
+  \item the blink frequency
+\end{enumerate}
+\afterlist*
+An option can be either be an empty string (in which case the old value is kept)
+or a numerical value, optionally with a prefix specifying the numerical base
+used.
+If the chosen value is $0$, the corresponding feature is disabled.
+All options are applied as soon as the closing parenthesis is encountered.
+
+\emph{Note: if a base is specified but no number is inserted, the value of the
+option is treated as 0.}
+
+A formal definition in Extended Backus-Naur form\cite{ebnf} of this structure
+can be seen in \autoref{fig:dispmsg}.
+
+\begin{figure}[h]
+\import{display-ebnf.tex}
+
+\caption{Formal grammar definition of display messages}
+\label{fig:dispmsg}
+\end{figure}
+
+Actually, the program tries to parse any message it receives, even if it isn't
+correctly formatted; thus, it is possible to obtain the desired result using a
+slightly different syntax than the one presented, but the behaviour is clearly
+defined only for correctly formatted messages.
+
+\begin{table}[h]
+\begin{multicols}{6}
+\makeatletter\col@number\@ne\makeatother
+\begin{longtable}{l|c}
+  \import{tab_dispsymb}
+\end{longtable}
+\end{multicols}
+
+\caption{List of displayable symbols}
+\label{table:dispsym}
+\end{table}

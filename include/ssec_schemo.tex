@@ -94,7 +94,7 @@ to modern schedulers.
 
   Each task, then, must tell the scheduler what the next task in the
   job is before terminating (this process can be automated by
-  \cmdline{schemop}\footnote{See \autoref{sssec:schemop}}).
+  \cmdline{schemop}\footnote{See below}).
 
   \ScheMo{} also incorporates a system to manage shared memory between
   jobs by using mutexes.
@@ -121,7 +121,6 @@ to modern schedulers.
   problems related to mutexes.}
  
 \subsubsection{\ScheMo{} Preprocessor (\cmdline{schemop})}
-\label{sssec:schemop}
   Even if the C++ library offers various functions and macros to
   ease the writing of a multithreaded program, complex applications
   still result in hard-to-read and cluttered code.
