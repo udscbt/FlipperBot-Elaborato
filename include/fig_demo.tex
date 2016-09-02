@@ -1,0 +1,64 @@
+\contourlength{0.5pt}
+\begin{interface}[\textwidth]{img/demo.png}{1600}{881}
+  \newcommand{\intfcol}{blue}
+  \draw [ultra thick, \intfcol, rounded corners]
+    (1, -44) node [anchor=north west] {
+      \intflabel*{demo_board}
+      \bfseries
+      \contour{white}{\protect\intfref{demo_board}\relax}
+    }
+    rectangle (793, -836);
+  
+  \node [\intfcol]
+    (totemoff) at (207, -250) {
+      \bfseries
+      \intflabel{demo_totemoff}
+    };
+  %~ \draw [\intfcol, ultra thick] (totemoff) circle(70);
+
+  \node [\intfcol]
+    (totemon) at (590, -250) {
+      \bfseries
+      \intflabel{demo_totemon}
+    };
+  %~ \draw [\intfcol, ultra thick] (totemon) circle(70);
+
+  \node [\intfcol]
+    (totemhit) at (207, -633) {
+      \bfseries
+      \intflabel{demo_totemhit}
+    };
+  %~ \draw [\intfcol, ultra thick] (totemhit) circle(70);
+
+  %~ \draw [ultra thick, \intfcol, rounded corners]
+    %~ (794, -40) node [ultra thick, anchor=north west] {
+      %~ \bfseries
+      %~ \intflabel{demo_leds}
+    %~ }
+    %~ rectangle (1020, -170);
+
+  \node [\intfcol] at (905, -101) {
+    \bfseries
+    \intflabel{demo_leds}
+  };
+  
+  \node [\intfcol] at (1134, -101) {
+    \intflabel*{demo_eb}
+    \bfseries
+    \contour{white}{\protect\intfref{demo_eb}\relax}
+  };
+
+  \draw [ultra thick, \intfcol, rounded corners]
+    (1256, -2) node [anchor=north west] {
+      \bfseries
+      \intflabel{demo_display}
+    }
+    rectangle (1599, -199);
+
+  \draw [ultra thick, \intfcol, rounded corners]
+    (858, -201) node [anchor=north west] {
+      \bfseries
+      \intflabel{demo_joystick}
+    }
+    rectangle (1537, -881);
+\end{interface}

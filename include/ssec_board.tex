@@ -1,0 +1,29 @@
+The Raspberry Pi on the board runs the Raspian operating system, a GNU/Linux
+system built specifically for this device.
+
+All the software we developed to run on the RPi was written in Python,
+specifically it was tested on version \Verb|3.5.2|.
+
+\beforelist* Considering the large number of different and, sometimes, unrelated
+tasks the board has to carry out, we opted for a very modularized structure.
+The \Code|flipperbot.board| package, containing all the Python code specifically
+developed for the board, is in fact divided in the following modules:
+\begin{itemize}
+  \item \Code|audio|
+  \item \Code|display|
+  \item \Code|everythingButton|
+  \item \Code|game|
+  \item \Code|led|
+  \item \Code|server|
+  \item \Code|shared|
+  \item \Code|simonsays|
+  \item \Code|totems|
+\end{itemize}
+\afterlist
+
+
+\subsubsection{External display}
+\import{sssec_display}
+
+\subsubsection[\code{demo} package]{\Code|demo| package}
+\import{sssec_demo}
