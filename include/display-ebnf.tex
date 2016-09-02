@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PY{k}{message        }\PY{o}{=} \PY{k}{symbol}\PY{p}{,} \PY{p}{\PYZob{}} \PY{l+s+s2}{\PYZdq{}:\PYZdq{}}\PY{p}{,} \PY{k}{symbol }\PY{p}{\PYZcb{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{};\PYZdq{}}\PY{p}{;}
+\PY{k}{symbol         }\PY{o}{=} \PY{k}{simple\PYZhy{}symbol}\PY{p}{,} \PY{p}{[} \PY{l+s+s2}{\PYZdq{}+\PYZdq{}}\PY{p}{,} \PY{k}{symbol }\PY{p}{]}\PY{p}{;}
+\PY{k}{simple\PYZhy{}symbol  }\PY{o}{=} \PY{p}{(} \PY{l+s+s2}{\PYZdq{}\PYZdq{}} \PY{p}{|} \PY{n+ni}{? A symbol from \autoref{table:dispsym} ?} \PY{p}{)}\PY{p}{,} \PY{p}{[} \PY{l+s+s2}{\PYZdq{}.\PYZdq{}} \PY{p}{]}\PY{p}{,} \PY{p}{[} \PY{k}{options }\PY{p}{]}\PY{p}{;}
+\PY{k}{options        }\PY{o}{=} \PY{l+s+s2}{\PYZdq{}(\PYZdq{}}\PY{p}{,} \PY{k}{option}\PY{p}{,} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{};\PYZdq{}}\PY{p}{,} \PY{k}{option }\PY{p}{\PYZcb{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{})\PYZdq{}}\PY{p}{;}
+\PY{k}{option         }\PY{o}{=} \PY{l+s+s2}{\PYZdq{}\PYZdq{}} \PY{p}{|}
+                 \PY{k}{base}\PY{p}{,} \PY{p}{\PYZob{}} \PY{k}{digit }\PY{p}{\PYZcb{}} \PY{p}{|}
+                 \PY{k}{non\PYZhy{}base\PYZhy{}digit}\PY{p}{,} \PY{p}{\PYZob{}} \PY{k}{digit }\PY{p}{\PYZcb{}}\PY{p}{;}
+\PY{k}{base           }\PY{o}{=} \PY{l+s+s2}{\PYZdq{}b\PYZdq{}} \PY{p}{|} \PY{c+cm}{(*}\PY{c+cm}{ }\PY{c+cm}{B}\PY{c+cm}{i}\PY{c+cm}{n}\PY{c+cm}{a}\PY{c+cm}{r}\PY{c+cm}{y}\PY{c+cm}{ }\PY{c+cm}{*)}
+                 \PY{l+s+s2}{\PYZdq{}o\PYZdq{}} \PY{p}{|} \PY{c+cm}{(*}\PY{c+cm}{ }\PY{c+cm}{O}\PY{c+cm}{c}\PY{c+cm}{t}\PY{c+cm}{a}\PY{c+cm}{l}\PY{c+cm}{ }\PY{c+cm}{*)}
+                 \PY{l+s+s2}{\PYZdq{}d\PYZdq{}} \PY{p}{|} \PY{c+cm}{(*}\PY{c+cm}{ }\PY{c+cm}{D}\PY{c+cm}{e}\PY{c+cm}{c}\PY{c+cm}{i}\PY{c+cm}{m}\PY{c+cm}{a}\PY{c+cm}{l}\PY{c+cm}{ }\PY{c+cm}{*)}
+                 \PY{l+s+s2}{\PYZdq{}x\PYZdq{}}\PY{p}{;}  \PY{c+cm}{(*}\PY{c+cm}{ }\PY{c+cm}{H}\PY{c+cm}{e}\PY{c+cm}{x}\PY{c+cm}{a}\PY{c+cm}{d}\PY{c+cm}{e}\PY{c+cm}{c}\PY{c+cm}{i}\PY{c+cm}{m}\PY{c+cm}{a}\PY{c+cm}{l}\PY{c+cm}{ }\PY{c+cm}{*)}
+\PY{k}{digit          }\PY{o}{=} \PY{k}{non\PYZhy{}base\PYZhy{}digit }\PY{p}{|} \PY{l+s+s2}{\PYZdq{}b\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}d\PYZdq{}}\PY{p}{;}
+\PY{k}{non\PYZhy{}base\PYZhy{}digit }\PY{o}{=} \PY{l+s+s2}{\PYZdq{}0\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}1\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}2\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}3\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}4\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}5\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}6\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}7\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}8\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}9\PYZdq{}} \PY{p}{|}
+                 \PY{l+s+s2}{\PYZdq{}a\PYZdq{}} \PY{p}{|}       \PY{l+s+s2}{\PYZdq{}c\PYZdq{}}       \PY{p}{|} \PY{l+s+s2}{\PYZdq{}e\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}f\PYZdq{}} \PY{p}{|}
+                 \PY{l+s+s2}{\PYZdq{}A\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}B\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}C\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}D\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}E\PYZdq{}} \PY{p}{|} \PY{l+s+s2}{\PYZdq{}F\PYZdq{}}\PY{p}{;}
+\end{Verbatim}

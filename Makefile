@@ -1,6 +1,6 @@
 TEX=pdflatex
 
-pdf: ElaboratoFinale.tex ElaboratoFinale.bbl include/ code
+pdf: ElaboratoFinale.tex ElaboratoFinale.bbl include/ code tab
 	$(TEX) ElaboratoFinale.tex
 
 ElaboratoFinale.bbl: ElaboratoFinale.tex biblio.bib
@@ -13,7 +13,16 @@ include/robot-cpp.tex: include/code/robot.cpp
 include/server-py.tex: include/code/server.py
 	./include/code/do include/code/server.py python
 
-code: include/robot-cpp.tex include/server-py.tex
+include/display-ebnf.tex: include/code/display.ebnf
+	pygmentize -f latex -l ebnf -P texcomments=True include/code/display.ebnf > include/display-ebnf.tex
+	sed -i s/REFTABLE/\\\\autoref{table:dispsym}/g include/display-ebnf.tex
+
+code: include/robot-cpp.tex include/server-py.tex include/display-ebnf.tex
+
+include/tab_dispsymb.tex: include/code/display.sym
+	./include/code/sym2sseg.py include/code/display.sym include/tab_dispsymb.tex
+
+tab: include/tab_dispsymb.tex
 
 clean:
 	-rm tmp.*
