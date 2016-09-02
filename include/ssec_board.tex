@@ -8,6 +8,7 @@ specifically it was tested on version \Verb|3.5.2|.
 tasks the board has to carry out, we opted for a very modularized structure.
 The \Code|flipperbot.board| package, containing all the Python code specifically
 developed for the board, is in fact divided in the following modules:
+\begin{multicols}{2}
 \begin{itemize}
   \item \Code|audio|
   \item \Code|display|
@@ -19,11 +20,32 @@ developed for the board, is in fact divided in the following modules:
   \item \Code|simonsays|
   \item \Code|totems|
 \end{itemize}
+\end{multicols}
 \afterlist
+Each of these have a specific function and they have been designed in such a way
+that their implementation can be radically changed while their interface to the
+other modules remains the same.
+As an example of this, when we switched from an internal to an external display controller, the \Code|display| module has been almost completely rewritten, but
+not a single line of the other modules needed edits.
+This means that future improvements of the game will be possible without losing
+any of the previous work.
 
+Among these modules, the most important is \Code|game|.
+Its role is to use all other modules to accomplish the common goal of making the
+game work as wanted.
+While all other modules\footnote{Except for \Code|simonsays|, which contains alternative game rules} concern themselves with managing the interactions with
+the external world, \Code|game| takes the data retrieved from the former and
+gives them meaning by implementing the rules of the game, allowing the inputs
+and outputs to cooperate in a meaningful way.
 
-\subsubsection{External display}
-\import{sssec_display}
+In addition to these modules, the \Code|board| package contains two subpackages
+not directly related to making the game work: \Code|debug| and \Code|demo|. 
+
+\subsubsection[\code{demo} package]{\Code|debug| package}
+\import{sssec_debug}
 
 \subsubsection[\code{demo} package]{\Code|demo| package}
 \import{sssec_demo}
+
+\subsubsection{External display}
+\import{sssec_display}
