@@ -94,18 +94,18 @@ fontsize=\relsize{-1},
   }%
   \\* \nobreakhline%
 }
+% \addcaption{# columns}{text} : reduced caption line
+\newcommand{\addcaption}[2]{%
+  \multicolumn{#1}{c}{%
+    \textbf{[\autoref*{#2}]}%
+  }%
+}
 
 % Basically semantic \texttt
 \CustomVerbatimCommand{\Code}{Verb}{}
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\variable}[1]{\texttt{\textit{#1}}}
 \newcommand{\cmdline}[1]{\texttt{#1}}
-
-\newcommand{\addcaption}[2]{%
-  \multicolumn{#1}{c}{%
-    \textbf{[\autoref*{#2}]}%
-  }%
-}
 
 % ScheMo deserves a command
 \newcommand{\ScheMo}{ScheMo}
@@ -119,23 +119,36 @@ fontsize=\relsize{-1},
 \newcommand{\ScheMoTeX}{\ScheMo{}\TeX{}}
 
 % Labels for interface parts
-\newcounter{intfcount}
+\newcounter{intfcount}    % "Local" counter
+\newcounter{intfrefcount} % Reference counter
 \renewcommand{\theintfcount}{\Alph{intfcount}}
+\renewcommand{\theintfrefcount}{\theintfcount}
 \makeatletter
-\newcommand{\intflabel}{\@ifstar\@intflabel\@@intflabel}
-\newcommand{\@intflabel}[1]{%
-  \refstepcounter{intfcount}\label{intf:#1}%
-}
-\newcommand{\@@intflabel}[1]{%
-  \@intflabel{#1}%
-  \ref*{intf:#1}%
-}
+  \newcommand{\intfref}{\@ifstar\@intfref\@@intfref}
+  \newcommand{\@intfref}[1]{\ref*{intf:#1}}
+  \newcommand{\@@intfref}[1]{\ref{intf:#1}}
 
-% Interface labels and references
-\newcommand{\intfref}{\@ifstar\@intfref\@@intfref}
-\newcommand{\@intfref}[1]{\ref*{intf:#1}}
-\newcommand{\@@intfref}[1]{\ref{intf:#1}}
+  \newcommand{\intflabel}{\@ifstar\@intflabel\@@intflabel}
+  \newcommand{\@intflabel}[1]{%
+    \stepcounter{intfcount}%
+    \refstepcounter{intfrefcount}%
+    \label{intf:#1}%
+  }
+  \newcommand{\@@intflabel}[1]{%
+    \@intflabel{#1}%
+    \intfref*{#1}%
+  }
 \makeatother
+
+% Interface environment
+\newenvironment{interface}[4][\textwidth]{%
+  \setcounter{intfcount}{0}
+  \sbox0{\includegraphics[width=#1]{#2}}
+  \begin{tikzpicture}[x=\wd0/#3, y=\ht0/#4]
+  \node [anchor=north west, inner sep=0] (image) at (-1,1) {\usebox0};
+}{%
+  \end{tikzpicture}
+}
 
 % Questionable typografical choices
 \makeatletter
