@@ -1,9 +1,5 @@
-\setcounter{intfcount}{0}
 \contourlength{1.1pt}
-\sbox0{\includegraphics[width=\textwidth]{img/virtual.png}}
-\begin{tikzpicture}[x=\wd0/560, y=\ht0/293]
-  \node [anchor=north west, inner sep=0] (image) at (0,0) {\usebox0};
-
+\begin{interface}[\textwidth]{img/virtual.png}{560}{293}
   \draw [ultra thick, red, rounded corners]
     (560, -2) node [ultra thick, anchor=north east] {
       \bfseries
@@ -32,4 +28,4 @@
       \intflabel{hint}
     }
     rectangle (160, -275);
-\end{tikzpicture}
+\end{interface}

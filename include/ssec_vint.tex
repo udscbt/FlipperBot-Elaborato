@@ -1,25 +1,32 @@
 \begin{figure}[h]
   \import{fig_vcontr}
 
-  \caption{Virtual joystick interface}
+  \caption[Virtual joystick interface]{
+    \centering
+    Virtual joystick interface
+
+    \small\noindent
+    \begin{enumerate*}[itemjoin={{; }}, after=.]
+    \item[\bfseries \intfref{connect}:] Connection button
+    \item[\bfseries \intfref{joystick}:] Virtual joystick
+    \item[\bfseries \intfref{options}:] Options
+    \item[\bfseries \intfref{hint}:] Hint text
+    \end{enumerate*}
+  }
   \label{fig:vcontr}
 \end{figure}
 
 \beforelist \autoref{fig:vcontr} shows a screenshot of the interface. The labels
 refer to its components:
 \begin{description}
-\item[\intfref{connect}:]
-  \textit{Connection button}. Allows to start and stop a connection with a board
+\item[Connection button:] Allows to start and stop a connection with a board
   or a robot (the WiFi connection to the right network must be done outside of
   this program).
-\item[\intfref{joystick}:]
-  \textit{Virtual joystick}. Simulates a real joystick, showing its current
+\item[Virtual joystick:] Simulates a real joystick, showing its current
   position and accepting user input.
-\item[\intfref{options}:]
-  \textit{Options}. Allow to enable or disable certain features of the virtual
+\item[Options:] Allow to enable or disable certain features of the virtual
   interface on the fly, enhancing the user experience.
-\item[\intfref{hint}:]
-  \textit{Hint text}. Briefly explains what's the meaning of an option when the
+\item[Hint text:] Briefly explains what's the meaning of an option when the
   cursor goes over it.
 \end{description}
 \afterlist*
