@@ -51,13 +51,13 @@ to modern schedulers.
     \item [Job] it represents a single (pseudo-)process that can be
       started, stopped, paused and resumed at will. Different
       processes are represented by different jobs.
-    \item [Task] it's a continous, non-interruptable part of a job;
+    \item [Task] it is a continous, non-interruptable part of a job;
       that is, the scheduler can switch control from a job to
       another only after a task of the first job has terminated and
       before the next task starts. This means that it is vital to
       split jobs in as many tasks as possible and to make sure that
       tasks always halt (this condition is not required for jobs)
-    \item [Function] it's similar to a job in that it can run
+    \item [Function] it is similar to a job in that it can run
       concurrently with other processes, but it has some important
       differences:
       \begin{itemize}
