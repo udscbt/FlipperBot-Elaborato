@@ -1,1 +1,42 @@
+The robot's software is similar to that of the joystick in many ways, so only
+the main differences are indicated here.
 
+\beforelist The jobs executed by the robot are:
+\begin{description}
+  \item[\Code|job\_client|:] it is identical to that of the joystick except that
+    it takes data from the bumper (and thus the sent command is different);
+  \item[\Code|job\_link\_and\_bumper|:] it manages two sets of LEDs instead of
+    only one like the joystick and, in addition to this, it uses information
+    from the bumper to change the current direction\footnote{These two unrelated
+    functions have been united in the same job only because they are so simple
+    and short that splitting them in two jobs would only be a waste of
+    resources.};
+  \item[\Code|job\_network|:] similar to the one in joystick, but only tries to
+    connect to boards, getting into standalone mode if it fails;
+  \item[\Code|job\_server|:] each time the robot changes state, it accepts
+    exactly one connection from a device (the board to which the robot is
+    already connected as a client when in game mode or a new controller when in
+    standalone mode) and executes the received commands related to its direction
+    or the motors speed.
+\end{description}
+\afterlist*
+Just like the joystick, the robot sends a keepalive signal when necessary to
+check whether the connection is still active.
+It is to note, however, that the client job is only active while in game mode
+(in fact, the joystick wouldn't handle the bumper information even if it
+received it since it doesn't run a server).
+
+Unlike the joystick, though, the robot also has a server that needs to assure
+the functionality of the connection.
+It accomplishes this by setting a timeout (longer than the normal time between
+a keepalive command and the next) after which the connection is broken if no
+command is received.
+Of course, it also replies to incoming keepalive commands.
+
+As said in the list above, the bumper is used (in addition to sending its raw
+value to the board) to change the direction of the robot.
+In fact, to avoid having the robot needlessly pushing against the walls, the
+forward direction is prevented when the bumper is pressed (the robot stops
+instead).
+In addition to this, the forward left and forward right direction are converted
+to in-place left and right rotations respectively.

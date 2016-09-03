@@ -1,0 +1,37 @@
+\beforelist* The ESP8266 on the joystick is programmed in C++, using the
+\ScheMo{} library to allow mutiple threads to run simultaneously.
+The joystick must perform three basic activities at the same time, assosciated
+to the same number of jobs:
+\begin{description}
+  \item[\Code|job\_client|:] gathers data from the hardware (the button and the
+    two potentiometers) and if:
+    \begin{enumerate}[itemjoin={,}, itemjoin*={{ and }}]
+      \item the joystick is connected to another device and
+      \item the information has changed from the last transmission
+    \end{enumerate}
+    it sends the suitable FBCP commands to the server;
+  \item[\Code|job\_link|:] manages the blue LED, turning it on and off at the
+    appropriate frequency depending on the current state;
+  \item[\Code|job\_network|:] searches for available board or robot networks,
+    tries to connect to them and puts the joystick in the right state
+    depending on the result, repeating this operation each time it finds itself
+    disconnected.
+\end{description}
+\afterlist*
+Since the preferred way to use a controller is through a game network
+(i.e.\ connected to a board), the scanned SSIDs are sorted in alphabetical
+order before trying to connect to them one at a time.
+This way, connection to the \Verb|FlipperBot-Board-|\ldots networks will always
+be attempted before the \Verb|FlipperBot-Robot-|\ldots ones.
+
+While there are commands specifically to end a connection, it is possible that
+a devices breaks the connection without explicitly stating so.
+This is the case, for example, when a device is turned off (without a source of
+power it is impossible for it to send the right message).
+
+To prevent problems in such cases, every once in a while the joystick will send
+a \emph{keepalive} command\footnote{Called \Code|Q\_HEARTBEAT| in
+\autoref{app:fbcp}.} to the server to check if the device is still actually
+connected.
+If no response is received, the joysticks falls back to the idle state and tries
+to connect to a new network.
