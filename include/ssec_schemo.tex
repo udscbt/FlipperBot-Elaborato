@@ -7,7 +7,8 @@ The SDK\footnote{Software Development Kit} available to be used with
 the Arduino IDE\footnote{Available at
 \textit{https://github.com/esp8266/Arduino}} implements a simple
 scheduler to allow the correct functioning of the WiFi communication
-while the main program runs. Unfortunately, the related API are hard
+while the main program runs. Unfortunately, the related API\footnote{Application
+Programming Interface} are hard
 to use, badly documented and their use is discouraged by the
 developers.
 
@@ -26,7 +27,7 @@ to modern schedulers.
     \caption[Example flow diagram of a \ScheMo{} program.]{
       Example flow diagram of a \ScheMo{} program.
 
-      \small
+      \small\noindent
       Each job has a distinct flow diagram, where tasks are represented
       by circles.
 
@@ -48,7 +49,7 @@ to modern schedulers.
   do not necessarily correspond to the meanings that the same words
   have in other contexts of Computer Science}:
   \begin{description}[align=right]
-    \item [Job] it represents a single (pseudo-)process that can be
+    \item [Job] it represents a single (pseudo)process that can be
       started, stopped, paused and resumed at will. Different
       processes are represented by different jobs.
     \item [Task] it is a continous, non-interruptable part of a job;
@@ -59,7 +60,7 @@ to modern schedulers.
       tasks always halt (this condition is not required for jobs)
     \item [Function] it is similar to a job in that it can run
       concurrently with other processes, but it has some important
-      differences:
+      differences:\\*
       \begin{itemize}
         \item it can't be scheduled by itself, it must instead be
           called inside a job (that passes control to the function
@@ -113,7 +114,7 @@ to modern schedulers.
   To allow other jobs to use the same resources, a job must free the
   mutex once it has finished accessing the data.
 
-  See \autoref{fig:schemoflow} to see a graphical representation
+  See \autoref{fig:schemoflow} for a graphical representation
   of how \ScheMo{} operates.
 
   \textit{Note: \ScheMo{}'s management of shared resources is very
@@ -184,12 +185,13 @@ to modern schedulers.
     \item builds a flow graph of each job and function
   \end{itemize}
   \afterlist*
-  \beforelist* If the profiler features have been enabled during compilation, when
+  If the profiler features have been enabled during compilation, when
   the resulting program is run it records in a \code{.profile} file
   (either an already existing one or a new one) data about how
   the scheduler executed the various parts of the program.
-  Each time the scheduler passes control to a different job, in fact, it
-  adds to the file:
+  
+  \beforelist Each time the scheduler passes control to a different job, in fact, it
+  adds to the file:\\*
   \begin{itemize}
     \item the ID of the currently running job
     \item the ID of the task the job is currently on

@@ -4,7 +4,7 @@ Python script (using the OpenCV library) that could analyse a video of the
 wheels spinning and measure the rotation periods.
 
 \beforelist* The analysis is done on a series of frames (extracted from a video
-by using FFmpeg) with the assumptions that:
+by using FFmpeg) with the assumptions that:\\*
 \begin{enumerate}
   \item the wheel axis is almost aligned with the camera;
   \item two markers of the same color contrasting with the surrounding are
@@ -85,7 +85,7 @@ frame to measure the current orientation of the wheel (they are shown in
                 channel \\
               \> $r$ is the red channel value of the pixel \\
               \> $g$ is the green channel value of the pixel \\
-              \> $b$ is the green channel value of the pixel
+              \> $b$ is the blue channel value of the pixel
     \end{tabbing}
   \item a threshold is applied to the filtered frame to extract blocks of pixels
     which color is mostly that of the marker channel;
@@ -142,7 +142,7 @@ where:  \= $\theta$ is the angle of rotation \\
         \> $A_x$ is the $x$ position of the axis \\
         \> $A_y$ is the $y$ position of the axis \\
         \> $M_x$ is the $x$ position of the marker \\
-        \> $M_x$ is the $x$ position of the marker \\
+        \> $M_y$ is the $y$ position of the marker \\
         \> $\theta_0$ is the pass angle
 \end{tabbing}
 

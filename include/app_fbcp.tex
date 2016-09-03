@@ -3,7 +3,7 @@
 The first column contains the name with which each command is referred
 to in code (both using the C++ library and the Python module).
 The first letter indicates wether the command should be sent from the
-client (\textbf{Q}uestion) or the server in response to a previous
+client (\textbf{Q}uestion) or from the server in response to a previous
 command (\textbf{A}nswer).
 
 The second one shows how a packet must be written to be understood as
@@ -129,7 +129,7 @@ combination with the controller) and then either:
 
 \tablesection{3}{\textit{Robot}}
 
-\code{Q\_MOTOR\_COMMAND}
+\code{Q\_MOTOR\_COMMAND}%
 \footnote{\label{motcmd_note}These commands are also part of the
   \textit{Controller} group}
 & \code{MOTOR \variable{motor} \variable{direction}}

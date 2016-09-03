@@ -1,0 +1,25 @@
+Modificare nomi in frontespizio più spaziati
+
+Aggiungere indentazione in description
+
+Riferimenti a sezioni in appendice come Appendix
+
+Eliminare finti riferimenti all'appendice F
+
+Riferimenti più accurati a software
+
+Foto robot: dire a bonarini dei bumper
+
+described in the totem section -> autoref
+
+ESP8266 -> ESP-12
+
+In network, sostituire \subsection* con \itemskip
+
+Simon Says senza -
+
+Motor analyser: link a OpenCV e FFmpeg
+
+Method evaluation: ref al software
+
+Evitare rottura pagina prima di lista

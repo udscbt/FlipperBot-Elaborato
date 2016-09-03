@@ -15,28 +15,28 @@ is made of:
 \end{itemize}
 \afterlist*
 \beforelist The various FBCP commands are divided in the following groups:
-\begin{itemize}
-  \item \textbf{generic}: common commands that can be used with
+\begin{description}
+  \item[generic:] common commands that can be used with
     other groups of commands
-  \item \textbf{network building}: manages requests of permission to
+  \item[network building:] manages requests of permission to
     join a network and grant/denial of it, in addition to changes of
     network topology
-  \item \textbf{robot} and \textbf{controller}: commands specific
+  \item[robot and controller:] commands specific
     for communication with robots and controllers
-  \item \textbf{debug}: utilities to thelp in the development of new
+  \item[debug:] utilities to thelp in the development of new
     FBCP-compatible software
-\end{itemize}
+\end{description}
 \afterlist*
-To make the use of this protocol as easy as possible, we developed
-a C++ library and a Python module that implement it.
+To make the use of this protocol as easy as possible, we developed both
+a C++ and a Python implementation of it.
 
 These tools, however, are only concerned with the creation and
 parsing of correct FBCP packets, completely ignoring how the device
-should react to them. In fact, a program that uses FBCP need not
+should react to them. In fact, a program that uses FBCP needs not to
 implement all supported commands but only the ones it is supposed to
 use, giving an error for everything else.
 
-The C++ library and the Python module are also built so to be easily
+The C++ library and the Python module are built to be easily
 extendible, making it simple to add new commands to the protocol.
 
 \textit{A full list of currently supported commands with a short
@@ -72,24 +72,24 @@ description of each can be found in \autoref{app:fbcp}.}
   already decided.
 
   \beforelist* Enabling a mode is in no way different from setting the individual
-  options one by one from a functionality point of view, but:
+  options one by one from a functionality point of view, but:\\*
   \begin{itemize}
-  \item it is quicker
-  \item it requires fewer package exchanges
+  \item it is quicker;
+  \item it requires fewer package exchanges;
   \item it makes it possible to modify the options needed by the
     server to make a particular controller work without editing the
-    code of the controller (if the name of the mode doesn't change)
+    code of the controller (if the name of the mode doesn't change).
   \end{itemize}
   \afterlist*
   \beforelist* A server isn't required to support all possible modes and options,
-  so a controller should:
+  so a controller should:\\*
   \begin{enumerate}
   \item try to select all suitable modes, from the one that allows
-    the best performance to the worst
+    the best performance to the worst;
   \item try to set the necessary options one by one, if the previous
-    point failed
+    point failed;
   \item fall back to the standard way of communicating (with direct
     robot or motor commands) if the available options aren't
-    sufficient
+    sufficient.
   \end{enumerate}
   \afterlist*
