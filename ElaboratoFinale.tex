@@ -243,14 +243,17 @@ Social Robotics potential has been evidenced also in experiments/studies involvi
 
 \begin{figure}[h]
  
-\begin{subfigure}{6cm}
-\includegraphics[width=6cm]{img/Ljunglof} 
-\captionsetup{width=5cm}
+\begin{subfigure}[b]{\textwidth/2}
+\includegraphics[width=\textwidth]{img/Ljunglof} 
+\end{subfigure}
+\begin{subfigure}[b]{\textwidth/2}
+\includegraphics[width=\textwidth]{img/Westlund}
+\end{subfigure}
+
+\begin{subfigure}[t]{\textwidth/2}
 \caption{LEKBOT: Ljungl\"of P. et al., 2011}
 \end{subfigure}
-\begin{subfigure}{6cm}
-\includegraphics[width=6cm]{img/Westlund}
-\captionsetup{width=5cm}
+\begin{subfigure}[t]{\textwidth/2}
 \caption{Westlund J. et al., 2015}
 \end{subfigure}
 
@@ -273,21 +276,25 @@ Social Robotics potential has been evidenced also in experiments/studies involvi
 \end{enumerate}
 \afterlist*
 
-\begin{figure}[b]
+\begin{figure}[bh]
+\centering
+\begin{subfigure}[b]{0.3\textwidth}
+\includegraphics[width=\textwidth]{img/Cabibihan}
+\end{subfigure}\quad
+\begin{subfigure}[b]{0.3\textwidth}
+\includegraphics[width=\textwidth]{img/Dautenhahn}
+\end{subfigure}\quad
+\begin{subfigure}[b]{0.3\textwidth}
+\includegraphics[width=\textwidth]{img/Marchal-Crespo}
+\end{subfigure}
 
-\begin{subfigure}{4.5cm}
-\includegraphics[width=4cm, height=3cm]{img/Cabibihan}
-\captionsetup{width=4cm}
+\begin{subfigure}[t]{0.3\textwidth}
 \caption{Charlie: J. Cabibihan et al., 2013}
-\end{subfigure}
-\begin{subfigure}{4cm}
-\includegraphics[width= 3cm]{img/Dautenhahn}
-\captionsetup{width=3cm}
+\end{subfigure}\quad
+\begin{subfigure}[t]{0.3\textwidth}
 \caption{KASPAR: Dautenhahn K. et al., 2009}
-\end{subfigure}
-\begin{subfigure}{4cm}
-\includegraphics[width=3cm]{img/Marchal-Crespo}
-\captionsetup{width=3cm}
+\end{subfigure}\quad
+\begin{subfigure}[t]{0.3\textwidth}
 \caption{Marchal-Crespo L. et al., 2010}
 \end{subfigure}
 
@@ -879,7 +886,7 @@ As previously said, motors on the robot are actually modified servomotors. This 
 \afterlist*
 
 \begin{figure}[h]
-\includegraphics[width=\paperwidth, center]{img/figure_1}
+\import{fig_motors}
 \caption{Plot of the periods of rotation for each sample.}
 \label{fig:rpmtime}
 \end{figure}

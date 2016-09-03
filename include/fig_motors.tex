@@ -1,0 +1,41 @@
+\pgfplotstableread{\includeDir/data/lccw.dat}{\lccw}
+\pgfplotstableread{\includeDir/data/lcw.dat}{\lcw}
+\pgfplotstableread{\includeDir/data/rcw.dat}{\rcw}
+\pgfplotstableread{\includeDir/data/rccw.dat}{\rccw}
+\newcommand\marksize{1pt}
+\begin{tikzpicture}
+  \begin{axis}[
+    xlabel={Time from start of recording [s]},
+    ylabel={Rotation period [s]},
+    width=\textwidth,
+    height=0.6\textwidth,
+    cycle list name=color list,
+    grid=both
+  ]
+
+  \addplot [color=red, mark=o, mark size=\marksize] table [
+    x index = 1,
+    y index = 2
+  ]{\lccw};
+  \addlegendentry{L-CCW}
+
+  \addplot [color=blue, mark=o, mark size=\marksize] table [
+    x index = 1,
+    y index = 2
+  ]{\lcw};
+  \addlegendentry{L-CW}
+
+  \addplot [color=green, mark=o, mark size=\marksize] table [
+    x index = 1,
+    y index = 2
+  ]{\rcw};
+  \addlegendentry{R-CW}
+
+  \addplot [color=black, mark=o, mark size=\marksize] table [
+    x index = 1,
+    y index = 2
+  ]{\rccw};
+  \addlegendentry{R-CCW}
+  
+  \end{axis}
+\end{tikzpicture}
