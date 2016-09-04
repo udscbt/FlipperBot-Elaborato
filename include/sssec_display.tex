@@ -9,17 +9,17 @@ Pi) through a TTL serial connection with baudrate of 9600 bps.
 \beforelist By sending the right string to the Arduino, it is possible to:
 \begin{itemize}
 \item set the displayed text (if it is longer than 4 character, it will be
-  shown by making it scroll through the display)
+  shown by making it scroll through the display);
 \item set the refresh rate (i.e.\ the frequency in Hz at which the characters
   are ``redrawn'')\footnote{While higher refresh rates are usually preferred to
   obtain the illusion of a static text, lower ones can be sometimes used for
-  interesting effects.}
-\item set the scroll speed (in characters per second)
-\item enable/disable blinking
-\item set the blinking speed
+  interesting effects.};
+\item set the scroll speed (in characters per second);
+\item enable/disable blinking;
+\item set the blinking speed.
 \end{itemize}
 \afterlist*
-The program is capable to translate various characters into the right set of
+The program is able to translate various characters into the right set of
 segments in the display, but if a specific character isn't available it can
 still be displayed as a combination of the default ones (in the worst case by
 setting the individual segments).

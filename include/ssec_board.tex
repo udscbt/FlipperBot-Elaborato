@@ -4,7 +4,7 @@ system built specifically for this device.
 All the software we developed to run on the RPi was written in Python,
 specifically it was tested on version \Verb|3.5.2|.
 
-\beforelist* Considering the large number of different and, sometimes, unrelated
+\beforelist* Considering the large number of different, and sometimes unrelated,
 tasks the board has to carry out, we opted for a very modularized structure.
 The \Code|flipperbot.board| package, containing all the Python code specifically
 developed for the board, is in fact divided in the following modules:
@@ -22,8 +22,8 @@ developed for the board, is in fact divided in the following modules:
 \end{itemize}
 \end{multicols}
 \afterlist*
-Each of these have a specific function and they have been designed in such a way
-that their implementation can be radically changed while their interface to the
+Each of these has a specific function and they have been designed in such a way
+that their implementation can be radically changed, while their interface to the
 other modules remains the same.
 As an example of this, when we switched from an internal to an external display controller, the \Code|display| module has been almost completely rewritten, but
 not a single line of the other modules needed edits.

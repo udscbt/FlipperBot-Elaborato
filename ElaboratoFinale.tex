@@ -114,7 +114,7 @@
 \addvspace{1cm}
 \begin{figure}[h]
  \centering
- \includegraphics[width=6cm]{img/polilogo.eps}
+ \includegraphics[width=6cm]{img/polilogo}
 \end{figure}
  
 \addvspace{1cm}
@@ -397,6 +397,7 @@ The scoring increases as the number of successes in a row: for example, if the u
 \end{description}
 
 \section{Controller}
+\label{sec:contr}
 
 The controller represents the most interactive part of the game, for it is the connection that allows the child to express his/herself.
 We developed a few ideas that should cover a wide range of possible impairments, but due to lack of time, we chose only to develop one of them.
@@ -405,7 +406,7 @@ We developed a few ideas that should cover a wide range of possible impairments,
 Controller with 3 very large buttons that order the robot to accelerate forward (middle button), or to spin to the left or right (left and right buttons).
 
 \begin{wrapfigure}{r}{0.4\textwidth}
- \includegraphics[width=6cm]{img/controller.eps}
+ \includegraphics[width=6cm]{img/controller}
  \caption{3D render of the joypad}
 \end{wrapfigure}
 
@@ -569,7 +570,7 @@ On the other hand, an advantage of using servomotors is that speed con be select
 \subsection{Electronics}
 
 \begin{figure}[h]
-\includegraphics[width=\textwidth]{img/ProgettoCircuito.eps}
+\includegraphics[width=\textwidth]{img/ProgettoCircuito}
 \caption{Electric scheme of robot circuitry}
 \label{fig:robot_circ}
 \end{figure}
@@ -605,7 +606,7 @@ This requires also the frame to be robust. Unfortunately, we had to neglect this
 \item buzzer that emits sounds when the robot crashes, etc. We decided to delegate this part to the board as well, for the RPi can control the audio output more efficiently than the ESP-12 in the robot, providing more effective interaction, although sacrificing realism.
 \end{itemize}
 \afterlist*
-In a future development perspective, it was our intention to give the robot the possibility to disobey the user's commands from time to time, and randomly act on its own decision. This should not be as if openly helping the disabled child (in case the other player in not disabled).
+In a future development perspective, it our intention was to give the robot the possibility to disobey the user's commands from time to time, and randomly act on its own decision. This should not be as if openly helping the disabled child (in case the other player in not disabled).
 
 It also should give the impression that the robots have actually their own will, but are not capable of doing thing on their own, so that the child perceives that he/she must help them (in the story, we justify this by saying that ESPer is short-sighted). We believe this is very important to develop self-confidence and social skills.
 
@@ -686,7 +687,7 @@ The board also provides some boundaries to prevent the robot from falling off th
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\textwidth]{img/Board.eps}
+\includegraphics[width=0.9\textwidth]{img/Board}
 \caption{CAD of assembled board with part of the cover removed.}
 \end{figure}
 
@@ -828,7 +829,7 @@ On the other hand, this development is potentially very interesting, since the c
 
 \chapter{Method Evaluation}
 
-Some of these tests either would require too long time or cannot be performed due to difficulties in organisation (e.g. too small a sample to have statistically relevant results). We propose here some ideas to verify our assumptions, but unfortunately it was not possible to carry out them all.
+Some of these tests either would have required too long time or could not be performed due to difficulties in organisation (e.g. too small a sample to have statistically relevant results). We propose here some ideas to verify our assumptions, but unfortunately it was not possible to carry out them all.
 
 Since we chose to focus on realization, we tried to finish the project by the time given, neglecting a proper planning of measures of success and tests.
 
@@ -855,7 +856,7 @@ Impacts would be simulated on separate parts: robot (1), totem(2) and between th
 
 The network among robot, board and totem should be robust to interferences from other sources (such as nearby computers, cellphones etc.). To test this requirement we would count the logs during the game on the various components and check at the end of the match the number of misunderstood packets. 
 
-The protocol created should minimize this problem for every time a packet is sent there has to be an answer from the receiver, and if there is not, the packet is sent again. Since the network is simple and does not need to protect possibly private information, there was not need to provide it with protection from possible hackings.
+The protocol created should minimize this problem, for every time a packet is sent there has to be an answer from the receiver, and if there is not, the packet is sent again. Since the network is simple and does not need to protect possibly private information, there was not need to provide it with protection from possible hackings.
 
 \subsection{Tests After Realisation}
 
@@ -897,7 +898,7 @@ As previously said, motors on the robot are actually modified servomotors. This 
     \item box plots were drawn to exemplify conclusions for each of the four tests;
     \item the same passages were performed after removing outliers using Chauvenet's criterion.
   \end{enumerate}
-  -Data were acquired using a Python program written by us to analyse video clips of rotating wheels%
+  Data were acquired using a Python program written by us to analyse video clips of rotating wheels%
   \footnote{See \autoref{ssec:motor}}.
   The program used red colour marks placed on the centre and on the rim of the wheel to determine in which frame a rotation was completed. Knowing the frame rate of the camera (50fps), it was possible to estimate period of rotation, and the maximum error of measures (20ms).
 
@@ -977,7 +978,7 @@ Due to little time, we chose not to develop the second player interface. All the
 
 The controller is the component that resulted most affected by the large variety of possible impairments found in patients. Due mostly to the little time, and second-handedly to the delay in shipping of components, we decided only to fully design and realise the joystick interface, which looked to us as the one who could cover the widest range of limitations.
 
-Extended considerations over the other options are provided in the dedicated chapter.
+Extended considerations over the other options are provided in \autoref{sec:contr}.
 
 \subsection*{The Robot}
 
@@ -999,11 +1000,11 @@ We chose to put realisation at the top of priorities, and moreover there was phy
 
 %~ We would contact an association, \textquotedblleft{}L'Abilit\`{a}\textquotedblright{} , that dedicates itself to enhance the quality of life of disabled children, and that was recommended to us by our supervisor. Should this fail to happen, also testing the game with non\textendash disabled children would be a good result already.
 
-\chapter{Aknowledgements}
+\chapter{Acknowledgements}
 
 We would like to set aside this little space to thank those who contributed to our effort.
 
-First of all, our supervisor professor Andrea Bonarini for the precious advice, and Elena De Momi, the teacher responsible for the \textquotedblleft{}Project in Instrumentation and Functional Assestment\textquotedblright{} , as well as the course tutors, Elisabetta Peri and Noelia Chia Bejarano.
+First of all, our supervisor professor Andrea Bonarini for the precious advice, and Elena De Momi, the teacher responsible for the \textquotedblleft{}Project in Instrumentation and Functional Assestment\textquotedblright{}, as well as the course tutors, Elisabetta Peri and Noelia Chia Bejarano.
 
 %~ We would like to thank Dr. Giulio Fontana from AIRLab for helping coordinating our work.
 
@@ -1044,7 +1045,7 @@ Finally, we would like to thank all those people that started doubting our own e
 \item management of game states.
 \end {enumerate}
 
-\includegraphics[width=0.5\linewidth]{img/RPi.eps}
+\includegraphics[width=0.5\linewidth]{img/RPi}
 
 Raspberry Pi is a single-board computer with a voltage supply of 5V (from the battery pack).
 
@@ -1080,7 +1081,7 @@ Arduino is a micro controller with its own dedicated IDE and can be programmed u
 \end{enumerate} 
 \afterlist*
 
-\begin{figure}
+\begin{figure}[hb]
     \centering
     \includegraphics[width=6cm]{img/ArduinoUno}
 \end{figure}

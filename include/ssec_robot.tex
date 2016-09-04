@@ -26,17 +26,17 @@ It is to note, however, that the client job is active only while in game mode
 (in fact, the joystick wouldn't handle the bumper information even if it
 received it since it doesn't run a server).
 
-Unlike the joystick, though, the robot also has a server that needs to assure
+However, unlike the joystick the robot also has a server that needs to assure
 the functionality of the connection.
-It accomplishes this by setting a timeout (longer than the normal time between
+This is accomplished by setting a timeout (longer than the normal time between
 a keepalive command and the next) after which the connection is broken if no
 command is received.
 Of course, it also replies to incoming keepalive commands.
 
-As said in the list above, the bumper is used (in addition to sending its raw
-value to the board) to change the direction of the robot.
+As said in the list above, the bumper is used to change the direction of the robot
+(in addition to sending its raw value to the board).
 In fact, to avoid having the robot needlessly pushing against the walls, the
 forward direction is prevented when the bumper is pressed (the robot stops
 instead).
-In addition to this, the forward left and forward right direction are converted
+Additionally, the forward left and forward right direction are converted
 to in-place left and right rotations respectively.
