@@ -60,19 +60,41 @@ fontsize=\relsize{-1},
   \def\subsubsectionautorefname{\?}
   \def\Appendixautorefname{Appendix}
 }
-\BeforeBeginEnvironment{appendices}{
-\addto\extrasenglish{
-  \makeatletter
-  \let\@sectionautorefname\chapterautorefname
-  \renewcommand\sectionautorefname{\Appendixautorefname}
+\makeatletter
+\patchcmd{\hyper@makecurrent}{%
+    \ifx\Hy@param\Hy@chapterstring
+        \let\Hy@param\Hy@chapapp
+    \fi
+}{%
+    \iftoggle{inappendix}{%true-branch
+        % list the names of all sectioning counters here
+        \@checkappendixparam{chapter}%
+        \@checkappendixparam{section}%
+        \@checkappendixparam{subsection}%
+        \@checkappendixparam{subsubsection}%
+        \@checkappendixparam{paragraph}%
+        \@checkappendixparam{subparagraph}%
+    }{}%
+}{}{\errmessage{failed to patch}}
+\newcommand*{\@checkappendixparam}[1]{%
+    \def\@checkappendixparamtmp{#1}%
+    \ifx\Hy@param\@checkappendixparamtmp
+        \let\Hy@param\Hy@appendixstring
+    \fi
 }
-}
-\AfterEndEnvironment{appendices}{
-\addto\extrasenglish{
-  \makeatletter
-  \renewcommand\sectionautorefname{\@sectionautorefname}
-}
-}
+\makeatother
+\newtoggle{inappendix}
+\togglefalse{inappendix}
+\BeforeBeginEnvironment{appendices}{\toggletrue{inappendix}}
+\AfterEndEnvironment{appendices}{\togglefalse{inappendix}}
+% end appendix autoref patch
+
+% Patch lists
+\makeatletter
+\BeforeBeginEnvironment{itemize}{\par\nobreak\@afterheading}
+\BeforeBeginEnvironment{enumerate}{\par\nobreak\@afterheading}
+\BeforeBeginEnvironment{description}{\par\nobreak\@afterheading}
+\makeatother
 
 % \nobreakhline : \hline that doesn't break pages
 \makeatletter

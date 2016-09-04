@@ -38,9 +38,10 @@ standalone.
   \label{fig:network}
 \end{figure}
 
-\subsubsection{Standard Game Network (SSID starting with
-  \code{FlipperBot-Board-})}
-  In game mode, the board acts as access point for all other devices
+\begin{description}[style=nextline]
+\item[Standard Game Network (SSID starting with
+  \code{FlipperBot-Board-})]
+  In game mode, the board acts as access point for all other devices,
   and all communications go through it.
 
   In particular, in this mode controller and robot are not directly
@@ -50,7 +51,7 @@ standalone.
   the controller before sending them to the robot, as suited to make
   the game work as expected.
 
-  The first connection is also used to manage the Everything Button
+  The first connection is also used to manage the \textquotedblleft{}everything button\textquotedblright{}
   on the controller.
 
   Another client-server connection exists between the robot and the
@@ -58,8 +59,8 @@ standalone.
 
   This topology is represented in \autoref{fig:gamenet}.
 
-\subsubsection{Standalone Network (SSID starting with
-  \code{FlipperBot-Robot-})}
+\item[Standalone Network (SSID starting with
+  \code{FlipperBot-Robot-})]
   When no boards are available for connection, a robot can become an
   access point to create a new network.
 
@@ -68,12 +69,12 @@ standalone.
   
   This topology is represented in \autoref{fig:robotnet}.
 
-\subsubsection{Isolated Network}
+\item[Isolated Network]
   In the case in which neither boards nor robots are available, the
   controller simply doesn't connect to any other device while
   waiting for a suitable network to appear.
 
-\subsection*{}
+\end{description}
 The board always uses the game mode, broadcasting the network SSID%
 \footnote{Service Set IDentifier: the \textit{name} of the WiFi
 network} to make its presence known. Robots try to connect to a game

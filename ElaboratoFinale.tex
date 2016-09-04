@@ -27,6 +27,8 @@
 \import{utils}
 
 \setlist[description]{itemindent=0pt, listparindent=\parindent}
+
+\raggedbottom
 %%%%% FABIO SMETTE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -131,11 +133,12 @@
      \\
      Bachelor Thesis by:
   \end{tabbing}
-   
- \begin{tabular}{ l c r }
+  
+  \noindent
+  \begin{tabular*}{\textwidth}{@{} l @{\extracolsep{\fill}} c @{\extracolsep{\fill}} r @{}}
   Fabio Paini & Beatrice Pazzucconi & Damiano Quadraro \\
   ID 806874 & ID 809830 & ID 806809 \\
- \end{tabular}
+ \end{tabular*}
  
      \vfill
   \begin{center}
@@ -201,7 +204,7 @@ What is even more interesting is that it is not necessary for the game to have a
 Children affected by disabilities seem more prone than the others to suffer the consequences of deprivation of play and proper stimuli. We can define a  \textquotedblleft{}physical\textquotedblright{} deprivation (lack of sensory and motor information received by the child), and a \textquotedblleft
  social\textquotedblright{} deprivation (secondary disabilities as an indirect result of the former). The reasons for this are various, such as physical limitations of the child him/herself, environmental barriers, and social barriers (integration with peers) \cite{art2},\cite{art4},\cite{art8},\cite{art9}.
 
-Recently, many efforts have been made to use technology to assist disabled children. Also a 4-year action supported by the C.O.S.T.\footnote{European Cooperation in Science and Technology} started in 2014 to connect experts and professionals all over Europe (from 28 countries) and spread concern, to ensure children with disabilities are granted their righteous playing. (LUDI \textemdash Play for Children with Disabilities \footnote{\textit\underline{http://www.cost.eu/COST\_Actions/TDP/Actions/TD1309}; \textit\underline{http://www.ludi-network.eu}}) \cite{art3}.
+Recently, many efforts have been made to use technology to assist disabled children. Also a 4-year action supported by the C.O.S.T.\footnote{European Cooperation in Science and Technology} started in 2014 to connect experts and professionals all over Europe (from 28 countries) and spread concern, to ensure children with disabilities are granted their righteous playing. (LUDI \textemdash{} Play for Children with Disabilities\footnote{See \url{http://www.cost.eu/COST\_Actions/TDP/Actions/TD1309} and \url{http://www.ludi-network.eu}}) \cite{art3}.
 
 \section{Social Robotics}
 Robotics seem particularly promising in this case and have been already employed quite successfully in biomedical environment. In particular it is Social Robotics' aim to develop a natural and productive human-machine interface to improve the quality of playing.
@@ -260,7 +263,7 @@ Social Robotics potential has been evidenced also in experiments/studies involvi
 \caption{Examples of social robots used with disabled children.}
 \end{figure}
 
-\beforelist Difficulties encountered by researchers were mainly:\\*
+\beforelist Difficulties encountered by researchers were mainly:
 \begin{enumerate}
 \item low playfulness of patients (whether due to physical impairments or to the child's mood);
 \item wide range of possible impairments; that is, every patient, especially those affected by ASD or motor disabilities, has his/her own peculiar situation.
@@ -324,7 +327,7 @@ Little in comparison has been made for children with motor disabilities, and the
 
 \beforelist Since time was short to design interfaces able to deal with all of possible impairments, we needed first to select a specific target of patients.
 \begin{description}
-\item[Inclusion Criteria:] wpe chose to work for children with medium motor impairments, and which do not have severe cognitive and sensitive problems (reserving the option to adapt the interface for other types of conditions, such as tetraplegic patients, at least in a future development\textendash perspective).
+\item[Inclusion Criteria:] we chose to work for children with medium motor impairments, and which do not have severe cognitive and sensitive problems (reserving the option to adapt the interface for other types of conditions, such as tetraplegic patients, at least in a future development\textendash perspective).
 \item[Age:] 7\textendash 12 years (or mentally equal in case of cognitive disabilities).
 \item[Limitations:]
   \begin{enumerate}
@@ -352,7 +355,8 @@ Little in comparison has been made for children with motor disabilities, and the
 \includegraphics[width=\textwidth]{img/logo_finito}
 \subsection{The Story}
 
-ESPer is a little owl\textendash shaped alien, employed at the PIAP Inc. (Pluto is a Planet), a company based on Volcano, in a not so far extendash galaxy.His job is to keep an eye on some old satellites in the orbit of the planet Dab\'{o}n.
+ESPer is a little owl\textendash shaped alien, employed at the PIAP Inc. (Pluto is a Planet), a company based on Volcano, in a not so far galaxy.
+His job is to keep an eye on some old satellites in the orbit of the planet Dab\'{o}n.
 These satellites are very old and sometimes their program stops working.
 The way to fix them is to crash ESPer's pod onto their panels.
 
@@ -372,12 +376,12 @@ We took inspiration from pinball and bumper cars to create a game in which the g
 
 The time given to complete the task is 13 seconds for the first 15 points, then 10 for the following 15 points, then 7 seconds for the last 15 points. Is the user manages to hit all of the totems, then he/she wins the game.
 
-\item[Two Players Mode:] two children may play one against the other to reach the higher score by hitting totems more quickly.
-(due to little time available for  design and construction, we focused only on single player mode)
+\item[Two Players Mode:] two children may play one against the other to reach the higher score by hitting totems more quickly
+(due to little time available for  design and construction, we focused only on single player mode).
 
-In order to even the abilities of the two players, it would be interesting to program robots to randomly not execute the command from players but to go randomly around, as if it was their choice. More details about this can be find in the Robot section.
+In order to even the abilities of the two players, it would be interesting to program robots to arbitrarily not execute the command from players but to go randomly around, as if it was their choice. More details about this can be find in \autoref{sec:robot}.
 
-\item[Simon-Says Mode:] playing mode inspired by the popular children's play. It can be suitable for younger children, or if robot batteries are recharging, for it relies on board and joystick only. When the board sees that only the joystick is connected, it asks the user if he/she wishes to enter this mode. The user must confirm he/she wants to enter Simon-Says mode by pushing down the joystick, or wait for the robot to connect. 
+\item[Simon Says Mode:] playing mode inspired by the popular children's play. It can be suitable for younger children, or if robot batteries are recharging, for it relies on board and joystick only. When the board sees that only the joystick is connected, it asks the user if he/she wishes to enter this mode. The user must confirm he/she wants to enter Simon Says mode by pushing down the joystick, or wait for the robot to connect. 
 
 The game starts with a set of ten lives. The board will tell the user when the sequence is given and when is it his/her turn to repeat it. The sequence is showed lighting up randomly four totems (the one in the middle is excluded). The user must then replicate exactly the sequence shown by tilting the joystick to light up the totems. Each time the user fails, he/she loses one life. The last sequence is then re-proposed.  The game ends when no lives are left.
 
@@ -458,7 +462,7 @@ The shell provides protection for electronics, support for the joystick and ON/O
 \afterlist
 The joystick is secured to the fixed lid with screws.
 
-\subsubsection[Electric part]{Electric part\footnote{For the electric scheme, see \autoref{app:circuit}; for implementation information, see \autoref{sec:software} and \autoref{app:code}}}
+\subsubsection[Electric part]{Electric part\footnote{For the electric scheme, see \autoref{app:circuit}}}
 \beforelist Requirements of this part are: 
 \begin{itemize}
 \item provide power;
@@ -468,17 +472,17 @@ The joystick is secured to the fixed lid with screws.
 \end{itemize}
 \afterlist*
 The circuitry is powered by 3 regular 1.5V AA batteries, provided with their battery slot. We made this choice basing on the ease to find the batteries, size, and possibility to recharge them. Control unit (ESP-12) receives right input voltage from 3.3V regulator (AMS1117), that also provides power to the analog MUX (PC74HC4053)%
-\footnote{For more information about ESP, see \autoref{app:ESP}}.
-The choice was made mainly on order to give the ESP a regulated tension, that should remain stable for a while also when the batteries start running out. The OpAmp (LM378), on the other hand, is directly connected to the batteries.
+\footnote{For more information about ESP-12, see \autoref{app:ESP}}.
+The choice was made mainly on order to give the ESP-12 a regulated tension, that should remain stable for a while also when the batteries start running out. The OpAmp (LM378), on the other hand, is directly connected to the batteries.
 
 Since the FSR\footnote{Full Scale Range} of the ADC on control unit is only 1V, a trimmer connected to the actual joystick reduces the voltage to a proper value. The joystick consists of two potentiometers (one for x axis and one for y axis), each a $5k\Omega$ resistor.
-The trimmer value is decoupled by a buffer, then given as input to the actual joystick (which is standard for Arduino interfaces). The outputs are given to the MUX, which is controlled by ESP-12 that selects inputs from the two axes alternately. Output is then given to ADC input of ESP.
+The trimmer value is decoupled by a buffer, then given as input to the actual joystick (which is standard for Arduino interfaces). The outputs are given to the MUX, which is controlled by ESP-12 that selects inputs from the two axes alternately. Output is then given to ADC input of the ESP-12.
 This way we ensure a stable voltage supply for the potentiometers. 
-The joystick also provides a button (which is activated by pushing the joystick down). This input is given directly to ESP and serves as a \textquotedblleft{}everything button\textquotedblright{}, allowing the user to pause and resume the game, even if he/she cannot reach the everything button on the board.
+The joystick also provides a button (which is activated by pushing the joystick down). This input is given directly to ESP-12 and serves as a \textquotedblleft{}everything button\textquotedblright{}, allowing the user to pause and resume the game, even if he/she cannot reach the \textquotedblleft{}everything button\textquotedblright{} on the board.
 
 The circuit is turned on by a spring button switch connected directly to the battery slot.
 
-\beforelist* A red LED light signals when power is on, and a blue LED signals when the ESP is online. The frequency of the blue LED flashing identifies the state of the controller at the moment:
+\beforelist* A red LED light signals when power is on, and a blue LED signals when the ESP-12 is online. The frequency of the blue LED flashing identifies the state of the controller at the moment:
 \begin{description}
 \item[idle:] doing nothing: off;
 \item[scanning:] searching for available networks: slowly blinking;
@@ -494,12 +498,13 @@ In order to place the joystick comfortably, we realised a strap (made out of Vel
 
 There are two possible configurations, depending on the mobility of the child: the strap can be either wrapped around one armrest (for example, behind the scooter controls), or fastened across the space between the two armrests, so that the box can be placed in the  middle. With this system, though sacrificing some stability, we ensure a wide range of positions that can be reached by the patient.
 
-\subsection[Virtual Interface]{Virtual Interface\footnote{For implementation information, see \autoref{sec:software} and \autoref{app:code}}}
+\subsection[Virtual Interface]{Virtual Interface\footnote{For implementation information, see \autoref{ssec:vcontr}}}
 \label{ssec:vint}
 In order to test and debug the game while work was still in progress, we created a graphic interface that can simulate both the totem system (with display) and the joystick. From this interface we created a simplified version of joystick that could be used to adapt the controller to different users. By creating an actual virtual controller, the child has the possibility to use his/her own tablet or laptop to play. Patients with most severe restrictions are often provided with personal computer interfaces (e.g. to drive wheelchairs) and a controller application would represent an immediate and flexible approach in order to broaden the range of suitable users.
 \import{ssec_vint}
 
 \section{Robot}
+\label{sec:robot}
 
 \begin{figure}[h]
 \centering
@@ -508,16 +513,16 @@ In order to test and debug the game while work was still in progress, we created
 \end{figure}
 
 The second most interactive part of the game is represented by the robot (ESPer). If the controller allows the child freedom of expression, the robot is the part that deals with him/her as a peer%
-\footnote{For implementation information, see \autoref{sec:software} and \autoref{app:code} }.
+\footnote{For implementation information, see \autoref{ssec:robot}}.
 
 \beforelist It consists of three main parts:
 \begin{itemize}
 \item frame (that supports and protects the circuitry and shell), and wheels;
 \item electronics: batteries, regulation circuitry, lights, motors, control unit;
-\item outer shell (or \textquotedblleft{}head\textquotedblright{}) that can be decorated to form a personalised \textquotedblleft{}outfit\textquotedblright{}  and provides further protection for electronics;
+\item outer shell (or \textquotedblleft{}head\textquotedblright{}) that can be decorated to form a personalised \textquotedblleft{}outfit\textquotedblright{}  and provides further protection for electronics.
 \end{itemize}
 \afterlist*
-It receives instructions from the controller through WiFi connection. The wireless network developed allows the child to control the robot with the controller independently from the board: if the robot sees the board activated, it connects with it and the game can start (standard game mode), while if the board is not active (its network is not on), the robot can used alone (stand alone mode). We chose to create also this second mode in order to allow the child to use the game even when the board is charging batteries, or if the board set-up is made difficult, due to its dimensions. In this mode the robot can be used on the floor as well.
+It receives instructions from the controller through WiFi connection. The wireless network developed allows the child to control the robot with the controller independently from the board: if the robot sees the board activated, it connects with it and the game can start (standard game mode), while if the board is not active (its network is not on), the robot can used alone (standalone mode). We chose to create also this second mode in order to allow the child to use the game even when the board is charging batteries, or if the board set-up is made difficult, due to its dimensions. In this mode the robot can be used on the floor as well.
 
 The batteries are accessible by removing the outer shell from the top of the robot. To prevent the user from touching the circuitry inside, the batteries are stored in a separate section of the robot and only the connectors are accessible.
 Ideally, the best approach would be to have the batteries placed on the bottom and removable using their own slot, without having to remove the outer shell. This was not done due mainly to lack of material.
@@ -548,7 +553,9 @@ Moreover, the robot needs to be small enough to move freely on the board (approx
 \afterlist*
 Sections are carved in lightweight wood and secured by screws, the shape is hexagonal, inscribed in a circle approximately 7cm in diameter. The mask is set on top of everything. The strict detachment of compartments is needed both to minimize the eventuality of accidental electric contacts and to increase stability.
 
-The motors are actually servomotors that have been modified so that they can spin at 360\degree. This is due to lack of time, poor information supplied by datasheets on online markets, and cost of components. This arrangement causes the two motors not to spin at the same rate, so that it may be useful to verify that this problem does not affect manoeuvrability too much. Anyway, considering the size of the board (70cm) and placement of totems, the robot needs not to move on straight line for more than 30cm, so that we can accept some deviation without the game to suffer from this.
+The motors are actually servomotors that have been modified so that they can spin at 360\degree. This is due to lack of time, poor information supplied by datasheets on online markets, and cost of components. This arrangement causes the two motors not to spin at the same rate, so that it may be useful to verify that this problem does not affect manoeuvrability too much\footnote{See \autoref{ssec:motortest} for more
+information}.
+Anyway, considering the size of the board (70cm) and placement of totems, the robot needs not to move on straight line for more than 30cm, so that we can accept some deviation without the game to suffer from this.
 
 On the other hand, an advantage of using servomotors is that speed con be selected directly from the control unit, with no need for a driver.
 
@@ -568,7 +575,7 @@ On the other hand, an advantage of using servomotors is that speed con be select
 \end{figure}
 
 The robot is powered with two 4.7V LIPO batteries, and can be switched ON/OFF through a switch on the rear part. We chose to use LIPO batteries because, although more expensive, they are rechargeable and \textemdash{} compared to the alternatives (such as Stilo) \textemdash{} provide a better \textquotedblleft{}power-to-bulk\textquotedblright{}  ratio, for they are lighter and smaller than the others.
-The control unit (ESP-12\footnote{For more information about ESP, see \autoref{app:ESP}}) requires 3.3V input voltage, given by the same regulator used in the controller (AMS1117).
+The control unit (ESP-12\footnote{For more information about ESP-12, see \autoref{app:ESP}}) requires 3.3V input voltage, given by the same regulator used in the controller (AMS1117).
 
 The circuitry also provides a way of monitoring the voltage of the single battery through two triggers. When one of the two batteries drops below a threshold (set at 3.3V), the circuit cuts them off from the rest of the more power-consuming electronics (such as motors), preventing degeneration of batteries. The circuit provides connections between motors, LEDs, and bumpers, and ESP-12 as well as access for programming.
 
@@ -576,7 +583,7 @@ The circuit was designed entirely by us and printed as PCB by a Chinese manufact
 
 \subsection{Head}
 
-The role of the outer shell is mainly decorative, but is it also useful to dampen impacts and protect the inner part. In this case, we gave ESPer a colourful look to appeal kids, and to ease realisation but also more \textquotedblleft{}technological\textquotedblright{} outfits could be considered, such as space saucers etc. This is particularly true if we consider the possibility to play with another child, so that the two ESPers are recognizable.
+The role of the outer shell is mainly decorative, but is it also useful to dampen impacts and protect the inner part. In this case, we gave ESPer a colourful look to appeal kids, and to ease realisation but also more \textquotedblleft{}technological\textquotedblright{} outfits could be considered, such as space saucers etc. This is particularly true if we consider the possibility to play with another child, so that the two ESPers are recognisable.
 
 The shell consists of a papier\textendash m\^{a}ch\'{e} mask under a painted striped tissue cover fitted with an elastic band. There are also a couple of antennae that can be bent as one pleases fixed on the head. These were realised in metal wire and wool.
 
@@ -595,7 +602,7 @@ This requires also the frame to be robust. Unfortunately, we had to neglect this
   \item[standard game mode:] connected to board and ready to play: green and red alternately blinking (this does not change during the pause);
   \item[standalone mode:] directly controlling the robot: green and red both on.
   \end{description}
-\item buzzer that emits sounds when the robot crashes, etc. We decided to delegate this part to the board as well, for the RPi can control the audio output more efficiently than the ESP in the robot, providing more effective interaction, although sacrificing realism.
+\item buzzer that emits sounds when the robot crashes, etc. We decided to delegate this part to the board as well, for the RPi can control the audio output more efficiently than the ESP-12 in the robot, providing more effective interaction, although sacrificing realism.
 \end{itemize}
 \afterlist*
 In a future development perspective, it was our intention to give the robot the possibility to disobey the user's commands from time to time, and randomly act on its own decision. This should not be as if openly helping the disabled child (in case the other player in not disabled).
@@ -609,7 +616,7 @@ It also should give the impression that the robots have actually their own will,
 \item resuming the game from pause menu;
 \item scoring (hitting the totems);
 \item running out of time (last 5 seconds of time allotted, when the totem starts flashing);
-\item failure (not hitting the totem in time, or not hitting the right one in Simon-Says mode).
+\item failure (not hitting the totem in time, or not hitting the right one in Simon Says mode).
 \end{enumerate}
 \afterlist*
 
@@ -671,8 +678,9 @@ The RPi is responsible for collecting this information, processing it and sendin
 \item management of sound effects\footnote {See \autoref{app:noise}} (when connected to output).
 \end{itemize}
 \afterlist*
-The implementation needed in this process is extensive and so we describe in a separate chapter\footnote{ See \autoref{sec:software}}.
-Battery pack, RPi and circuitry are secured into their positions by screws and metal bands. All pieces contain the basis for the mating with the totems (described in the totem section).
+The implementation needed in this process is extensive and so we describe in a separate chapter\footnote{ See \autoref{ssec:board}}.
+Battery pack, RPi and circuitry are secured into their positions by screws and metal bands. All pieces contain the basis for the mating with the totems (described in
+\autoref{sec:totem}).
 
 The board also provides some boundaries to prevent the robot from falling off the top. They come in the form of wooden planks (5cm wide) with hinges that allow them to be folded and stored. They are secured to the top layer by wooden nails as well.
 
@@ -682,7 +690,7 @@ The board also provides some boundaries to prevent the robot from falling off th
 \caption{CAD of assembled board with part of the cover removed.}
 \end{figure}
 
-\subsection[Display]{Display\footnote{For details on implementation, see \autoref{sec:software} and \autoref{app:code}}}
+\subsection[Display]{Display\footnote{For details on implementation, see \autoref{ssec:board}}}
 \label{ssec:display}
 
 The display is a LTC4727G 7-segment common cathode, with four digits and seven points. It is controlled directly by Arduino UNO\footnote{For more information about Arduino, see \autoref{app:Arduino}}, that receives serial instructions from RPi. This is because, having many processes concurrently running, the Raspberry Pi does not manage to control the display most effectively, so that it tends to flicker quite visibly if directly controlling the display.
@@ -717,11 +725,12 @@ For example, the display shows \textquotedblleft{}FlipperBot\textquotedblright{}
 \item return to main menu by holding the button 3s at least during pause.
 \end{enumerate}
 \afterlist
-All of these passages are supported by the change in music themes 
+All of these passages are supported by the change in music themes%
 \footnote {See \autoref{app:noise} for more information}.
 
 
 \section{Totems}
+\label{sec:totem}
 
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{img/IMG_20160616_111854} 
@@ -1052,8 +1061,7 @@ The model used in the game is Raspberry Pi B+.
 \item 512MB RAM.
 \end{enumerate}
 \afterlist*
-GPIOs are used to manage totem lighting and impact detection, as well as  LED lights, \textquotedblleft{}everything button\textquotedblright{} , while 2 USB ports are used for Wi-Fi network and serial communication with Arduino, the audio output is dedicated to sound effects. All programming was done in Python 3%
-\footnote {For details on implementation, see \autoref{sec:software} and \autoref{app:code}}.
+GPIOs are used to manage totem lighting and impact detection, as well as  LED lights, \textquotedblleft{}everything button\textquotedblright{} , while 2 USB ports are used for Wi-Fi network and serial communication with Arduino, the audio output is dedicated to sound effects. All programming was done in Python 3.
 It is located in the main section of the board.
 
 \section{Arduino}
@@ -1125,7 +1133,7 @@ It is also placed on the main section of the board.
 \end{itemize}
 \afterlist*
 Because of the need to have multiple processes concurrently running, we created a scheduler to simulate parallelism on a single processor%
-\footnote {For details on implementation, see \autoref{sec:software} and \autoref{app:code}}.
+\footnote {For details on implementation, see \autoref{ssec:schemo} and \autoref{app:code}}.
 
 \section{Themes and Sounds Effects}
 \label{app:noise}

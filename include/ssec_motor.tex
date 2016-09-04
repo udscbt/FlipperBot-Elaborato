@@ -1,10 +1,10 @@
 In order to test whether the motors of the robot could move in a synchronised
 way, using the protocol described in \autoref{ssec:motortest}, we developed a
-Python script (using the OpenCV library) that could analyse a video of the
+Python script (using the OpenCV\footnote{\url{http://opencv.org/}} library) that could analyse a video of the
 wheels spinning and measure the rotation periods.
 
 \beforelist* The analysis is done on a series of frames (extracted from a video
-by using FFmpeg) with the assumptions that:\\*
+by using FFmpeg\footnote{\url{https://ffmpeg.org/}}) with the assumptions that:
 \begin{enumerate}
   \item the wheel axis is almost aligned with the camera;
   \item two markers of the same color contrasting with the surrounding are

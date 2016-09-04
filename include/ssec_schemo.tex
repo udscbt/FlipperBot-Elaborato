@@ -1,11 +1,11 @@
 Both the robot and the controller (as will be clear later) need to
 execute multiple tasks simultaneously to work properly, however the
-ESP8266 includes only a one-core CPU, allowing for only one process
+ESP-12 includes only a one-core CPU, allowing for only one process
 to run at a time.
 
 The SDK\footnote{Software Development Kit} available to be used with
 the Arduino IDE\footnote{Available at
-\textit{https://github.com/esp8266/Arduino}} implements a simple
+\url{https://github.com/esp8266/Arduino}} implements a simple
 scheduler to allow the correct functioning of the WiFi communication
 while the main program runs. Unfortunately, the related API\footnote{Application
 Programming Interface} are hard
@@ -14,7 +14,7 @@ developers.
 
 For these reasons, we developed our own scheduler, written in
 standard C++ and thus compatible with various platforms other than
-the ESP8266. It is, however, only a barebone implementation useful
+the ESP-12. It is, however, only a barebone implementation useful
 for this specific application but lacking of various features common
 to modern schedulers.
 
@@ -57,22 +57,22 @@ to modern schedulers.
       another only after a task of the first job has terminated and
       before the next task starts. This means that it is vital to
       split jobs in as many tasks as possible and to make sure that
-      tasks always halt (this condition is not required for jobs)
+      tasks always halt (this condition is not required for jobs).
     \item [Function] it is similar to a job in that it can run
       concurrently with other processes, but it has some important
-      differences:\\*
+      differences:
       \begin{itemize}
         \item it can't be scheduled by itself, it must instead be
           called inside a job (that passes control to the function
           until completion\footnote{Asynchronous function calling
-          has not been implemented yet})
+          has not been implemented yet});
         \item when called, it can accept parameters that change its
-          behaviour
+          behaviour;
         \item once finished, it returns a value that can be used for
           subsequent computation\footnote{\code{void} functions are
-          not implemented as of now}
+          not implemented as of now};
         \item multiple instances of the same function can be run at
-          the same time without conflicting with each other
+          the same time without conflicting with each other.
       \end{itemize}
     \item [Cycle] it represents the order of execution of the
       various tasks. The name comes from the fact that, at any one
@@ -81,7 +81,7 @@ to modern schedulers.
       the core function of the scheduler.
   \end{description}
   \afterlist*
-  \ScheMo{} manages execution of tasks in a very simple way: it has a
+  \ScheMo{} manages the execution of tasks in a very simple way: it has a
   loop that, at each iteration, cycles through all started jobs and
   adds the current task of each to the Cycle (potentially skipping
   some jobs if they are locked\footnote{See below} or defined to be
@@ -93,12 +93,12 @@ to modern schedulers.
   A new job can be started by informing the scheduler of its first
   task and asking for it to be executed.
 
-  Each task, then, must tell the scheduler what the next task in the
+  Each task then must tell the scheduler what the next task in the
   job is before terminating (this process can be automated by
   \cmdline{schemop}\footnote{See below}).
 
   \ScheMo{} also incorporates a system to manage shared memory between
-  jobs by using mutexes.
+  jobs using mutexes.
 
   \beforelist* A mutex is a dummy variable associated to a block of memory that
   keeps track of whether or not that block of memory is being used by
@@ -106,9 +106,9 @@ to modern schedulers.
   to the related mutex, with two possible outcomes:
   \begin{enumerate}
     \item the mutex changes state from \textit{free} to
-      \textit{busy} and the job continues its execution
+      \textit{busy} and the job continues its execution or
     \item the mutex remains in the \textit{busy} state and the job
-      locks until the mutex is freed
+      locks until the mutex is freed.
   \end{enumerate}
   \afterlist*
   To allow other jobs to use the same resources, a job must free the
@@ -145,9 +145,9 @@ to modern schedulers.
   to worry about defining, locking and unlocking mutexes since the
   preprocessor automatically generates the right code to do that.
   
-  It is however worthy of note that only statically defined jobs and
+  However it is worthy of note that only statically defined jobs and
   tasks can take advantage of the full capabilities of this tool,
-  since it can not reliably predict runtime behaviour. \ScheMo{} allows
+  since it cannot reliably predict runtime behaviour. \ScheMo{} allows
   dynamically created jobs and tasks, but mixing
   \code{@}-directives and normal macros is an operation that
   necessitates a clear understanding of the library and the
@@ -173,16 +173,16 @@ to modern schedulers.
   device.}. The result is a \code{.profile} file, a text file that is
   both human-readable and easy to parse automatically.
 
-  \ScheMo{} Profiler isn't made of standalone programs but it is
+  \ScheMo{} Profiler isn't made of standalone programs, but it is
   a set of optional features built-in in both the \ScheMo{} Preprocessor
   and the \ScheMo{} C++ Library.
   
   \beforelist When used in conjunction with the \ScheMo{} Preprocessor, it:
   \begin{itemize}
-    \item counts the number of jobs, functions, tasks and mutexes used
+    \item counts the number of jobs, functions, tasks and mutexes used;
     \item assigns a name and ID to each job, function and task for
-      additional analysis
-    \item builds a flow graph of each job and function
+      additional analysis;
+    \item builds a flow graph of each job and function.
   \end{itemize}
   \afterlist*
   If the profiler features have been enabled during compilation, when
@@ -191,24 +191,24 @@ to modern schedulers.
   the scheduler executed the various parts of the program.
   
   \beforelist Each time the scheduler passes control to a different job, in fact, it
-  adds to the file:\\*
+  adds to the file:
   \begin{itemize}
-    \item the ID of the currently running job
-    \item the ID of the task the job is currently on
+    \item the ID of the currently running job;
+    \item the ID of the task the job is currently on;
     \item a timestamp\footnote{\label{clock_note}Milliseconds elapsed
     since the program was launched.} of when control is passed
-    \textit{to} the job
+    \textit{to} the job;
     \item a timestamp\footref{clock_note} of when control is passed
-    \textit{away from} the job
+    \textit{away from} the job.
   \end{itemize}
   \afterlist
   \beforelist Using this information it is possible to:
   \begin{itemize}
-    \item reveal superflous pieces of code that are never accessed
+    \item reveal superflous pieces of code that are never accessed;
     \item decide whether or not it is convenient to merge or split
-    certain tasks based on their running time
-    \item identify bottlenecks in the program execution
-    \item recognise errors in the structure of the program
+    certain tasks based on their running time;
+    \item identify bottlenecks in the program execution;
+    \item recognise errors in the structure of the program;
     \item etc\ldots
   \end{itemize}
   \afterlist

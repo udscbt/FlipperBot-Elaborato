@@ -1,5 +1,5 @@
 The robot's software is similar to that of the joystick in many ways, so only
-the main differences are indicated here.
+the main differences are listed here.
 
 \beforelist The jobs executed by the robot are:
 \begin{description}
@@ -15,14 +15,14 @@ the main differences are indicated here.
     connect to boards, getting into standalone mode if it fails;
   \item[\Code|job\_server|:] each time the robot changes state, it accepts
     exactly one connection from a device (the board to which the robot is
-    already connected as a client when in game mode or a new controller when in
+    already connected as a client when in game mode, or a new controller when in
     standalone mode) and executes the received commands related to its direction
     or the motors speed.
 \end{description}
 \afterlist*
 Just like the joystick, the robot sends a keepalive signal when necessary to
 check whether the connection is still active.
-It is to note, however, that the client job is only active while in game mode
+It is to note, however, that the client job is active only while in game mode
 (in fact, the joystick wouldn't handle the bumper information even if it
 received it since it doesn't run a server).
 

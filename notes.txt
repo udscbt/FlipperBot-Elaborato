@@ -1,25 +1,26 @@
-Modificare nomi in frontespizio più spaziati
+✓ Modificare nomi in frontespizio più spaziati
 
-Aggiungere indentazione in description
+✓ Aggiungere indentazione in description
 
-Riferimenti a sezioni in appendice come Appendix
+✓ Riferimenti a sezioni in appendice come Appendix
 
-Eliminare finti riferimenti all'appendice F
+✓ Eliminare finti riferimenti all'appendice F
 
-Riferimenti più accurati a software
+✓ Riferimenti più accurati a software
 
 Foto robot: dire a bonarini dei bumper
 
-described in the totem section -> autoref
+✓ described in the totem section -> autoref
 
-ESP8266 -> ESP-12
+✓ ESP8266 -> ESP-12
 
-In network, sostituire \subsection* con \itemskip
+✓ In network, sostituire \subsection* con \itemskip
+(Trasformato in description invece)
 
-Simon Says senza -
+✓ Simon Says senza -
 
-Motor analyser: link a OpenCV e FFmpeg
+✓ Motor analyser: link a OpenCV e FFmpeg
 
-Method evaluation: ref al software
+✓ Method evaluation: ref al software
 
-Evitare rottura pagina prima di lista
+✓ Evitare rottura pagina prima di lista

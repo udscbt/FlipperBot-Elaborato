@@ -1,4 +1,4 @@
-\beforelist* The ESP8266 on the joystick is programmed in C++, using the
+\beforelist* The ESP-12 on the joystick is programmed in C++, using the
 \ScheMo{} library to allow mutiple threads to run simultaneously.
 The joystick must perform three basic activities at the same time, assosciated
 to the same number of jobs:
@@ -13,7 +13,7 @@ to the same number of jobs:
   \item[\Code|job\_link|:] manages the blue LED, turning it on and off at the
     appropriate frequency depending on the current state;
   \item[\Code|job\_network|:] searches for available board or robot networks,
-    tries to connect to them and puts the joystick in the right state
+    tries to connect to them, and puts the joystick in the right state
     depending on the result, repeating this operation each time it finds itself
     disconnected.
 \end{description}
