@@ -60,6 +60,19 @@ fontsize=\relsize{-1},
   \def\subsubsectionautorefname{\?}
   \def\Appendixautorefname{Appendix}
 }
+\BeforeBeginEnvironment{appendices}{
+\addto\extrasenglish{
+  \makeatletter
+  \let\@sectionautorefname\chapterautorefname
+  \renewcommand\sectionautorefname{\Appendixautorefname}
+}
+}
+\AfterEndEnvironment{appendices}{
+\addto\extrasenglish{
+  \makeatletter
+  \renewcommand\sectionautorefname{\@sectionautorefname}
+}
+}
 
 % \nobreakhline : \hline that doesn't break pages
 \makeatletter
