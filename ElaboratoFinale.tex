@@ -152,6 +152,13 @@
 \pagenumbering{Roman}
 
 \tableofcontents
+\listoffigures
+\begingroup
+\let\clearpage\relax
+\let\cleardoublepage\relax
+\vspace{1cm}
+\listoftables
+\endgroup
 \newpage
 
 \pagenumbering{arabic}
@@ -571,7 +578,7 @@ On the other hand, an advantage of using servomotors is that speed con be select
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{img/ProgettoCircuito}
-\caption{Electric scheme of robot circuitry}
+\caption{Electric scheme of the robot's control board}
 \label{fig:robot_circ}
 \end{figure}
 
@@ -747,7 +754,7 @@ They consist of cylinders containing the light set and switches (to detect impac
 \begin{wrapfigure}{r}{0.3\textwidth} 
     \centering
     \includegraphics[width=0.3\textwidth]{img/totem_nuovo1}
-    \caption{CAD model of the struction of totems.}
+    \caption{CAD model of the structure of totems.}
 \end{wrapfigure}
 
 The core consists in aluminium cylinders (inner diameter 2cm). On the lower part of the core, there are three tough plastic plaques. The plaques transfer impact to the switches to which there are connected.
